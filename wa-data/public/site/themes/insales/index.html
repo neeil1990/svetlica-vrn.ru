@@ -42,6 +42,7 @@
     {include file="./settings.html" inline}
 
     {* CSS *}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="{$wa_theme_url}css/insale.min.css?v{$wa_theme_version}" rel="stylesheet"/>
 
     {* CUSTOM FILE, DELETE PROM *}
@@ -109,6 +110,7 @@
     {/if}
 
     {* JS *}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" defer></script>
     <script src="{$wa_theme_url}js/owl.carousel.min.js?v={$wa->version(true)}" defer></script>
     <script src="{$wa_theme_url}js/jquery.fancybox.min.js?v={$wa->version(true)}" defer></script>
     <script src="{$wa_theme_url}js/jquery.countdownTimer.min.js?v={$wa->version(true)}" defer></script>
@@ -119,6 +121,22 @@
 
     <script>
         $(function() {
+
+            $('.tooltip').tooltip({
+                position: {
+                    my: "left top",
+                    at: "right+5 top-5",
+                    collision: "none"
+                },
+                items: "[data-title]",
+                content: function() {
+                    var element = $( this );
+                    if ( element.is( "[data-title]" ) ) {
+                        return element.attr( "data-title" );
+                    }
+                }
+            });
+
             $.inSale.init({
                 "_svg": "{$wa_real_theme_url}img/svg.svg",
                 "is_mobile": "{waRequest::isMobile(false)}",

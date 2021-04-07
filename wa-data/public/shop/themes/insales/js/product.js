@@ -84,21 +84,6 @@ $(function () {
             return false;
         }
     }
-
-    $('.tooltip').tooltip({
-        position: {
-            my: "left top",
-            at: "right+5 top-5",
-            collision: "none"
-        },
-        items: "[data-title]",
-        content: function() {
-            var element = $( this );
-            if ( element.is( "[data-title]" ) ) {
-                return element.attr( "data-title" );
-            }
-        }
-    });
 });
 
 function Product(form, options) {
