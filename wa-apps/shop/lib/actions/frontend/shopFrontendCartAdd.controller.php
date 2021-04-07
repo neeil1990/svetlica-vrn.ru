@@ -140,6 +140,9 @@ class shopFrontendCartAddController extends waJsonController
                     'create_datetime' => date('Y-m-d H:i:s'),
                     'product_id' => $product['id'],
                     'sku_id' => $sku['id'],
+                    'wa_width' => $data['wa_width'],
+                    'wa_height' => $data['wa_height'],
+                    'wa_deep' => $data['wa_deep'],
                     'quantity' => $quantity,
                     'type' => 'product'
                 );

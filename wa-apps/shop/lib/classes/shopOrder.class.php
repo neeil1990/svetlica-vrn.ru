@@ -3708,6 +3708,17 @@ class shopOrder implements ArrayAccess
             }
             $i['sku_code'] = $sku['sku'];
             $i['sku_name'] = $sku['name'];
+
+            if(isset($i['cart_item_id']) && $i['cart_item_id']){
+                $cart = new shopCartItemsModel();
+                $item = $cart->getById($i['cart_item_id']);
+                if($item['wa_width'] && $item['wa_height']){
+                    $name .= ' '.$item['wa_width'].'x'.$item['wa_height'];
+                    if($item['wa_deep'])
+                        $name .= 'x'.$item['wa_deep'];
+                }
+            }
+
             $i['name'] = $name;
         } else {
             $i['deleted'] = true;
