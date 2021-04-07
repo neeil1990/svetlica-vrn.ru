@@ -1,0 +1,9 @@
+{strip}
+
+{if $ts.header_logo || $ts.header_logo_svg}
+    <a class="header__logo" href="{$wa_url}">
+        <img src="{$ts.header_logo_svg|default:"`$wa_theme_url``$ts.header_logo`"}?v{$wa_theme_version}" alt="{$wa->accountName()}">
+    </a>
+{/if}
+
+{/strip}

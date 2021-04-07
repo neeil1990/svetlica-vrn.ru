@@ -1,0 +1,61 @@
+{strip}
+
+{if ($ts.product_table_info_1 || $ts.product_table_info_2) && !$wa->get('ajax')}
+    {$f1 = 1}
+    {$f2 = 1}
+
+
+    {if ($ts.product_table_info_1_feature && !array_key_exists($ts.product_table_info_1_feature, $product.features)) ||
+        ($ts.product_table_info_1_categ && !in_array($product.category_id, explode(',',$ts.product_table_info_1_categ)))}
+        {$f1 = 0}
+    {/if}
+
+    {if ($ts.product_table_info_2_feature && !array_key_exists($ts.product_table_info_2_feature, $product.features)) ||
+        ($ts.product_table_info_2_categ && !in_array($product.category_id, explode(',',$ts.product_table_info_2_categ)))}
+        {$f2 = 0}
+    {/if}
+
+    {if $f1 || $f2}
+        <div class="product__item">
+            <div class="product__t-info">
+                {if $ts.product_table_info_1 && $f1}
+                    <div class="product__t-info-item">
+                        <div class="product__t-info-icon">
+                            <svg class="icon16 i-info "><use xlink:href="#i-info"></use></svg>
+                        </div>
+                        <a href="#t-info-item-1" class="in-modal">{$ts.product_table_info_1_title}</a>
+                    </div>
+                    <div id="t-info-item-1" style="display:none;">
+                        <div class="product__wrap_modal page">
+                            {if $ts.product_table_info_1_block}
+                                {$wa->block($ts.product_table_info_1_block, ['product' => $product])}
+                            {else}
+                                <p>Укажите ид блока в настройках. <a href="http://steemy.ru/img-ss/insales/9.png" target="_blank">Как узнать ID пользовательского блока</a></p>
+                            {/if}
+                        </div>
+                    </div>
+                {/if}
+
+                {if $ts.product_table_info_2 && $f2}
+                    <div class="product__t-info-item">
+                        <div class="product__t-info-icon">
+                            <svg class="icon16 i-info "><use xlink:href="#i-info"></use></svg>
+                        </div>
+                        <a href="#t-info-item-2" class="in-modal">{$ts.product_table_info_2_title}</a>
+                    </div>
+                    <div id="t-info-item-2" style="display:none;">
+                        <div class="product__wrap_modal page">
+                            {if $ts.product_table_info_2_block}
+                                {$wa->block($ts.product_table_info_2_block, ['product' => $product])}
+                            {else}
+                                <p>Укажите ид блока в настройках. <a href="http://steemy.ru/img-ss/insales/9.png" target="_blank">Как узнать ID пользовательского блока</a></p>
+                            {/if}
+                        </div>
+                    </div>
+                {/if}
+            </div>
+        </div>
+    {/if}
+{/if}
+
+{/strip}

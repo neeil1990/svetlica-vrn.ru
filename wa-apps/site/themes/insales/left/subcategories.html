@@ -1,0 +1,11 @@
+{strip}
+
+{if $ts.header_category_parent}
+    {$categ = $wa->shop->categories($ts.header_category_parent, null, true, true)}
+{/if}
+
+{if !empty($categ)}
+    {include file="./subpages.html" menu = $categ}
+{/if}
+
+{/strip}

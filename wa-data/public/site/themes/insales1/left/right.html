@@ -1,0 +1,119 @@
+{strip}
+
+{$ts = $theme_settings}
+
+{* LEFT *}
+{$blocksCheck = [
+    'filters',
+    'subcategories',
+    'subpages',
+    'bestsellers',
+    'brands',
+    'photos',
+    'tags',
+    'news',
+    'banner_1',
+    'banner_2',
+    'help',
+    'viewed'
+]}
+
+{if !waRequest::isMobile(false)}
+
+    {* OVERRIDE LEFT_BLOCKS CATEGORY*}
+    {if !empty($category.params.right_blocks)}
+        {$ts.category_right_blocks = $category.params.right_blocks}
+    {/if}
+
+    {$blocks = explode(',', $ts.category_right_blocks)}
+
+    {if !empty($blocks) && $ts.category_right_blocks}
+        {if in_array('subcategories', $blocks)}
+            {if $ts.header_catalog_parent}
+                {$categ = $wa->shop->categories($ts.header_catalog_parent, null, true, true)}
+            {else}
+                {$categ = $wa->shop->categories(0, null, true, true)}
+            {/if}
+        {/if}
+
+        {* FOR EDIT BLOKS*}
+        {function name=edit_block_button_sidebar_right}
+            {$chechSett = ['brands','tags','subcategories','subpages','search','blogs','timeline']}
+            {$settName = "divider_left_block_`$name`"}
+            {if in_array($name, $chechSett)}
+                {$settName = 'category_common'}
+            {/if}
+            <div class="e-panel-edit" data-group-edit="{$settName}" data-id="{$name}">
+                {if !empty($url)}
+                    <a href="{$url}" class="e-panel-edit__icon" target="_blank" title="Редактировать блок - {$name}">
+                        <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg></a>
+                {else}
+                    <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - {$name}">
+                        <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg></div>
+                {/if}
+                <div class="e-panel-edit__icon e-panel-edit__slach{if !empty($active)} e-panel-edit__slach_active{/if}" title={if !empty($active)}Скрыть{else}Показать{/if}>
+                    <svg class="icon12 i-eye"><use xlink:href="#i-eye"></use></svg>
+                    <svg class="icon14 i-eye-slash"><use xlink:href="#i-eye-slash"></use></svg></div>
+                <div class="e-panel-edit__icon e-panel-edit__up" title="Переместить вверх">
+                    <svg class="icon12 i-i-angle-down"><use xlink:href="#i-angle-down"></use></svg></div>
+                <div class="e-panel-edit__icon e-panel-edit__down" title="Переместить вниз">
+                    <svg class="icon12 i-i-angle-down"><use xlink:href="#i-angle-down"></use></svg></div>
+            </div>
+        {/function}
+
+        <div class="in-left in-left_right">
+            {foreach $blocks as $name}
+                {if in_array($name, $blocksCheck)}
+                    {if $name == 'filters' && (isset($category.params.filter_left_hide) || empty($filters))}{continue}{/if}
+                    {if $name == 'subcategories' && isset($category.params.sub_left_hide)}{continue}{/if}
+
+                    <div class="in-left__item in-left__item-{$name}">
+                        {include file="../left/`$name`.html" type=$type}
+
+                        {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                            <div class="block-info-name">{$name}</div>
+                            {edit_block_button_sidebar_right name=$name active=1}
+                        {/if}
+                    </div>
+                {else}
+                    {$block = $wa->block($name)}
+                    {if $block}
+                        <div class="in-left__item in-left__item-custom in-left__item-{$name}">
+                            {$block}
+                            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                                <div class="block-info-name">{$name}</div>
+                                {edit_block_button_sidebar_right name=$name active=1
+                                    url="`$wa_backend_url`site/?domain_id=`siteHelper::getDomainId()`#/blocks/id=`$name`"}
+                            {/if}
+                        </div>
+                    {/if}
+                {/if}
+            {/foreach}
+
+            {* HIDDEN BLOKS FOR EDIT *}
+            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                {$bloksExcludeHome = ['subpages','filters','subcategories','search','blogs','timeline']}
+                {$bloksExcludeSite = ['filters','subcategories','search','blogs','timeline']}
+                {$bloksExcludeCategory = ['subpages','search','blogs','timeline']}
+                {$bloksExcludeBlog = ['subpages','filters','subcategories']}
+                {foreach $blocksCheck as $name}
+                    {if !in_array($name, $blocks) &&
+                    (($type=='shop' && !in_array($name, $bloksExcludeHome) ||
+                    $type=='site' && !in_array($name, $bloksExcludeSite) ||
+                    $type=='category' && !in_array($name, $bloksExcludeCategory) ||
+                    $type=='blog' && !in_array($name, $bloksExcludeBlog)))}
+
+                        <div class="in-left__item e-panel-edit-block e-panel-edit-block-hidden">
+                            {edit_block_button_sidebar_right name=$name}
+                            Блок <b>{$name}</b> спрятан
+                        </div>
+                    {/if}
+                {/foreach}
+                <input type="hidden" name="e-panel-edit-type" value="category_right">
+            {/if}
+        </div>
+    {/if}
+{/if}
+
+
+{/strip}

@@ -1,0 +1,15 @@
+{strip}
+
+{if $post.album.photos}
+    <div class="in-post-album">
+        {foreach $post.album.photos as $p}
+            <div class="in-post-album__item">
+                <a href="{$p.thumb_big.url}" class="fan" data-fancybox="in-post-album">
+                    <img src="{$p.thumb.url}" alt="{$p.name|escape}">
+                </a>
+            </div>
+        {/foreach}
+    </div>
+{/if}
+
+{/strip}

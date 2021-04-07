@@ -1,0 +1,29 @@
+{strip}
+
+{$urlTheme = $wa_parent_theme_url|default:$wa_theme_url}
+
+{$imgUrl = ''}
+{if !empty($ts.left_banner_1)}
+    {$imgUrl = "`$urlTheme``$ts.left_banner_1`"}
+{/if}
+
+{* OVERRIDE LEFT_BANNER_1 CATEGORY*}
+{if !empty($category.params.left_banner_1)}
+    {$imgUrl = $category.params.left_banner_1}
+{/if}
+
+{if !empty($category.params.left_banner_1_link)}
+    {$ts.left_banner_1_link = $category.params.left_banner_1_link}
+{/if}
+
+{if $imgUrl}
+    <div class="in-left__promo in-effect-glare">
+        {if $ts.left_banner_1_link}
+            <a href="{$ts.left_banner_1_link}"></a>
+        {/if}
+
+        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgUrl}?v{$wa_theme_version}" alt="{$ts.left_banner_1_alt}" />
+    </div>
+{/if}
+
+{/strip}

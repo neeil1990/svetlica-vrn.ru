@@ -1,0 +1,107 @@
+<section class="comments" itemscope itemtype="http://schema.org/UserComments">
+    <a name="comments"></a>
+    <h3 class="comment-count" {if $post.comment_count == 0}style="display: none;"{/if}>{_w('%d comment','%d comments',$post.comment_count)}</h3>
+
+    {if $post.comment_count == 0}
+        <ul>
+            <!-- placeholder for new comments -->
+        </ul>
+    {/if}
+
+    {$depth=-1}
+    {foreach $post.comments as $comment}
+    {if $comment.depth < $depth}
+        {$loop=$depth-$comment.depth}
+        {section name="end-comment" loop=$loop}
+
+            </li>
+            </ul>
+        {/section}
+        {$depth=$comment.depth}
+    {/if}
+    {if $comment.depth == $depth}
+
+    </li>
+    <li>
+    {/if}
+        {if $comment.depth > $depth}
+
+        <ul>
+            <li>
+                {$depth=$comment.depth}
+        {/if}
+
+                {include file="comment.html" inline}
+                {* sub comment *}
+                {/foreach}
+                {section name="end-comment" loop=$depth }
+
+            </li>
+        </ul>
+        {/section}
+    </li>
+    </ul>
+
+</section>
+
+<section class="comment-form">
+    <a name="comment0"></a>
+    <form action="{$post.comment_link}" method="post">
+        <h4>[`Add comment`]</h4>
+        {$current_user_id=$wa->userId()}
+
+        <div class="comment-form-fields">
+            {if empty($current_user_id)}
+                {if $require_authorization}
+                    <div id="user-auth-provider" data-provider="signup" {if $current_auth_source neq 'signup'}style="display:none"{/if}>
+                        {sprintf('[`To add a comment please <a href="%s">sign up</a> or <a href="%s">login</a>`]',$wa->signupUrl(),$wa->loginUrl())}
+                    </div>
+                {/if}
+                <div id="user-auth-provider" class="tab clear-left" data-provider="guest" {if $current_auth_source}style="display:none"{/if}>
+                    <p>
+                        <label for="comment_name">[`Your name`]</label>
+                        <input type="text" name="name" id="comment_name" class="bold" value="">
+                    </p>
+                    <p>
+                        <label for="comment_email">[`Email`]</label>
+                        <input type="text" name="email" id="comment_email">
+                    </p>
+                </div>
+                {if $require_authorization}
+                    <div class="tab" data-provider="signup" {if $current_auth_source != 'signup'}style="display:none"{/if}>
+                        {sprintf('[`To add a comment please <a href="%s">sign up</a> or <a href="%s">login</a>`]',$wa->signupUrl(),$wa->loginUrl())}
+                    </div>
+                {/if}
+                {foreach $auth_adapters as $adapter}
+                    <div class="tab" data-provider="{$adapter->getId()}" {if $current_auth_source != $adapter->getId()}style="display:none"{/if}>
+                        <p>
+                            <label for="name">[`Your name`]</label>
+                            <strong><img src="{$adapter->getIcon()}" class="userpic" />{$current_auth.name|default:''|escape}</strong>
+                            <a href="{$wa_app_url}logout">[`log out`]</a>
+                        </p>
+                    </div>
+                {/foreach}
+            {else}
+                <p>
+                    <label>[`Your name`]</label>
+                    <img src="{$wa->user()->getPhoto(20)}" class="userpic" alt=""> <strong>{$wa->user('name')}</strong> <a href="{$wa_app_url}logout">[`log out`]</a>
+                </p>
+            {/if}
+
+            <p class="comment-body">
+                <label for="comment_text">[`Comment`]</label>
+                <textarea id="comment_text" name="text" rows="10" cols="45"></textarea>
+            </p>
+        </div>
+        <div class="comment-submit">
+            {if $request_captcha && empty($current_user_id)}
+                {$wa->captcha()}
+            {/if}
+            <input type="hidden" name="auth_provider" value="{$current_auth_source|default:blogCommentModel::AUTH_GUEST}">
+            <input type="hidden" name="parent" value="0">
+            <input type="submit" value="[`Add comment`]">
+            <img src="{$wa_static_url}wa-content/img/loading16.gif" style="display: none;" alt="">
+        </div>
+    </form>
+</section>
+

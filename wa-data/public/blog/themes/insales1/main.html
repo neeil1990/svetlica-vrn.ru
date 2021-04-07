@@ -1,0 +1,51 @@
+{strip}
+
+{$ts = $theme_settings}
+
+{$globals_blog_id = $wa->globals('blog_id')}
+
+{if !is_array($globals_blog_id)}
+    {$current_blog = $wa->blog->blog($wa->globals('blog_id'))}
+{/if}
+
+
+<div class="main__wrap wrap">
+
+    {include file="./left.html" inline}
+
+    <div class="in-right">
+
+        {* BREADCRUMBS *}
+        {include file="`$wa_parent_theme_path`/breadcrumbs.html"}
+
+        <h1>
+            {if isset($current_blog) && !isset($post.title)}
+                {$current_blog.name|escape}
+            {elseif isset($post.title)}
+                {$post.title|escape}
+            {else}
+                [`Blog`]
+            {/if}
+        </h1>
+
+
+        {if empty($posts) && $wa->currentUrl() == $wa_app_url}
+
+            <h1>[`Welcome to your new blog!`]</h1>
+            <p>{sprintf('[`Start by <a href="%s">writing a post</a> in your blog backend.`]', $wa_backend_url|cat:'blog/')}</p>
+
+        {else}
+
+            {$content}
+
+        {/if}
+
+        {if isset($pages) && $pages > 1}
+            <div class="in-blocks__item">
+                {wa_pagination total=$pages attrs=["class" => "pagin"]}
+            </div>
+        {/if}
+    </div>
+</div>
+
+{/strip}

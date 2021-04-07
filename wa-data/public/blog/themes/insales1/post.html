@@ -1,0 +1,33 @@
+{strip}
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+
+    <meta itemprop="datePublished" content="{$post.datetime|date_format:'Y-m-d\TH:i'}">
+    <meta itemprop="author" content="{$post.user.name}">
+
+    {* @event prepare_posts_frontend.%plugin_id%.before *}
+    {if !empty($post.plugins.before)}
+        <div class="text_before">
+            {foreach $post.plugins.before as $plugin => $output}{$output}{/foreach}
+        </div>
+    {/if}
+
+    <div class="page" itemprop="articleBody">
+        {$post.text}
+    </div>
+
+    {* @event prepare_posts_frontend.%plugin_id%.after *}
+    {if !empty($post.plugins.after)}
+        <div class="text_after">
+            {foreach $post.plugins.after as $plugin => $output}{$output}{/foreach}
+        </div>
+    {/if}
+
+    {* @event frontend_post.%plugin_id%.footer *}
+    {foreach $frontend_post as $plugin => $output}
+        {if !empty($output.footer)}{$output.footer}{/if}
+    {/foreach}
+
+</article>
+
+{/strip}

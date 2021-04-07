@@ -1,0 +1,49 @@
+{strip}
+
+{$ts = $theme_settings}
+
+{$globals_blog_id = $wa->globals('blog_id')}
+{if !is_array($globals_blog_id)}
+    {$current_blog = $wa->blog->blog($wa->globals('blog_id'))}
+{/if}
+
+{if !empty($current_blog) && !isset($post.title) && $ts.blog_ids_type}
+    {$typeIds = []}
+    {foreach explode(',',$ts.blog_ids_type) as $t}
+        {$type = explode(':',$t)}
+        {if $current_blog.id == $type[0]}
+            {$ts.blog_view = $type[1]}
+        {/if}
+    {/foreach}
+{/if}
+
+{if $ts.blog_view == 'columns_bg' }
+    {include file="./post.columns_bg.html" posts=$posts ts=$ts}
+
+{else if $ts.blog_view == 'full_width' }
+    {include file="./post.full_width.html" posts=$posts ts=$ts}
+
+{else if $ts.blog_view == 'mixed' }
+    {include file="./post.mixed.html" posts=$posts ts=$ts}
+
+{else if $ts.blog_view == 'сlassic' || $ts.blog_view == 'columns' }
+    <div {if $wa->param('blog_url')}itemscope itemtype="http://schema.org/Blog"{/if}>
+        {if $ts.blog_view == 'columns'}
+            <div class="h-news">
+                <div class="h-news__wrap">
+                    {foreach $posts as $post}
+                        {include file="./post.preview.html" post=$post ts=$ts}
+                    {/foreach}
+                </div>
+            </div>
+        {else}
+
+            {foreach $posts as $post}
+                {include file="./post.preview.html" post=$post ts=$ts}
+            {/foreach}
+
+        {/if}
+    </div>
+{/if}
+
+{/strip}

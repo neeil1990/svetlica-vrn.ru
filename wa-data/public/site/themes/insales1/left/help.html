@@ -1,0 +1,52 @@
+{strip}
+
+<div class="in-left__item">
+    <div class="l-help">
+        <div class="in-left__title in-left__title_bg">
+            {$ts.left_help_title}
+        </div>
+
+        <div class="l-help__content">
+            {if $ts.left_help_phone_1}
+                <div class="l-help__phone">
+                    {eval var=$ts.left_help_phone_1}
+
+                    {if $ts.left_help_phone_1_hint}
+                        <div class="l-help__phone-text">{$ts.left_help_phone_1_hint}</div>
+                    {/if}
+                </div>
+            {/if}
+
+            {if $ts.left_help_phone_2}
+                <div class="l-help__phone">
+                    {eval var=$ts.left_help_phone_2}
+
+                    {if $ts.left_help_phone_2_hint}
+                        <div class="l-help__phone-text">{$ts.left_help_phone_2_hint}</div>
+                    {/if}
+                </div>
+            {/if}
+
+            {if $ts.left_help_share}
+                {include file="../header/share.html" big=1}
+            {/if}
+
+            {if $ts.left_help_email}
+                <div class="l-help__mail">
+                    <a href="mailto:{eval var=$ts.left_help_email}">{eval var=$ts.left_help_email}</a>
+                </div>
+            {/if}
+
+            {if $ts.left_help_text}
+                <div class="l-help__text">
+                    {$ts.left_help_text}
+                </div>
+            {/if}
+
+            {if $ts.left_help_soz}
+                {include file="../header/social.html" color=1}
+            {/if}
+        </div>
+    </div>
+</div>
+{/strip}

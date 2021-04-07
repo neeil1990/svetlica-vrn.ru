@@ -1,0 +1,52 @@
+{strip}
+
+{if $ts.home_news_id && $wa->blog}
+    {$news = $wa->blog->posts((int)$ts.home_news_id)}
+    {if !empty($news)}
+        <div class="h-news">
+            {if $ts.home_news_title}
+                <div class="in-blocks__title">
+                    <div class="in-blocks__title-name">
+                        {$ts.home_news_title}
+                    </div>
+                    <a href="{$ts.home_news_link}" class="in-blocks__title-link">
+                        {$ts.home_news_link_title} <svg class="icon10 i-angle-right">
+                            <use xlink:href="#i-angle-right"></use>
+                        </svg>
+                    </a>
+                </div>
+            {/if}
+
+            <div class="h-news__wrap">
+                {foreach $news as $n}
+                    <div class="h-news__item">
+                        {if !empty($n.img)}
+                            <div class="h-news__item-img in-effect-glare">
+                                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$n.img}" alt="{$n.title|escape}">
+                            </div>
+                        {/if}
+
+                        <div class="h-news__item-date">{$n.datetime|wa_datetime:"humandate"}</div>
+
+                        <div class="h-news__item-name">
+                            <a href="{$n.link}">{$n.title}</a>
+                        </div>
+
+                        <div class="h-news__item-text">{strip_tags($n.text)|truncate:200}</div>
+                        <a href="{$n.link}" class="h-news__item-next">
+                            [`more`] <svg class="icon8 i-angle-right">
+                                <use xlink:href="#i-angle-right"></use>
+                            </svg>
+                        </a>
+                    </div>
+
+                    {if $n@iteration == 3}
+                        {break}
+                    {/if}
+                {/foreach}
+            </div>
+        </div>
+    {/if}
+{/if}
+
+{/strip}

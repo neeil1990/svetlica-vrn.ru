@@ -1,0 +1,84 @@
+{strip}
+
+{$colorIcon = 0}
+{if $ts.header_social == 'img/settings/header_social-1.png' || !empty($color)}
+    {$colorIcon = 1}
+{/if}
+
+<div class="soz{if $colorIcon} soz_color{/if}">
+    {if $ts.social_vk}
+        <a class="soz__list" href="{$ts.social_vk}" target="_blank"{if $colorIcon} style="background-color:#365493;"{/if}>
+            <svg class="icon14 i-vk">
+                <use xlink:href="#i-vk"></use>
+            </svg>
+        </a>
+    {/if}
+
+    {if $ts.social_fc}
+        <a class="soz__list" href="{$ts.social_fc}" target="_blank"{if $colorIcon} style="background-color:#0274B3;"{/if}>
+            <svg class="icon14 i-fc">
+                <use xlink:href="#i-fc"></use>
+            </svg>
+        </a>
+    {/if}
+
+    {if $ts.social_tw}
+        <a class="soz__list" href="{$ts.social_tw}" target="_blank"{if $colorIcon} style="background-color:#3CF;"{/if}>
+            <svg class="icon14 i-tw">
+                <use xlink:href="#i-tw"></use>
+            </svg>
+        </a>
+    {/if}
+
+    {if $ts.social_od}
+        <a class="soz__list" href="{$ts.social_od}" target="_blank"{if $colorIcon} style="background-color:#EE8208;"{/if}>
+            <svg class="icon14 i-odn">
+                <use xlink:href="#i-odn"></use>
+            </svg>
+        </a>
+    {/if}
+
+    {if $ts.social_in}
+        <a class="soz__list" href="{$ts.social_in}" target="_blank"{if $colorIcon} style="background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);"{/if}>
+            <svg class="icon14 i-inst">
+                <use xlink:href="#i-inst"></use>
+            </svg>
+        </a>
+    {/if}
+
+    {if $ts.social_yo}
+        <a class="soz__list" href="{$ts.social_yo}" target="_blank"{if $colorIcon} style="background-color:#FF0000;"{/if}>
+            <svg class="icon14 i-youtube">
+                <use xlink:href="#i-youtube"></use>
+            </svg>
+        </a>
+    {/if}
+
+    {if $ts.social_plus_twv}
+        {if $ts.header_share_telegram}
+            <a class="soz__list" href="tg://resolve?domain={$ts.header_share_telegram}" target="_blank"{if $colorIcon} style="background-color:#64a9dc;"{/if}>
+                <svg class="icon22 i-tg">
+                    <use xlink:href="#i-tg"></use>
+                </svg>
+            </a>
+        {/if}
+
+        {if $ts.header_share_whatsapp}
+            <a class="soz__list" href="https://api.whatsapp.com/send?phone={$ts.header_share_whatsapp}" target="_blank"{if $colorIcon} style="background-color:#65bc54;"{/if}>
+                <svg class="icon22 i-wat">
+                    <use xlink:href="#i-wat"></use>
+                </svg>
+            </a>
+        {/if}
+
+        {if $ts.header_share_viber}
+            <a class="soz__list" href="viber://chat?number={$ts.header_share_viber}" target="_blank"{if $colorIcon} style="background-color:#7b519d;"{/if}>
+                <svg class="icon20 i-wat">
+                    <use xlink:href="#i-vib"></use>
+                </svg>
+            </a>
+        {/if}
+    {/if}
+</div>
+
+{/strip}

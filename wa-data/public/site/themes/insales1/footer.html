@@ -1,0 +1,363 @@
+{strip}
+
+{$actions = ['order','cart','checkout','checkoutone']}
+<footer class="footer{if ($ts.footer_panel && !empty($action) && !in_array($action, $actions)) ||
+    ($ts.footer_panel_mobile && waRequest::isMobile(false))} footer_pb{/if}" itemscope="" itemtype="http://schema.org/Store">
+    <meta itemprop="name" content="{$wa->accountName()}">
+    <meta itemprop="address" content="{eval var=$ts.micro_address}">
+    <meta itemprop="telephone" content="{eval var=$ts.micro_phone}">
+    <meta itemprop="description" content="{$wa->accountName()}">
+    <meta itemprop="image" content="{$ts.header_logo_svg|default:"`$wa_theme_url``$ts.header_logo`"}">
+    <meta itemprop="priceRange" content="{eval var=$ts.price_range}">
+
+    <div class="footer__wrap wrap">
+
+        <div class="footer__item">
+            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                <div class="e-panel-edit" data-group-edit="divider_footer_settings_1">
+                    <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки 1 блок">
+                        <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                    </div>
+                </div>
+            {/if}
+
+            {if $ts.footer_logo || $ts.footer_logo_svg}
+                <div class="footer__item-logo">
+                    <a class="footer__logo" href="{$wa_url}">
+                        <img src="{$ts.footer_logo_svg|default:"`$wa_theme_url``$ts.footer_logo`"}?v{$wa_theme_version}" alt="{$wa->accountName()}">
+                    </a>
+                </div>
+            {/if}
+
+            {if $ts.footer_copmany_text}
+                <div class="footer__item-desc">
+                    <p>
+                        {eval var=$ts.footer_copmany_text}
+                    </p>
+                </div>
+            {/if}
+
+            {if $wa->shop && $ts.footer_currencies}
+                {$currencies = $wa->shop->currencies()}
+                {if count($currencies) > 1}
+                    {$currency = $wa->shop->currency()}
+                    <div class="footer__item-currency">
+                        <div class="f-currency">
+                            <select>
+                                {foreach $currencies as $c_code => $c}
+                                    <option value="{$c_code}"{if $c_code == $currency} selected{/if}>{$c.title}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+                {/if}
+            {/if}
+
+            {if $ts.footer_politika_map}
+                <div class="footer__item-policy">
+                    <div class="policy">
+                        {if $ts.footer_politika_text}
+                            <a class="policy__link" href="{$ts.footer_politika_link}">
+                                {$ts.footer_politika_text}
+                            </a>
+                        {/if}
+
+                        {if $ts.footer_html_map_text && $ts.footer_html_map_text}
+                            <span class="policy__sep">|</span>
+                        {/if}
+
+                        {if $ts.footer_html_map_text}
+                            <a class="policy__link" href="{$ts.footer_html_map_link}">
+                                {$ts.footer_html_map_text}
+                            </a>
+                        {/if}
+                    </div>
+                </div>
+            {/if}
+
+            {if $ts.footer_pay_show}
+                <div class="footer__item-pay">
+                    {include file="./footer.pay.html" inline}
+                </div>
+            {/if}
+
+
+            {if $ts.footer_copy_text || $ts.footer_copy}
+                <div class="footer__item-copy">
+                    {if $ts.footer_copy_text}
+                        <div class="footer__item-creator">
+                            {$ts.footer_copy_text}
+                        </div>
+                    {/if}
+
+                    {if $ts.footer_copy}
+                        <div class="webasyst">
+                            <a href="https://www.webasyst.ru/" target="_blank">
+                                <svg height="16" viewBox="0 0 60 16" xmlns="http://www.w3.org/2000/svg">
+                                    <circle fill="#ff0000" cx="05" cy="8" r="2"></circle>
+                                    <circle class="uk-preserve" fill="#44aaff" cx="15" cy="8" r="2"></circle>
+                                    <circle class="uk-preserve" fill="#eedd44" cx="25" cy="8" r="2"></circle>
+                                    <circle class="uk-preserve" fill="#ee6699" cx="35" cy="8" r="2"></circle>
+                                    <circle class="uk-preserve" fill="#99dd33" cx="45" cy="8" r="2"></circle>
+                                    <circle class="uk-preserve" fill="#44aaff" cx="55" cy="8" r="2"></circle>
+                                </svg>
+                            </a>
+                        </div>
+                    {/if}
+                </div>
+            {/if}
+        </div>
+
+        <div class="footer__item">
+            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                <div class="e-panel-edit" data-group-edit="divider_footer_settings_2">
+                    <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки 2 блок">
+                        <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                    </div>
+                </div>
+            {/if}
+
+            <div class="footer__item-title">
+                <div class="footer__item-name">{$ts.footer_company_title}</div>
+                <div class="footer__item-down">
+                    <svg class="icon14 i-angle-right">
+                        <use xlink:href="#i-angle-right"></use>
+                    </svg>
+                </div>
+            </div>
+
+            {if $ts.footer_company_links_menu}
+                {$companyLinks = $wa->menu->get($ts.footer_company_links_menu)}
+            {elseif $ts.footer_company_links == 'wa_apps' && $wa->apps()}
+                {$companyLinks = $wa->apps()}
+            {elseif $ts.footer_company_links == 'shop_pages'}
+                {if $wa->shop}{$companyLinks = $wa->shop->pages()}{/if}
+            {elseif $ts.footer_company_links == 'site_pages'}
+                {if $wa->site}{$companyLinks = $wa->site->pages()}{/if}
+            {elseif $ts.footer_company_links == 'category'}
+                {if $wa->shop}{$companyLinks = $categ}{/if}
+            {/if}
+
+            {if !empty($companyLinks)}
+                <div class="f-menu">
+                    {foreach $companyLinks as $l}
+                        {if !isset($l.params.hide) && !isset($l.hide)}
+                            <div class="f-menu__list">
+                                <a href="{$l.url}">{$l.name|escape}</a>
+                            </div>
+                        {/if}
+                    {/foreach}
+                </div>
+            {/if}
+        </div>
+
+        <div class="footer__item">
+            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                <div class="e-panel-edit" data-group-edit="divider_footer_settings_3">
+                    <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки 3 блок">
+                        <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                    </div>
+                </div>
+            {/if}
+
+            <div class="footer__item-title">
+                <div class="footer__item-name">{$ts.footer_buyers_title}</div>
+                <div class="footer__item-down">
+                    <svg class="icon14 i-angle-right">
+                        <use xlink:href="#i-angle-right"></use>
+                    </svg>
+                </div>
+            </div>
+
+            {if $ts.footer_buyers_links_menu}
+                {$buyersLinks = $wa->menu->get($ts.footer_buyers_links_menu)}
+            {elseif $ts.footer_buyers_links == 'wa_apps' && $wa->apps()}
+                {$buyersLinks = $wa->apps()}
+            {elseif $ts.footer_buyers_links == 'shop_pages'}
+                {if $wa->shop}{$buyersLinks = $wa->shop->pages()}{/if}
+            {elseif $ts.footer_buyers_links == 'site_pages'}
+                {if $wa->site}{$buyersLinks = $wa->site->pages()}{/if}
+            {elseif $ts.footer_buyers_links == 'category'}
+                {if $wa->shop}{$buyersLinks = $categ}{/if}
+            {/if}
+
+            {if !empty($buyersLinks)}
+                <div class="f-menu">
+                    {foreach $buyersLinks as $l}
+                        {if !isset($l.params.hide) && !isset($l.hide)}
+                            <div class="f-menu__list">
+                                <a href="{$l.url}">{$l.name|escape}</a>
+                            </div>
+                        {/if}
+                    {/foreach}
+                </div>
+            {/if}
+
+            {if $ts.footer_lk && $wa->shop && $wa->isAuthEnabled()}
+                <div class="footer__item-title">
+                    <div class="footer__item-name">{$ts.footer_lk_title}</div>
+                    <div class="footer__item-down">
+                        <svg class="icon14 i-angle-right">
+                            <use xlink:href="#i-angle-right"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div class="f-menu">
+                    <div class="f-menu__list">
+                        <a href="{$wa->getUrl('shop/frontend/myProfile')}">[s`My profile`]</a>
+                    </div>
+
+                    <div class="f-menu__list">
+                        <a href="{$wa->getUrl('shop/frontend/myOrders')}">[`My orders`]</a>
+                    </div>
+
+                    {if shopAffiliate::isEnabled()}
+                        <div class="f-menu__list">
+                            <a href="{$wa->getUrl('shop/frontend/myAffiliate')}">[`Affiliate program`]</a>
+                        </div>
+                    {/if}
+
+                    {if $wa->mailer}
+                        <div class="f-menu__list">
+                            <a href="{$wa->getUrl('mailer/frontend/mySubscriptions')}">[`My subscriptions`]</a>
+                        </div>
+                    {/if}
+
+                    {if !empty($frontend_my_nav)}
+                        {* @event frontend_my_nav.%plugin_id% *}
+                        {foreach $frontend_my_nav as $_plugin => $_}
+                            <div class="f-menu__list">
+                                {$_}
+                            </div>
+                        {/foreach}
+                    {/if}
+                </div>
+            {/if}
+
+        </div>
+
+        <div class="footer__item">
+            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                <div class="e-panel-edit" data-group-edit="divider_footer_settings_4">
+                    <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки 4 блок">
+                        <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                    </div>
+                </div>
+            {/if}
+
+            <div class="footer__item-title">
+                <div class="footer__item-name">{$ts.footer_contact_title}</div>
+                <div class="footer__item-down">
+                    <svg class="icon14 i-angle-right">
+                        <use xlink:href="#i-angle-right"></use>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="footer__item-contact">
+                <div class="f-contact">
+                    {if $ts.footer_contact_phone}
+                        <div class="f-contact__item">
+                            <div class="f-contact__item-icon">
+                                <svg class="icon16 i-phone">
+                                    <use xlink:href="#i-phone"></use>
+                                </svg>
+                            </div>
+                            <div class="f-contact__item-text">
+                                {eval var=$ts.footer_contact_phone}
+                            </div>
+                        </div>
+                    {/if}
+                    {if $ts.footer_contact_address}
+                        <div class="f-contact__item">
+                            <div class="f-contact__item-icon">
+                                <svg class="icon16 i-address">
+                                    <use xlink:href="#i-address"></use>
+                                </svg>
+                            </div>
+                            <div class="f-contact__item-text">
+                                {eval var=$ts.footer_contact_address}
+                            </div>
+                        </div>
+                    {/if}
+                    {if $ts.footer_contact_email}
+                        <div class="f-contact__item">
+                            <div class="f-contact__item-icon">
+                                <svg class="icon16 i-email">
+                                    <use xlink:href="#i-email"></use>
+                                </svg>
+                            </div>
+                            <div class="f-contact__item-text">
+                                <a href="mailto:{eval var=$ts.footer_contact_email}">
+                                    {eval var=$ts.footer_contact_email}
+                                </a>
+                            </div>
+                        </div>
+                    {/if}
+                    {if $ts.footer_contact_mode}
+                        <div class="f-contact__item">
+                            <div class="f-contact__item-icon">
+                                <svg class="icon16 i-clock">
+                                    <use xlink:href="#i-clock"></use>
+                                </svg>
+                            </div>
+                            <div class="f-contact__item-text">
+                                {eval var=$ts.footer_contact_mode}
+                            </div>
+                        </div>
+                    {/if}
+                </div>
+            </div>
+
+            {* SOCIAL *}
+            {if $ts.footer_contact_soz}
+                <div class="footer__item-soz">
+                    {include file="./header/social.html" color=1}
+                </div>
+            {/if}
+        </div>
+    </div>
+
+    {if $ts.footer_bottom_copy}
+        <div class="footer__copy">
+            <div class="footer__copy-wrap wrap">
+                {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                    <div class="e-panel-edit" data-group-edit="divider_footer_settings_5">
+                        <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки внизу подвала">
+                            <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                        </div>
+                    </div>
+                {/if}
+
+                {eval var=$ts.footer_bottom_copy}
+            </div>
+        </div>
+    {/if}
+</footer>
+
+{include file="./footer.icon.fav.com.cart.html" inline}
+
+{if $ts.footer_uptop_show && !waRequest::isMobile(false)}
+    <div class="upTop">
+        <svg class="icon12 i-angle-down">
+            <use xlink:href="#i-angle-down"></use>
+        </svg>
+    </div>
+{/if}
+
+{if $ts.cookies && !waRequest::cookie("f-cookies", '', waRequest::TYPE_STRING)}
+    <div class="f-cookies">
+        <div class="f-cookies__wrap">
+            <div class="f-cookies__text">{$ts.cookies_text}</div>
+            <div class="f-cookies__button">
+                <button>{$ts.cookies_text_button}</button>
+            </div>
+        </div>
+    </div>
+{/if}
+
+{if $ts.header_menu_bg}
+    <div class="c-main-bg"></div>
+{/if}
+
+{/strip}

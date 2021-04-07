@@ -1,0 +1,12 @@
+{strip}
+
+{if $ts.header_catalog_parent}
+    {$categ = $wa->shop->categories($ts.header_catalog_parent, null, true, true)}
+{else}
+    {$categ = $wa->shop->categories(0, null, true, true)}
+{/if}
+
+{include file="`$wa_parent_theme_path`/left/left.html" type='blog' categ=$categ}
+
+{/strip}
+

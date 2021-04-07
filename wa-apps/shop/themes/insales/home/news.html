@@ -1,0 +1,110 @@
+{strip}
+
+{if $ts.home_news_id && $wa->blog}
+    {$news = $wa->blog->posts((int)$ts.home_news_id)}
+    {if !empty($news)}
+        {if $ts.home_news_title}
+            <div class="in-blocks__title">
+                <div class="in-blocks__title-name">
+                    {$ts.home_news_title}
+                </div>
+                <a href="{$ts.home_news_link}" class="in-blocks__title-link">
+                    {$ts.home_news_link_title} <svg class="icon10 i-angle-right">
+                        <use xlink:href="#i-angle-right"></use>
+                    </svg>
+                </a>
+            </div>
+        {/if}
+        {if $ts.home_news_type == 'columns_bg'}
+            <div class="news-v-1">
+                {foreach $news as $n}
+                    <div class="news-v-1__item{if $n@iteration == 1} news-v-1__item_w{/if}{if !empty($n.columns_bg)} news-v-1__item_bg{/if}">
+                        <a href="{$n.link}">
+                            <div class="news-v-1__content"{if ($n@iteration == 1 || !empty($n.columns_bg)) && !empty($n.img)} style="background-image:url({$n.img})"{/if}>
+                                {if $n@iteration != 1 && empty($n.columns_bg)}
+                                    <div class="news-v-1__img"{if !empty($n.img)} style="background-image:url({$n.img})"{/if}>
+                                {/if}
+                                        <div class="news-v-1__info">
+                                            {if $ts.home_news_blog}
+                                                <div class="news-v-1__blog">{$n.blog_name}</div>
+                                            {/if}
+                                            <div class="news-v-1__date">{$n.datetime|wa_datetime:"humandate"}</div>
+                                            {if $ts.home_news_author}
+                                                <div class="news-v-1__author">
+                                                    <div class="news-v-1__author-img">
+                                                        <img src="{$n.user.photo_url_20|regex_replace:'/\.20x20\./':'.100x100.'}" alt="{$n.user.name}" />
+                                                    </div>
+                                                    <div class="news-v-1__author-name">{$n.user.name}</div>
+                                                </div>
+                                            {/if}
+                                        </div>
+                                {if $n@iteration != 1 && empty($n.columns_bg)}
+                                    </div>
+                                {/if}
+
+                                <div class="news-v-1__post">
+                                    <div class="news-v-1__name">{$n.title}</div>
+                                    {if !empty($n.columns_bg)}
+                                        {$trunc = 200}
+                                    {else}
+                                        {$trunc = 260}
+                                    {/if}
+                                    <div class="news-v-1__des">{strip_tags($n.text)|truncate:$trunc}</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {if $n@iteration == 3}
+                        {break}
+                    {/if}
+                {/foreach}
+            </div>
+        {else}
+            <div class="h-news">
+                {if $ts.home_news_title}
+                    <div class="in-blocks__title">
+                        <div class="in-blocks__title-name">
+                            {$ts.home_news_title}
+                        </div>
+                        <a href="{$ts.home_news_link}" class="in-blocks__title-link">
+                            {$ts.home_news_link_title} <svg class="icon10 i-angle-right">
+                                <use xlink:href="#i-angle-right"></use>
+                            </svg>
+                        </a>
+                    </div>
+                {/if}
+
+                <div class="h-news__wrap">
+                    {foreach $news as $n}
+                        <div class="h-news__item">
+                            {if !empty($n.img)}
+                                <div class="h-news__item-img in-effect-glare">
+                                    <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$n.img}" alt="{$n.title|escape}">
+                                </div>
+                            {/if}
+
+                            <div class="h-news__item-date">{$n.datetime|wa_datetime:"humandate"}</div>
+
+                            <div class="h-news__item-name">
+                                <a href="{$n.link}">{$n.title}</a>
+                            </div>
+
+                            <div class="h-news__item-text">{strip_tags($n.text)|truncate:200}</div>
+                            <a href="{$n.link}" class="h-news__item-next">
+                                [`more`] <svg class="icon8 i-angle-right">
+                                    <use xlink:href="#i-angle-right"></use>
+                                </svg>
+                            </a>
+                        </div>
+
+                        {if $n@iteration == 3}
+                            {break}
+                        {/if}
+                    {/foreach}
+                </div>
+            </div>
+        {/if}
+    {/if}
+{/if}
+
+{/strip}

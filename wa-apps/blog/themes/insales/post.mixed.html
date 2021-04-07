@@ -1,0 +1,125 @@
+{strip}
+
+<div class="in-blogs">
+    <div class="news-v-1">
+    {foreach $posts as $n}
+        {if $n@iteration < 4}
+            <div class="news-v-1__item{if $n@iteration == 1} news-v-1__item_w{/if}{if !empty($n.columns_bg)} news-v-1__item_bg{/if}">
+                <a href="{$n.link}">
+                    <div class="news-v-1__content"{if ($n@iteration == 1 || !empty($n.columns_bg)) && !empty($n.img)} style="background-image:url({$n.img})"{/if}>
+                        {if $n@iteration != 1 && empty($n.columns_bg)}
+                            <div class="news-v-1__img"{if !empty($n.img)} style="background-image:url({$n.img})"{/if}>
+                        {/if}
+                                <div class="news-v-1__info">
+                                    {if $ts.blog_name}
+                                        <div class="news-v-1__blog">{$n.blog_name}</div>
+                                    {/if}
+                                    <div class="news-v-1__date">{$n.datetime|wa_datetime:"humandate"}</div>
+                                    {if $ts.blog_author}
+                                        <div class="news-v-1__author">
+                                            <div class="news-v-1__author-img">
+                                                <img src="{$n.user.photo_url_20|regex_replace:'/\.20x20\./':'.100x100.'}" alt="{$n.user.name}" />
+                                            </div>
+                                            <div class="news-v-1__author-name">{$n.user.name}</div>
+                                        </div>
+                                    {/if}
+                                </div>
+                        {if $n@iteration != 1 && empty($n.columns_bg)}
+                            </div>
+                        {/if}
+
+                        <div class="news-v-1__post">
+                            <div class="news-v-1__name">{$n.title}</div>
+                            {if !empty($n.columns_bg)}
+                                {$trunc = 200}
+                            {else}
+                                {$trunc = 260}
+                            {/if}
+                            <div class="news-v-1__des">{strip_tags($n.text)|truncate:$trunc}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {if $n@iteration == 3 || ($n@iteration == 2 && count($posts) == 1) || ($n@iteration == 1 && count($posts) == 1)}
+            </div>
+            {/if}
+        {else}
+            {if !empty($n.full_width) && ($n.full_width == 'img_bg' || $n.full_width == 'img_bg_left' || $n.full_width == 'img_bg_right') && !empty($n.img)}
+                <div class="in-blogs__item in-blogs__item_bg{if $n.full_width == 'img_bg'} in-blogs__item_top{/if}{if $n.full_width == 'img_bg_right'} in-blogs__item_reverse{/if}" style="background-image:url({$n.img})">
+                    <div class="in-blogs__content">
+                        {if $ts.blog_name}
+                            <div class="in-blogs__blog">{$n.blog_name}</div>
+                        {/if}
+                        <a href="{$n.link}" class="in-blogs__name">{$n.title}</a>
+                        <div class="in-blogs__des">{strip_tags($n.text)|truncate:400}</div>
+                        <div class="in-blogs__info">
+                            <div class="in-blogs__date">{$n.datetime|wa_datetime:"humandate"}</div>
+                            {if $ts.blog_author}
+                                <div class="in-blogs__author">
+                                    <div class="in-blogs__author-img">
+                                        <img src="{$n.user.photo_url_20|regex_replace:'/\.20x20\./':'.100x100.'}" alt="{$n.user.name}">
+                                    </div>
+                                    <div class="in-blogs__author-name">{$n.user.name}</div>
+                                </div>
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+
+            {elseif !empty($n.full_width) && ($n.full_width == 'img_left' || $n.full_width == 'img_right') && !empty($n.img)}
+                <div class="in-blogs__item{if $n.full_width == 'img_right'} in-blogs__item_reverse{/if}">
+                    <div class="in-blogs__left">
+                        <a href="{$n.link}" class="in-blogs__img" style="background-image:url({$n.img})"></a>
+                    </div>
+                    <div class="in-blogs__right">
+                        {if $ts.blog_name}
+                            <div class="in-blogs__blog">{$n.blog_name}</div>
+                        {/if}
+                        <a href="{$n.link}" class="in-blogs__name">{$n.title}</a>
+                        <div class="in-blogs__des">{strip_tags($n.text)|truncate:200}</div>
+                        <div class="in-blogs__info">
+                            <div class="in-blogs__date">{$n.datetime|wa_datetime:"humandate"}</div>
+                            {if $ts.blog_author}
+                                <div class="in-blogs__author">
+                                    <div class="in-blogs__author-img">
+                                        <img src="{$n.user.photo_url_20|regex_replace:'/\.20x20\./':'.100x100.'}" alt="{$n.user.name}">
+                                    </div>
+                                    <div class="in-blogs__author-name">{$n.user.name}</div>
+                                </div>
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+
+            {else}
+                <div class="in-blogs__item in-blogs__item_img">
+                    {if !empty($n.img)}
+                        <div class="in-blogs__item-img">
+                            <img src="{$n.img}" alt="{$n.title|escape}">
+                        </div>
+                    {/if}
+                    <div class="in-blogs__item-content">
+                        {if $ts.blog_name}
+                            <div class="in-blogs__blog">{$n.blog_name}</div>
+                        {/if}
+                        <a href="{$n.link}" class="in-blogs__name">{$n.title}</a>
+                        <div class="in-blogs__des">{strip_tags($n.text)|truncate:400}</div>
+                        <div class="in-blogs__info">
+                            <div class="in-blogs__date">{$n.datetime|wa_datetime:"humandate"}</div>
+                            {if $ts.blog_author}
+                                <div class="in-blogs__author">
+                                    <div class="in-blogs__author-img">
+                                        <img src="{$n.user.photo_url_20|regex_replace:'/\.20x20\./':'.100x100.'}" alt="{$n.user.name}">
+                                    </div>
+                                    <div class="in-blogs__author-name">{$n.user.name}</div>
+                                </div>
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+            {/if}
+        {/if}
+    {/foreach}
+</div>
+
+{/strip}

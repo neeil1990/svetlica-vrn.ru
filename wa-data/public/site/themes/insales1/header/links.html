@@ -1,0 +1,25 @@
+{strip}
+
+<div class="header__links">
+    {for $i=1 to 3}
+        {$img   = "header_links_img_`$i`"}
+        {$title = "header_links_title_`$i`"}
+        {$link  = "header_links_link_`$i`"}
+
+        {if $ts.$title}
+            <a class="header__links-item header__links-item_{$i}" href="{$ts.$link}">
+                {if $ts.$img}
+                    <span class="header__links-icon">
+                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$ts.$img}?v{$wa_theme_version}" alt="{$ts.$title}">
+                    </span>
+                {/if}
+
+                <span class="header__links-name">
+                    {$ts.$title}
+                </span>
+            </a>
+        {/if}
+    {/for}
+</div>
+
+{/strip}

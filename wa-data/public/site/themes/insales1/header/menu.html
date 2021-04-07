@@ -1,0 +1,79 @@
+{strip}
+
+{if $ts.header_menu_id}
+    {$hMenu = $wa->menu->get($ts.header_menu_id)}
+{elseif $ts.header_menu == 'wa_apps' && $wa->apps()}
+    {$hMenu = $wa->apps()}
+{elseif $ts.header_menu == 'shop_pages'}
+    {if $wa->shop}{$hMenu = $wa->shop->pages()}{/if}
+{elseif $ts.header_menu == 'site_pages'}
+    {if $wa->site}{$hMenu = $wa->site->pages()}{/if}
+{/if}
+
+{$sel = 0}
+{if $ts.header_menu_id || $ts.header_menu == 'wa_apps'}
+    {$sel = $wa->currentUrl()}
+{elseif isset($page.id) && !empty($page.id)}
+    {$sel = $page.id}
+{/if}
+
+{if !empty($hMenu)}
+    <ul class="h-menu h-menu_over">
+        {foreach $hMenu as $page}
+            {if !isset($page.hide)}
+                <li class="h-menu__item">
+                    <a class="h-menu__link{if $page.id == $sel || $page.url == "`$sel`"} h-menu__link_active{/if}" href="{$page.url}">
+                        <span class="h-menu__name">{$page.name}</span>
+                        {if !empty($page.childs)}
+                            <svg class="icon8 i-angle-down">
+                                <use xlink:href="#i-angle-down"></use>
+                            </svg>
+                        {/if}
+                    </a>
+                    {if !empty($page.childs)}
+                        <ul class="h-menu__sub h-menu__sub-1">
+                            {foreach $page.childs as $p1}
+                                {if empty($p1.hide)}
+                                    <li class="h-menu__sub-item">
+                                        <a class="h-menu__sub-link{if $p1.id == $sel || $p1.url == "`$sel`"} h-menu__link_active{/if}" href="{$p1.url}">
+                                            <span class="h-menu__name">{$p1.name}</span>
+                                            {if !empty($p1.childs)}
+                                                <svg class="icon10 i-angle-right">
+                                                    <use xlink:href="#i-angle-right"></use>
+                                                </svg>
+                                            {/if}
+                                        </a>
+                                        {if !empty($p1.childs)}
+                                            <ul class="h-menu__sub h-menu__sub-2">
+                                                {foreach $p1.childs as $p2}
+                                                    {if empty($p2.hide)}
+                                                        <li class="h-menu__sub-item">
+                                                            <a class="h-menu__sub-link{if $p2.id == $sel || $p2.url == "`$sel`"} h-menu__link_active{/if}" href="{$p2.url}">
+                                                                {$p2.name}
+                                                            </a>
+                                                        </li>
+                                                    {/if}
+                                                {/foreach}
+                                            </ul>
+                                        {/if}
+                                    </li>
+                                {/if}
+                            {/foreach}
+                        </ul>
+                    {/if}
+                </li>
+            {/if}
+        {/foreach}
+
+        <li class="h-menu__item h-menu__yet">
+            <div class="h-menu__link">
+                <svg class="icon4 i-circle"><use xlink:href="#i-circle"></use></svg>
+                <svg class="icon4 i-circle"><use xlink:href="#i-circle"></use></svg>
+                <svg class="icon4 i-circle"><use xlink:href="#i-circle"></use></svg>
+            </div>
+            <ul class="h-menu__sub h-menu__sub-1 h-menu__sub_right"></ul>
+        </li>
+    </ul>
+{/if}
+
+{/strip}

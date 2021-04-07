@@ -1,0 +1,63 @@
+{strip}
+
+{if !empty($mobile)}
+    {$ts.header_region = '2'}
+{/if}
+
+{if $ts.header_region == 'img/settings/header_region-1.png'}
+
+    <div class="header__address">
+        <div class="header__address-icon">
+            {if $ts.header_region_svg}
+                <img class="icon14" src="{$ts.header_region_svg}?v{$wa_theme_version}" alt="i-region">
+            {else}
+                <svg class="icon14 i-address">
+                    <use xlink:href="#i-address"></use>
+                </svg>
+            {/if}
+        </div>
+        <div class="header__address-name">
+            {if $ts.header_region_code}
+                {eval var=$ts.header_region_code}
+            {else}
+                {if class_exists('shopRegionsViewHelper')}
+                    {shopRegionsViewHelper::getWindow()}
+                {else}
+                    {* DEMO VARIANT *}
+                     Санкт-Петербург
+                {/if}
+            {/if}
+        </div>
+    </div>
+
+
+{else}
+
+    <div class="h-info">
+        <div class="h-info__icon">
+            <svg class="icon18 i-address">
+                <use xlink:href="#i-address"></use>
+            </svg>
+        </div>
+        <div>
+            <div class="h-info__title">
+                {$ts.header_region_title}
+            </div>
+
+            <div class="h-info__content">
+                {if $ts.header_region_code}
+                    {eval var=$ts.header_region_code}
+                {else}
+                    {if class_exists('shopRegionsViewHelper')}
+                        {shopRegionsViewHelper::getWindow()}
+                    {else}
+                        Санкт-Петербург
+                    {/if}
+                {/if}
+            </div>
+        </div>
+    </div>
+
+{/if}
+
+{/strip}

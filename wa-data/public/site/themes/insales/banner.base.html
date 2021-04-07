@@ -1,0 +1,12 @@
+{strip}
+
+{if $ts.base_banner && $ts.base_banner_page && (!$ts.base_banner_cookies || ($ts.base_banner_cookies && !waRequest::cookie("base_banner", '', waRequest::TYPE_STRING)))}
+    <div class="baseBanner" style="display:none;" data-time="{$ts.base_banner_time}" data-expires="{if $ts.base_banner_cookies}{$ts.base_banner_expires}{/if}">
+        <div class="baseBanner__wrap">
+            {$baseBanner = $wa->shop->page((int)$ts.base_banner_page)}
+            {if $baseBanner.content}{$baseBanner.content}{else}Укажите id страницы в настройках темы{/if}
+        </div>
+    </div>
+{/if}
+
+{/strip}

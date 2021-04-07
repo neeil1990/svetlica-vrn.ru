@@ -1,0 +1,398 @@
+{strip}
+
+{$ts = $theme_settings}
+
+{* PRELOAD IMG SLIDER *}
+{if !empty($action) && $action == 'default'}
+    {if $ts.home_slide_1}
+        <link rel="preload" as="image" href="{$wa_parent_theme_url}{$ts.home_slide_1}?v{$wa_theme_version}">
+    {/if}
+    {if $ts.home_slide_banner_1}
+        <link rel="preload" as="image" href="{$wa_parent_theme_url}{$ts.home_slide_banner_1}?v{$wa_theme_version}">
+    {/if}
+    {if $ts.home_slide_banner_2}
+        <link rel="preload" as="image" href="{$wa_parent_theme_url}{$ts.home_slide_banner_2}?v{$wa_theme_version}">
+    {/if}
+{/if}
+
+{* FONT BODY STYLE *}
+{$ts.site_font = $ts.site_font-1}
+{$fonts = [
+    ['name'=>'Roboto', 'weight'=>'500',
+        'fonts' => ['roboto-v20-latin_cyrillic-500',
+                    'roboto-v20-latin_cyrillic-700',
+                    'roboto-v20-latin_cyrillic-regular']],
+
+    ['name'=>'Open Sans', 'weight'=>'600',
+        'fonts' => ['open-sans-v18-latin_cyrillic-600',
+                    'open-sans-v18-latin_cyrillic-700',
+                    'open-sans-v18-latin_cyrillic-regular']],
+
+    ['name'=>'Montserrat', 'weight'=>'500',
+        'fonts' => ['montserrat-v15-latin_cyrillic-500',
+                    'montserrat-v15-latin_cyrillic-600',
+                    'montserrat-v15-latin_cyrillic-regular']],
+
+    ['name'=>'Source Sans Pro', 'weight'=>'600',
+        'fonts' => ['source-sans-pro-v14-latin_cyrillic-600',
+                    'source-sans-pro-v14-latin_cyrillic-700',
+                    'source-sans-pro-v14-latin_cyrillic-regular']],
+
+    ['name'=>'Raleway', 'weight'=>'600',
+        'fonts' => ['raleway-v18-latin_cyrillic-600',
+                    'raleway-v18-latin_cyrillic-700',
+                    'raleway-v18-latin_cyrillic-regular']],
+
+    ['name'=>'Ubuntu', 'weight'=>'500',
+        'fonts' => ['ubuntu-v15-latin_cyrillic-500',
+                    'ubuntu-v15-latin_cyrillic-700',
+                    'ubuntu-v15-latin_cyrillic-regular']]
+]}
+
+{* PRELOAD FONTS *}
+<link rel="preload" as="font" href="{$wa_real_theme_url}css/{$fonts[$ts.site_font].fonts[0]}.woff2" crossorigin>
+<link rel="preload" as="font" href="{$wa_real_theme_url}css/{$fonts[$ts.site_font].fonts[1]}.woff2" crossorigin>
+<link rel="preload" as="font" href="{$wa_real_theme_url}css/{$fonts[$ts.site_font].fonts[2]}.woff2" crossorigin>
+
+{* DEFAULT SETTINGS *}
+{$settingsName = [
+    '--cheme-color'     => [ 'n' => 'c_common',     'd' => "#4E7DF1" ],
+    '--cheme-color-dop' => [ 'n' => 'c_common_dop', 'd' => "#4E7DF1" ],
+
+    '--t-p-t' => [ 'n' => 'header_top_blocks_padding_top',     'd' => '12px', 'px'=>1 ],
+    '--t-p-b' => [ 'n' => 'header_top_blocks_padding_bottom',  'd' => '12px', 'px'=>1 ],
+    '--m-p-t' => [ 'n' => 'header_midd_blocks_padding_top',    'd' => '25px', 'px'=>1 ],
+    '--m-p-b' => [ 'n' => 'header_midd_blocks_padding_bottom', 'd' => '25px', 'px'=>1 ],
+    '--b-p-t' => [ 'n' => 'header_bott_blocks_padding_top',    'd' => '20px', 'px'=>1 ],
+    '--b-p-b' => [ 'n' => 'header_bott_blocks_padding_bottom', 'd' => '20px', 'px'=>1 ],
+
+    '--c-ht-b'   => [ 'n' => 'c_h_banner',       'd' => '#4E7DF1' ],
+    '--c-ht-b-c' => [ 'n' => 'c_h_banner_color', 'd' => '#fff' ],
+
+    '--c-h-t'   => [ 'n' => 'c_h_top',         'd' => '#232b46' ],
+    '--c-h-t-w' => [ 'n' => 'c_h_top_w',       'd' => $ts.c_h_top ],
+    '--c-h-t-b' => [ 'n' => 'c_h_top_border',  'd' => '' ],
+
+    '--c-h-m'   => [ 'n' => 'c_h_midd',        'd' => '#fff' ],
+    '--c-h-m-w' => [ 'n' => 'c_h_midd_w',      'd' => $ts.c_h_midd ],
+    '--c-h-m-b' => [ 'n' => 'c_h_midd_border', 'd' => '' ],
+
+    '--c-h-b'   => [ 'n' => 'c_h_bott',        'd' => '#fff' ],
+    '--c-h-b-w' => [ 'n' => 'c_h_bott_w',      'd' => $ts.c_h_bott ],
+    '--c-h-b-b' => [ 'n' => 'c_h_bott_border', 'd' => '' ],
+
+    '--c-h-li-1'   => [ 'n' => 'c_h_links_1',        'd' => '#222' ],
+    '--c-h-li-1-h' => [ 'n' => 'c_h_links_1_hover',  'd' => '#4e7df1' ],
+    '--c-h-li-1-b' => [ 'n' => 'c_h_links_1_border', 'd' => '#4e7df1' ],
+
+    '--c-h-li-2'   => [ 'n' => 'c_h_links_1',        'd' => '#222' ],
+    '--c-h-li-2-h' => [ 'n' => 'c_h_links_1_hover',  'd' => '#4e7df1' ],
+    '--c-h-li-2-b' => [ 'n' => 'c_h_links_1_border', 'd' => '#4e7df1' ],
+
+    '--c-h-li-3'   => [ 'n' => 'c_h_links_1',        'd' => '#222' ],
+    '--c-h-li-3-h' => [ 'n' => 'c_h_links_1_hover',  'd' => '#4e7df1' ],
+    '--c-h-li-3-b' => [ 'n' => 'c_h_links_1_border', 'd' => '#4e7df1' ],
+
+    '--c-h-lo'     => [ 'n' => 'c_h_local',            'd' => '#ccc' ],
+    '--c-h-lo-h'   => [ 'n' => 'c_h_local_hover',      'd' => '#ccc' ],
+    '--c-h-lo-i'   => [ 'n' => 'c_h_local_icon',       'd' => '#ccc' ],
+    '--c-h-lo-i-h' => [ 'n' => 'c_h_local_icon_hover', 'd' => '#ccc' ],
+
+    '--c-h-ad-i' => [ 'n' => 'c_h_address_icon',  'd' => '#f50' ],
+    '--c-h-ad-t' => [ 'n' => 'c_h_address_title', 'd' => '#222' ],
+    '--c-h-ad'   => [ 'n' => 'c_h_address',       'd' => '#808080' ],
+
+    '--c-h-mo-i' => [ 'n' => 'c_h_mode_icon',  'd' => '#f50' ],
+    '--c-h-mo-t' => [ 'n' => 'c_h_mode_title', 'd' => '#222' ],
+    '--c-h-mo'   => [ 'n' => 'c_h_mode',       'd' => '#808080' ],
+
+    '--c-h-re-i' => [ 'n' => 'c_h_region_icon',  'd' => '#f50' ],
+    '--c-h-re-t' => [ 'n' => 'c_h_region_title', 'd' => '#222' ],
+    '--c-h-re'   => [ 'n' => 'c_h_region',       'd' => '#ссс' ],
+    '--c-h-re-h' => [ 'n' => 'c_h_region_hover', 'd' => '#fff' ],
+
+    '--c-h-ph-1'     => [ 'n' => 'c_h_phone_1',          'd' => '#222' ],
+    '--c-h-ph-1-h'   => [ 'n' => 'c_h_phone_1_hover',    'd' => '#222' ],
+    '--c-h-ph-1-t'   => [ 'n' => 'c_h_phone_1_hint',     'd' => '#808080' ],
+    '--c-h-ph-1-i-f' => [ 'n' => 'c_h_phone_1_icon_fon', 'd' => '#fff' ],
+    '--c-h-ph-1-i'   => [ 'n' => 'c_h_phone_1_icon',     'd' => '#4e7df1' ],
+
+    '--c-h-ph-3'     => [ 'n' => 'c_h_phone_3',          'd' => '#222' ],
+    '--c-h-ph-3-h'   => [ 'n' => 'c_h_phone_3_hover',    'd' => '#222' ],
+    '--c-h-ph-3-t'   => [ 'n' => 'c_h_phone_3_hint',     'd' => '#808080' ],
+    '--c-h-ph-3-i-f' => [ 'n' => 'c_h_phone_3_icon_fon', 'd' => '#fff' ],
+    '--c-h-ph-3-i'   => [ 'n' => 'c_h_phone_3_icon',     'd' => '#4e7df1' ],
+
+    '--c-h-br'     => [ 'n' => 'c_h_brands',            'd' => '#ff6635' ],
+    '--c-h-br-h'   => [ 'n' => 'c_h_brands_hover',      'd' => '#ff6635' ],
+    '--c-h-br-i'   => [ 'n' => 'c_h_brands_icon',       'd' => '#ccc' ],
+    '--c-h-br-i-h' => [ 'n' => 'c_h_brands_icon_hover', 'd' => '#ccc' ],
+
+    '--c-h-a-f'   => [ 'n' => 'c_h_auth_fon',          'd' => '#fff' ],
+    '--c-h-a-b'   => [ 'n' => 'c_h_auth_border',       'd' => '#ebebeb' ],
+    '--c-h-a-b-h' => [ 'n' => 'c_h_auth_border_hover', 'd' => '#ebebeb' ],
+    '--c-h-a-e'   => [ 'n' => 'c_h_auth_effect',       'd' => '#ebebeb' ],
+    '--c-h-a-i'   => [ 'n' => 'c_h_auth_icon',         'd' => '#222' ],
+    '--c-h-a-i-h' => [ 'n' => 'c_h_auth_icon_hover',   'd' => '#4e7df1' ],
+    '--c-h-a-t'   => [ 'n' => 'c_h_auth_text',         'd' => '#222' ],
+    '--c-h-a-t-h' => [ 'n' => 'c_h_auth_text_hover',   'd' => '#4e7df1' ],
+
+    '--c-h-i-f'   => [ 'n' => 'c_h_icon_fon',          'd' => '#fff' ],
+    '--c-h-i-b'   => [ 'n' => 'c_h_icon_border',       'd' => '#ebebeb' ],
+    '--c-h-i-b-h' => [ 'n' => 'c_h_icon_border_hover', 'd' => '#ebebeb' ],
+    '--c-h-i-e'   => [ 'n' => 'c_h_icon_effect',       'd' => '#4e7df1' ],
+    '--c-h-i'     => [ 'n' => 'c_h_icon',              'd' => '#222' ],
+    '--c-h-i-h'   => [ 'n' => 'c_h_icon_hover',        'd' => '#4E7DF1' ],
+    '--c-h-i-t'   => [ 'n' => 'c_h_icon_text',         'd' => '#222' ],
+    '--c-h-i-t-h' => [ 'n' => 'c_h_icon_text_hover',   'd' => '#4E7DF1' ],
+    '--c-h-i-c'   => [ 'n' => 'c_h_icon_count',        'd' => '#43c16d' ],
+    '--c-h-i-c-d' => [ 'n' => 'c_h_icon_count_d',      'd' => '#e3e3e3' ],
+    '--c-h-i-c-t' => [ 'n' => 'c_h_icon_count_text',   'd' => '#fff' ],
+
+    '--c-h-c-f'     => [ 'n' => 'c_h_cart_fon',              'd' => '#fff' ],
+    '--c-h-c-f-d'   => [ 'n' => 'c_h_cart_fon_d',            'd' => '#fff' ],
+    '--c-h-c-f-h'   => [ 'n' => 'c_h_cart_fon_hover',        'd' => '#fff' ],
+    '--c-h-c-e'     => [ 'n' => 'c_h_cart_effect',           'd' => '#4e7df1' ],
+    '--c-h-c-b'     => [ 'n' => 'c_h_cart_border',           'd' => '#ebebeb' ],
+    '--c-h-c-b-d'   => [ 'n' => 'c_h_cart_border_d',         'd' => '#ebebeb' ],
+    '--c-h-c-b-h'   => [ 'n' => 'c_h_cart_border_hover',     'd' => '#ebebeb' ],
+    '--c-h-c-t'     => [ 'n' => 'c_h_cart_text',             'd' => '#222' ],
+    '--c-h-c-t-d'   => [ 'n' => 'c_h_cart_text_d',           'd' => '#222' ],
+    '--c-h-c-t-h'   => [ 'n' => 'c_h_cart_text_hover',       'd' => '#222' ],
+    '--c-h-c-i'     => [ 'n' => 'c_h_cart_icon',             'd' => '#222' ],
+    '--c-h-c-i-d'   => [ 'n' => 'c_h_cart_icon_d',           'd' => '#f3f3f3' ],
+    '--c-h-c-i-c'   => [ 'n' => 'c_h_cart_icon_color',       'd' => '#fff' ],
+    '--c-h-c-i-c-d' => [ 'n' => 'c_h_cart_icon_color_d',     'd' => '#9c9c9c' ],
+    '--c-h-c-i-c-h' => [ 'n' => 'c_h_cart_icon_color_h',     'd' => '#9c9c9c' ],
+    '--c-h-c-ic'    => [ 'n' => 'c_h_cart_icon_count',       'd' => '#222' ],
+    '--c-h-c-ic-d'  => [ 'n' => 'c_h_cart_icon_count_d',     'd' => '#e3e3e3' ],
+    '--c-h-c-ic-c'  => [ 'n' => 'c_h_cart_icon_count_color', 'd' => '#222' ],
+
+    '--c-h-m-c'     => [ 'n' => 'c_h_m_color',          'd' => '#ccc' ],
+    '--c-h-m-c-h'   => [ 'n' => 'c_h_m_color_hover',    'd' => '#fff' ],
+    '--c-h-m-c-a'   => [ 'n' => 'c_h_m_color_active',   'd' => '#fff' ],
+    '--c-h-m-i-c'   => [ 'n' => 'c_h_m_i_color',        'd' => '#ccc' ],
+    '--c-h-m-i-c-h' => [ 'n' => 'c_h_m_i_color_hover',  'd' => '#fff' ],
+    '--c-h-m-i-c-a' => [ 'n' => 'c_h_m_i_color_active', 'd' => '#fff' ],
+
+    '--c-h-m-c-c'     => [ 'n' => 'c_h_m_c_color',          'd' => '#222' ],
+    '--c-h-m-c-c-h'   => [ 'n' => 'c_h_m_c_color_hover',    'd' => '#000' ],
+    '--c-h-m-c-c-a'   => [ 'n' => 'c_h_m_c_color_active',   'd' => '#000' ],
+    '--c-h-m-c-i-c'   => [ 'n' => 'c_h_m_c_i_color',        'd' => '#BDBDBD' ],
+    '--c-h-m-c-i-c-h' => [ 'n' => 'c_h_m_c_i_color_hover',  'd' => '#BDBDBD' ],
+    '--c-h-m-c-i-c-a' => [ 'n' => 'c_h_m_c_i_color_active', 'd' => '#000' ],
+
+    '--c-h-b-c-f'    => [ 'n' => 'c_h_b_c_fon',          'd' => '#fff' ],
+    '--c-h-b-c-f-h'  => [ 'n' => 'c_h_b_c_fon_hover',    'd' => '#fff' ],
+    '--c-h-b-c-e'    => [ 'n' => 'c_h_b_c_effect',       'd' => '#4e7df1' ],
+    '--c-h-b-c-b'    => [ 'n' => 'c_h_b_c_border',       'd' => '#ebebec' ],
+    '--c-h-b-c-b-h'  => [ 'n' => 'c_h_b_c_border_hover', 'd' => '#ebebec' ],
+    '--c-h-b-c-c'    => [ 'n' => 'c_h_b_c_color',        'd' => '#fff' ],
+    '--c-h-b-c-c-h'  => [ 'n' => 'c_h_b_c_color_hover',  'd' => '#fff' ],
+    '--c-h-b-c-bb'   => [ 'n' => 'c_h_b_c_bars',         'd' => '#fff' ],
+    '--c-h-b-c-bb-h' => [ 'n' => 'c_h_b_c_bars_hover',   'd' => '#fff' ],
+
+    '--c-h-t-f-f' => [ 'n' => 'c_h_t_f_fon', 'd' => '#fff' ],
+
+    '--c-h-t-f-b-f'   => [ 'n' => 'c_h_t_f_b_fon',          'd' => '#4e7df1' ],
+    '--c-h-t-f-b-f-h' => [ 'n' => 'c_h_t_f_b_fon_hover',    'd' => '#4e7df1' ],
+    '--c-h-t-f-b-e'   => [ 'n' => 'c_h_t_f_b_effect',       'd' => '#4e7df1' ],
+    '--c-h-t-f-b-b'   => [ 'n' => 'c_h_t_f_b_border',       'd' => '#ebebec' ],
+    '--c-h-t-f-b-b-h' => [ 'n' => 'c_h_t_f_b_border_hover', 'd' => '#ebebec' ],
+    '--c-h-t-f-b-c'   => [ 'n' => 'c_h_t_f_b_color',        'd' => '#fff' ],
+    '--c-h-t-f-b-c-h' => [ 'n' => 'c_h_t_f_b_color_hover',  'd' => '#fff' ],
+    '--c-h-t-f-b'     => [ 'n' => 'c_h_t_f_bars',           'd' => '#fff' ],
+    '--c-h-t-f-b-h'   => [ 'n' => 'c_h_t_f_bars_hover',     'd' => '#fff' ],
+
+    '--c-h-t-f-a-f'   => [ 'n' => 'c_h_t_f_auth_fon',          'd' => '#fff' ],
+    '--c-h-t-f-a-b'   => [ 'n' => 'c_h_t_f_auth_border',       'd' => '#ebebeb' ],
+    '--c-h-t-f-a-b-h' => [ 'n' => 'c_h_t_f_auth_border_hover', 'd' => '#ebebeb' ],
+    '--c-h-t-f-a-e'   => [ 'n' => 'c_h_t_f_auth_effect',       'd' => '#ebebeb' ],
+    '--c-h-t-f-a-i'   => [ 'n' => 'c_h_t_f_auth_icon',         'd' => '#222' ],
+    '--c-h-t-f-a-i-h' => [ 'n' => 'c_h_t_f_auth_icon_hover',   'd' => '#4e7df1' ],
+    '--c-h-t-f-a-t'   => [ 'n' => 'c_h_t_f_auth_text',         'd' => '#222' ],
+    '--c-h-t-f-a-t-h' => [ 'n' => 'c_h_t_f_auth_text_hover',   'd' => '#4e7df1' ],
+
+    '--c-h-t-f-i-f'   => [ 'n' => 'c_h_t_f_icon_fon',          'd' => '#fff' ],
+    '--c-h-t-f-i-b'   => [ 'n' => 'c_h_t_f_icon_border',       'd' => '#ebebeb' ],
+    '--c-h-t-f-i-b-h' => [ 'n' => 'c_h_t_f_icon_border_hover', 'd' => '#ebebeb' ],
+    '--c-h-t-f-i-e'   => [ 'n' => 'c_h_t_f_icon_effect',       'd' => '#4e7df1' ],
+    '--c-h-t-f-i'     => [ 'n' => 'c_h_t_f_icon',              'd' => '#222' ],
+    '--c-h-t-f-i-h'   => [ 'n' => 'c_h_t_f_icon_hover',        'd' => '#4E7DF1' ],
+    '--c-h-t-f-i-t'   => [ 'n' => 'c_h_t_f_icon_text',         'd' => '#222' ],
+    '--c-h-t-f-i-t-h' => [ 'n' => 'c_h_t_f_icon_text_hover',   'd' => '#4E7DF1' ],
+    '--c-h-t-f-i-c'   => [ 'n' => 'c_h_t_f_icon_count',        'd' => '#43c16d' ],
+    '--c-h-t-f-i-c-d' => [ 'n' => 'c_h_t_f_icon_count_d',      'd' => '#e3e3e3' ],
+    '--c-h-t-f-i-c-t' => [ 'n' => 'c_h_t_f_icon_count_text',   'd' => '#fff' ],
+
+    '--c-h-t-f-c-f'     => [ 'n' => 'c_h_t_f_cart_fon',              'd' => '#fff' ],
+    '--c-h-t-f-c-f-d'   => [ 'n' => 'c_h_t_f_cart_fon_d',            'd' => '#fff' ],
+    '--c-h-t-f-c-f-h'   => [ 'n' => 'c_h_t_f_cart_fon_hover',        'd' => '#fff' ],
+    '--c-h-t-f-c-e'     => [ 'n' => 'c_h_t_f_cart_effect',           'd' => '#4e7df1' ],
+    '--c-h-t-f-c-b'     => [ 'n' => 'c_h_t_f_cart_border',           'd' => '#ebebeb' ],
+    '--c-h-t-f-c-b-d'   => [ 'n' => 'c_h_t_f_cart_border_d',         'd' => '#ebebeb' ],
+    '--c-h-t-f-c-b-h'   => [ 'n' => 'c_h_t_f_cart_border_hover',     'd' => '#ebebeb' ],
+    '--c-h-t-f-c-t'     => [ 'n' => 'c_h_t_f_cart_text',             'd' => '#222' ],
+    '--c-h-t-f-c-t-d'   => [ 'n' => 'c_h_t_f_cart_text_d',           'd' => '#222' ],
+    '--c-h-t-f-c-t-h'   => [ 'n' => 'c_h_t_f_cart_text_hover',       'd' => '#222' ],
+    '--c-h-t-f-c-i'     => [ 'n' => 'c_h_t_f_cart_icon',             'd' => '#222' ],
+    '--c-h-t-f-c-i-d'   => [ 'n' => 'c_h_t_f_cart_icon_d',           'd' => '#f3f3f3' ],
+    '--c-h-t-f-c-i-c'   => [ 'n' => 'c_h_t_f_cart_icon_color',       'd' => '#fff' ],
+    '--c-h-t-f-c-i-c-d' => [ 'n' => 'c_h_t_f_cart_icon_color_d',     'd' => '#9c9c9c' ],
+    '--c-h-t-f-c-i-c-h' => [ 'n' => 'c_h_t_f_cart_icon_color_h',     'd' => '#9c9c9c' ],
+    '--c-h-t-f-c-ic'    => [ 'n' => 'c_h_t_f_cart_icon_count',       'd' => '#222' ],
+    '--c-h-t-f-c-ic-d'  => [ 'n' => 'c_h_t_f_cart_icon_count_d',     'd' => '#e3e3e3' ],
+    '--c-h-t-f-c-ic-c'  => [ 'n' => 'c_h_t_f_cart_icon_count_color', 'd' => '#222' ],
+
+    '--c-b'     => [ 'n' => 'c_b',             'd' => '#4e7df1' ],
+    '--c-b-h'   => [ 'n' => 'c_b_hover',       'd' => '#5b88f7' ],
+    '--c-b-c'   => [ 'n' => 'c_b_color',       'd' => '#fff' ],
+    '--c-b-c-h' => [ 'n' => 'c_b_color_hover', 'd' => '#fff' ],
+
+    '--c-l-c-t-f'   => [ 'n' => 'c_l_c_title_fon',     'd' => '#232b46' ],
+    '--c-l-c-t-c'   => [ 'n' => 'c_l_c_title_color',   'd' => '#fff' ],
+    '--c-l-c-a-f'   => [ 'n' => 'c_l_c_a_fon',         'd' => '#f7f7f7' ],
+    '--c-l-c-a-f-h' => [ 'n' => 'c_l_c_a_fon_hover',   'd' => '#eaeaea' ],
+    '--c-l-c-a-c'   => [ 'n' => 'c_l_c_a_color',       'd' => '#222' ],
+    '--c-l-c-a-c-h' => [ 'n' => 'c_l_c_a_color_hover', 'd' => '#4e7df1' ],
+    '--c-l-c-b-c'   => [ 'n' => 'c_l_c_b_color',       'd' => '#ff6635' ],
+    '--c-l-c-b-c-h' => [ 'n' => 'c_l_c_b_color_hover', 'd' => '#ff6635' ],
+
+    '--c-l-f-t-f'   => [ 'n' => 'c_l_f_title_fon',         'd' => '#232b46' ],
+    '--c-l-f-t-f-h' => [ 'n' => 'c_l_f_title_fon_hover',   'd' => '#232b46' ],
+    '--c-l-f-t-c'   => [ 'n' => 'c_l_f_title_color',       'd' => '#fff' ],
+    '--c-l-f-t-c-h' => [ 'n' => 'c_l_f_title_color_hover', 'd' => '#fff' ],
+
+    '--c-c-l-p-b'   => [ 'n' => 'c_c_l_p_border', 'd' => '#ececec' ],
+    '--c-c-l-p-f'   => [ 'n' => 'c_c_l_p_fon',    'd' => '#fff' ],
+    '--c-c-l-p-f-f' => [ 'n' => 'c_c_l_p_f_fon',  'd' => '#ff3100' ],
+    '--c-c-l-p-f-i' => [ 'n' => 'c_c_l_p_f_icon', 'd' => '#fff' ],
+    '--c-c-l-p-c-f' => [ 'n' => 'c_c_l_p_с_fon',  'd' => '#43c16d' ],
+    '--c-c-l-p-c-i' => [ 'n' => 'c_c_l_p_с_icon', 'd' => '#fff' ],
+    '--c-c-l-i-f'   => [ 'n' => 'c_c_l_i_fon',    'd' => '#4e7df1' ],
+
+    '--c-b-n' => [ 'n' => 'c_badge_new',  'd' => '#43C16D' ],
+    '--c-b-l' => [ 'n' => 'c_badge_low',  'd' => '#FF4C3C' ],
+    '--c-b-b' => [ 'n' => 'c_badge_best', 'd' => '#FF9444' ],
+
+    '--c-f-b' => [ 'n' => 'c_f_fon',   'd' => '#232B46' ],
+    '--c-f-c' => [ 'n' => 'c_f_color', 'd' => '#767b8b' ],
+
+    '--c-f-a'   => [ 'n' => 'c_f_a_color',       'd' => '#767b8b' ],
+    '--c-f-a-h' => [ 'n' => 'c_f_a_color_hover', 'd' => '#a6acc2' ],
+
+    '--c-f-t' => [ 'n' => 'c_f_t_color', 'd' => '#999fb3' ],
+
+    '--c-f-a-m'   => [ 'n' => 'c_f_a_m_color',       'd' => '#767b8b' ],
+    '--c-f-a-m-h' => [ 'n' => 'c_f_a_m_color_hover', 'd' => '#a6acc2' ],
+
+    '--c-f-i-c'  => [ 'n' => 'c_f_i_color', 'd' => '#4e7df1' ],
+
+    '--c-f-p-f'    => [ 'n' => 'c_f_p_fon',    'd' => '#fff' ],
+    '--c-f-p-b'    => [ 'n' => 'c_f_p_border', 'd' => '#e9e9e9' ],
+
+    '--c-f-p-i-f'    => [ 'n' => 'c_f_p_i_fon', 'd' => '#fff' ],
+    '--c-f-p-m'      => [ 'n' => 'c_f_p_menu',  'd' => '#4e7df1' ],
+
+    '--c-f-p-i-c'    => [ 'n' => 'c_f_p_i_color',       'd' => '#222' ],
+    '--c-f-p-i-c-h'  => [ 'n' => 'c_f_p_i_color_hover', 'd' => '#4e7df1' ],
+    '--c-f-p-i'      => [ 'n' => 'c_f_p_icon',          'd' => '#222' ],
+    '--c-f-p-i-h'    => [ 'n' => 'c_f_p_icon_hover',    'd' => '#4e7df1' ],
+    '--c-f-p-c-bg'   => [ 'n' => 'c_f_p_c_bg',          'd' => '#e3e3e3' ],
+    '--c-f-p-c-bg-a' => [ 'n' => 'c_f_p_c_bg_a',        'd' => '#43c16d' ],
+    '--c-f-p-c-c'    => [ 'n' => 'c_f_p_c_color',       'd' => '#fff' ],
+
+    '--c-f-p-c-f'      => [ 'n' => 'c_f_p_c_fon',          'd' => '#fff' ],
+    '--c-f-p-c'        => [ 'n' => 'c_f_p_cart',           'd' => '#222' ],
+    '--c-f-p-c-h'      => [ 'n' => 'c_f_p_cart_hover',     'd' => '#4e7df1' ],
+    '--c-f-p-c-i'      => [ 'n' => 'c_f_p_c_icon',         'd' => '#4e7df1' ],
+    '--c-f-p-c-i-d'    => [ 'n' => 'c_f_p_c_icon_d',       'd' => '#f3f3f3' ],
+    '--c-f-p-c-i-c'    => [ 'n' => 'c_f_p_c_icon_color',   'd' => '#fff' ],
+    '--c-f-p-c-i-c-d'  => [ 'n' => 'c_f_p_c_icon_color_d', 'd' => '#9c9c9c' ],
+    '--c-f-p-c-c-bg'   => [ 'n' => 'c_f_p_count_bg',       'd' => '#43c16d' ],
+    '--c-f-p-c-c-bg-d' => [ 'n' => 'c_f_p_count_bg_d',     'd' => '#e3e3e3' ],
+    '--c-f-p-c-c-c'    => [ 'n' => 'c_f_p_count_color',    'd' => '#fff' ],
+
+    '--w-c'     => [ 'n' => 'header_catalog_w',      'd' => '300px',  'px'=>1 ],
+    '--w-l'     => [ 'n' => 'header_left_width',     'd' => '300px',  'px'=>1 ],
+    '--h-c-r'   => [ 'n' => 'header_catalog_radius', 'd' => '6px',    'px'=>1 ],
+    '--h-c-h'   => [ 'n' => 'header_catalog_height', 'd' => '48px',   'px'=>1 ],
+    '--h-c-w'   => [ 'n' => 'header_catalog_width',  'd' => 'auto',   'px'=>1 ],
+
+    '--c-m-h-f'   => [ 'n' => 'c_m_h_fon',    'd' => '#fff'],
+    '--c-m-b-f'   => [ 'n' => 'c_m_bar_fon',  'd' => '#4e7df1'],
+    '--c-m-s'     => [ 'n' => 'c_m_search',   'd' => '#ccc'],
+
+    '--c-m-i'     => [ 'n' => 'c_m_icons',           'd' => '#222'],
+    '--c-m-i-c-a' => [ 'n' => 'c_m_icons_count_act', 'd' => '#43c16d'],
+    '--c-m-i-c'   => [ 'n' => 'c_m_icons_count',     'd' => '#e3e3e3'],
+    '--c-m-i-t'   => [ 'n' => 'c_m_icons_text',      'd' => '#fff'],
+
+    '--c-m-c-f'      => [ 'n' => 'c_m_cart_fon',              'd' => '#fff'],
+    '--c-m-c-f-d'    => [ 'n' => 'c_m_cart_fon_d',            'd' => '#fff'],
+    '--c-m-c-b'      => [ 'n' => 'c_m_cart_border',           'd' => '#ebebeb'],
+    '--c-m-c-b-d'    => [ 'n' => 'c_m_cart_border_d',         'd' => '#ebebeb'],
+    '--c-m-c-t'      => [ 'n' => 'c_m_cart_text',             'd' => '#222'],
+    '--c-m-c-t-d'    => [ 'n' => 'c_m_cart_text_d',           'd' => '#222'],
+    '--c-m-c-i'      => [ 'n' => 'c_m_cart_icon',             'd' => '#4e7df1'],
+    '--c-m-c-i-d'    => [ 'n' => 'c_m_cart_icon_d',           'd' => '#f3f3f3'],
+    '--c-m-c-i-c'    => [ 'n' => 'c_m_cart_icon_color',       'd' => '#5b88f7'],
+    '--c-m-c-i-c-d'  => [ 'n' => 'c_m_cart_icon_color_d',     'd' => '#9c9c9c'],
+    '--c-m-c-i-co'   => [ 'n' => 'c_m_cart_icon_count',       'd' => '#43c16d'],
+    '--c-m-c-i-co-d' => [ 'n' => 'c_m_cart_icon_count_d',     'd' => '#e3e3e3'],
+    '--c-m-c-i-co-c' => [ 'n' => 'c_m_cart_icon_count_color', 'd' => '#fff'],
+
+    '--c-m-p-i' => [ 'n' => 'c_m_phone_icon', 'd' => '#4e7df1'],
+    '--c-m-p-t' => [ 'n' => 'c_m_phone_text', 'd' => '#222'],
+    '--c-m-p-d' => [ 'n' => 'c_m_phone_down', 'd' => '#222'],
+    '--c-m-p-h' => [ 'n' => 'c_m_phone_hint', 'd' => '#808080'],
+
+    '--c-m-p-b'     => [ 'n' => 'c_m_p_bars',             'd' => '#fff'],
+    '--c-m-p-b-i'   => [ 'n' => 'c_m_p_bars_icon',        'd' => '#4e7df1'],
+    '--c-m-p-f'     => [ 'n' => 'c_m_p_filtr',            'd' => '#fff'],
+    '--c-m-p-f-i'   => [ 'n' => 'c_m_p_filtr_icon',       'd' => '#222'],
+    '--c-m-p-c'     => [ 'n' => 'c_m_p_cart',             'd' => '#fff'],
+    '--c-m-p-c-i'   => [ 'n' => 'c_m_p_cart_icon',        'd' => '#4e7df1'],
+    '--c-m-p-c-i-d' => [ 'n' => 'c_m_p_cart_icon_d',      'd' => '#9c9c9c'],
+    '--c-m-p-c-c'   => [ 'n' => 'c_m_p_cart_count',       'd' => '#43c16d'],
+    '--c-m-p-c-c-d' => [ 'n' => 'c_m_p_cart_count_d',     'd' => '#e3e3e3'],
+    '--c-m-p-c-c-c' => [ 'n' => 'c_m_p_cart_count_color', 'd' => '#fff'],
+
+    '--c-l-r'   => [ 'n' => 'category_products_radius',        'd' => '6px',  'px'=>1 ],
+    '--c-l-m'   => [ 'n' => 'category_products_margin',        'd' => '30px', 'px'=>1 ],
+    '--c-l-m-m' => [ 'n' => 'category_products_margin_mobile', 'd' => '10px', 'px'=>1 ]
+]}
+
+{if $ts.header_catalog == 'img/settings/header_catalog-1.png'}
+    {$settingsName['--h-c-h']['d'] = '38px'}
+{/if}
+
+<style>
+    :root {
+        --site-max-width: {$ts.site_max_width|default:1480}px;
+        --font-family: "{$fonts[$ts.site_font].name}", sans-serif;
+        --font-weight: {$fonts[$ts.site_font].weight};
+        --slider-height: {$ts.home_slider_height|default:462}px;
+
+        {foreach $settingsName as $name=>$val}
+            {$name}: {$ts[$val.n]|default:$val.d}{if !empty($val.px) && ($ts[$val.n] || $ts[$val.n]!='')}px{/if};
+        {/foreach}
+    }
+
+    {if $ts.colors_bg_fon}
+        body {
+            background:url({$wa_theme_url}{$ts.colors_bg_fon}?v{$wa_theme_version});
+            {if $ts.colors_bg_fon_fix}
+                background-position:center;
+                background-size:cover;
+                background-attachment:fixed;
+            {/if}
+        }
+    {/if}
+
+    {if waRequest::isMobile(false)}
+        .h-mobile { display:block!important; }
+    {/if}
+</style>
+
+{/strip}

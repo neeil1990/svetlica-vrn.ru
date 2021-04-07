@@ -1,0 +1,60 @@
+{strip}
+
+{if !empty($without_form)}
+    {$without_form = 1}
+{else}
+    {$without_form = 0}
+{/if}
+
+{if !$without_form}
+    <div class="wrap">
+        <h1 class="align-center">[s`Login`]</h1>
+{/if}
+        <div class="l-auth">
+            {* SOCIAL ACCOUNTS *}
+            {$auth_adapters = $wa->authAdapters(true)}
+            {if $auth_adapters}
+                {$linked_adapters = []}
+                {$other_adapters = []}
+                {foreach $auth_adapters as $a}
+                    {if $wa->user("{$a->getId()}_id")}
+                        {$linked_adapters[] = $a}
+                    {else}
+                        {$other_adapters[] = $a}
+                    {/if}
+                {/foreach}
+                {if $other_adapters}
+                    <div class="l-auth__social">
+                        <p>Авторизуйтесь, указав свои контактные данные, или воспользовавшись перечисленными сервисами</p>
+                        <ul>
+                            {foreach $other_adapters as $a}
+                                <li>
+                                    <a href="{$a->getUrl()}">
+                                        <img alt="{$a->getName()}" src="{$a->getIcon()}"/>
+                                    </a>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                    <script>
+                        $("div.l-auth__social a").click(function () {
+                            var left = (screen.width - 600) / 2;
+                            var top = (screen.height - 500) / 2;
+                            window.open($(this).attr('href'),'oauth', "width=600,height=500,left="+left+",top="+top+",status=no,toolbar=no,menubar=no");
+                            return false;
+                        });
+                    </script>
+                {/if}
+            {/if}
+
+            <div class="l-auth__form">
+                <div class="wa-form">
+                    {$wa->loginForm($error, ['include_css' => false])}
+                </div>
+            </div>
+        </div>
+{if !$without_form}
+    </div>
+{/if}
+
+{/strip}

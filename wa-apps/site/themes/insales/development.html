@@ -1,0 +1,56 @@
+{strip}
+
+<div class="in-development" style="background-image:url({$wa_parent_theme_url}{$ts.site_develop_bg})">
+    <div class="in-development__wrap">
+
+        <div class="in-development__title">
+            {$ts.site_develop_title}
+        </div>
+
+        <div class="in-development__text">
+            {$ts.site_develop_text}
+        </div>
+
+        {if $ts.site_develop_timer}
+            <div class="in-development__timer">
+                <div class="timer" data-start="{date('Y-m-d H:i:s')}" data-end="{$ts.site_develop_timer}"  style="color:{$ts.$color|default:'#222'}"></div>
+            </div>
+        {/if}
+
+        {if $ts.site_develop_social}
+            <div class="in-development__social">
+                {include file="./header/social.html" color=1}
+            </div>
+        {/if}
+
+        {if $ts.site_develop_share}
+            <div class="in-development__share">
+                {include file="./header/share.html" big=1}
+            </div>
+        {/if}
+    </div>
+</div>
+
+<script src="{$wa_theme_url}js/owl.carousel.min.js?v={$wa->version(true)}" defer></script>
+<script src="{$wa_theme_url}js/jquery.fancybox.min.js?v={$wa->version(true)}" defer></script>
+<script src="{$wa_theme_url}js/jquery.countdownTimer.min.js?v={$wa->version(true)}" defer></script>
+<script src="{$wa_theme_url}js/insale.js?v{$wa_theme_version}"></script>
+
+<script>
+    $(function() {
+        $.inSale.init({
+            "_svg": "{$wa_real_theme_url}img/svg.svg",
+            "is_mobile": "{waRequest::isMobile(false)}",
+            "home_slider_auto": "{$ts.home_slider_auto|default:0}",
+            "modal_add": "{$ts.modal_add|default:0}",
+            "lazy_load_false": {$ts.lazy_load_false|default:0},
+            "product_images_arrow": {$ts.product_images_arrow|default:0},
+            "days": "[`days`]",
+            "hours": "[`hours`]",
+            "minutes": "[`minutes`]",
+            "seconds": "[`seconds`]"
+        });
+    });
+</script>
+
+{/strip}

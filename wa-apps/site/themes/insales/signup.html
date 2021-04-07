@@ -1,0 +1,62 @@
+{strip}
+
+<div class="wrap">
+    <h1 class="align-center">[s`Sign up`]</h1>
+
+    <div class="l-auth">
+
+        {* HEADER *}
+        {if !empty($confirmed_email)}
+
+            <h3 class="align-center">[s`Thank you!`]</h3>
+            <p class="align-center">[s`You have successfully confirmed your email.`]</p>
+
+        {elseif !empty($contact)}
+
+            <h3 class="align-center">[s`Thank you!`]</h3>
+            <p class="align-center">[s`You have successfully signed up.`]</p>
+
+            {if !empty($email_confirmation_hash)}
+                <p class="align-center"><em>[s`A confirmation link has been sent to you by email. Please click this link to confirm your signup and to sign in.`]</em></p>
+            {/if}
+        {/if}
+
+        {if empty($confirmed_email) && empty($contact)}
+
+            {* SOCIAL ACCOUNTS *}
+            {$auth_adapters = $wa->authAdapters(true)}
+            {if $auth_adapters}
+                {$linked_adapters = []}
+                {$other_adapters = []}
+                {foreach $auth_adapters as $a}
+                    {if $wa->user("{$a->getId()}_id")}
+                        {$linked_adapters[] = $a}
+                    {else}
+                        {$other_adapters[] = $a}
+                    {/if}
+                {/foreach}
+
+                {if $other_adapters}
+                    <div class="l-auth__social">
+                        <p>Авторизуйтесь, указав свои контактные данные, или воспользовавшись перечисленными сервисами</p>
+                        <ul>
+                            {foreach $other_adapters as $a}
+                                <li>
+                                    <a href="{$a->getUrl()}"><img alt="{$a->getName()}" src="{$a->getIcon()}"/></a>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                {/if}
+            {/if}
+
+            <div class="l-auth__form">
+                <div class="wa-form">
+                    {$wa->signupForm($errors, ['include_css' => false])}
+                </div>
+            </div>
+        {/if}
+    </div>
+</div>
+
+{/strip}

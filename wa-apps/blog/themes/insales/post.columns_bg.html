@@ -1,0 +1,46 @@
+{strip}
+
+{$postWidth = [1,10,15,24,29,38,43,52]}
+
+<div class="news-v-1">
+    {foreach $posts as $n}
+        <div class="news-v-1__item{if in_array($n@iteration,$postWidth)} news-v-1__item_w{/if}{if !empty($n.columns_bg)} news-v-1__item_bg{/if}">
+            <a href="{$n.link}">
+                <div class="news-v-1__content"{if (in_array($n@iteration,$postWidth) || !empty($n.columns_bg)) && !empty($n.img)} style="background-image:url({$n.img})"{/if}>
+                    {if !in_array($n@iteration,$postWidth) && empty($n.columns_bg)}
+                        <div class="news-v-1__img"{if !empty($n.img)} style="background-image:url({$n.img})"{/if}>
+                    {/if}
+                            <div class="news-v-1__info">
+                                {if $ts.blog_name}
+                                    <div class="news-v-1__blog">{$n.blog_name}</div>
+                                {/if}
+                                <div class="news-v-1__date">{$n.datetime|wa_datetime:"humandate"}</div>
+                                {if $ts.blog_author}
+                                    <div class="news-v-1__author">
+                                        <div class="news-v-1__author-img">
+                                            <img src="{$n.user.photo_url_20|regex_replace:'/\.20x20\./':'.100x100.'}" alt="{$n.user.name}" />
+                                        </div>
+                                        <div class="news-v-1__author-name">{$n.user.name}</div>
+                                    </div>
+                                {/if}
+                            </div>
+                    {if !in_array($n@iteration,$postWidth) && empty($n.columns_bg)}
+                        </div>
+                    {/if}
+
+                    <div class="news-v-1__post">
+                        <div class="news-v-1__name">{$n.title}</div>
+                        {if !empty($n.columns_bg)}
+                            {$trunc = 200}
+                        {else}
+                            {$trunc = 260}
+                        {/if}
+                        <div class="news-v-1__des">{strip_tags($n.text)|truncate:$trunc}</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {/foreach}
+</div>
+
+{/strip}

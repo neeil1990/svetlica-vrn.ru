@@ -1,0 +1,27 @@
+{strip}
+
+{if $ts.home_banner_text_1_bg}
+    <div class="bg-promo" style="background-image:url({$wa_parent_theme_url}{$ts.home_banner_text_1_bg}?v{$wa_theme_version})">
+        <div class="bg-promo__wrap" style="color:{$ts.home_banner_text_1_color|default:'#fff'}">
+            <div class="bg-promo__header">{$ts.home_banner_text_1_header} </div>
+            <div class="bg-promo__title">{$ts.home_banner_text_1_title} </div>
+            <div class="bg-promo__text">{$ts.home_banner_text_1_text} </div>
+
+            {if $ts.home_banner_text_1_timer}
+                <div class="bg-promo__timer">
+                    <div class="timer" data-start="{date('Y-m-d H:i:s')}" data-end="{$ts.home_banner_text_1_timer}"></div>
+                </div>
+            {/if}
+
+            {if $ts.home_banner_text_1_link}
+                <div class="bg-promo__next">
+                    <a href="{$ts.home_banner_text_1_link}" class="button">
+                        {$ts.home_banner_text_1_link_title}
+                    </a>
+                </div>
+            {/if}
+        </div>
+    </div>
+{/if}
+
+{/strip}

@@ -1,0 +1,61 @@
+{strip}
+
+<div class="mcart__items" data-url="{$wa->getUrl('shop/frontend/cart')}">
+    <div class="mcart__h">[`Items in the basket`]</div>
+
+    <div class="mcart__content"{if !empty($itemsCart)} style="display:none;"{/if}>
+        {$itemsCart = $wa->shop->cart->items()}
+
+        {if !empty($itemsCart)}
+            <div class="mcart__items-list">
+                {foreach $itemsCart as $item}
+                    <div class="mcart__item">
+                        <div class="mcart__item-img">
+                            {$img = $wa->shop->productImgUrl($item.product, "0x96")}
+                            {$imgDefault = "`$wa_parent_theme_url|default:$wa_theme_url``$ts.product_default|default:'img/dummy96.png'`"}
+                            <img src="{$img|default:$imgDefault}" alt="{$item.product.name}" />
+                        </div>
+                        <div class="mcart__item-info">
+                            <a class="mcart__item-name" href="{$wa->shop->productUrl($item.product)}">
+                                {$item.product.name|escape}{if $item.sku_name && $item.sku_name != $item.product.name} ({$item.sku_name|escape}){/if}
+                            </a>
+                            <div class="mcart__item-total">
+                                <div class="mcart__item-price">{shop_currency_html($item.price, $wa->shop->currency())}</div>
+                                <div class="mcart__item-count">x {$item.quantity}</div>
+                            </div>
+
+                            {if !empty($item.services)}
+                                {foreach $item.services as $s}
+                                    <div class="mcart__item-service">{$s.name} - {shop_currency_html($s.price|round, $wa->shop->currency())}</div>
+                                {/foreach}
+                            {/if}
+                        </div>
+
+                        <div class="mcart__item-delete" data-id="{$item.id}">
+                            <svg class="icon10 i-remove ">
+                                <use xlink:href="#i-remove"></use>
+                            </svg>
+                        </div>
+                    </div>
+                {/foreach}
+            </div>
+        {/if}
+
+        <div class="mcart__total">
+            <div class="mcart__total-text">[`Total`]:</div>
+            {$cartTotal = $wa->shop->cart->total()}
+            <div class="mcart__total-price cart-price">{wa_currency($cartTotal, $wa->shop->currency())}</div>
+        </div>
+
+        {if method_exists($wa->shop, 'checkout')}
+            {$cartUrl = $wa->shop->checkout()->cartUrl()}
+        {else}
+            {$cartUrl = $wa->getUrl('shop/frontend/checkout')}
+        {/if}
+        <a href="{$cartUrl}" class="button mcart__button" rel="nofollow">[s`Checkout`]</a>
+    </div>
+
+    <div class="mcart__h-f"{if !empty($itemsCart)} style="display:none;"{/if}>[`basket is empty`]</div>
+</div>
+
+{/strip}

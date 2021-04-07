@@ -1,0 +1,77 @@
+{strip}
+
+<ul class="m-brands">
+    <li class="h-menu__item h-menu__item-p h-menu_hover">
+        <a class="m-brands__link" href="{$ts.header_brands_links}">
+            <span class="h-menu__name">{$ts.header_brands_title}</span>
+            <svg class="icon8 i-angle-down">
+                <use xlink:href="#i-angle-down"></use>
+            </svg>
+        </a>
+
+        <div class="h-menu__img">
+            <div class="wrap">
+                {if $wa->photos && $ts.header_brands_photos}
+                    {$brandsImg = $wa->photos->photos("album/`$ts.header_catalog_brands_photos`")}
+                    {if !empty($brandsImg)}
+                        <ul class="h-menu__img-ul">
+                            {foreach $brandsImg as $b}
+                                <li class="h-menu__img-li">
+                                    <a href="{$b.description}" class="h-menu__img-link">
+                                        <span class="h-menu__img-icon">
+                                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{photosPhoto::getPhotoUrl($b, "0x100")}" alt="[`BRANDS`]">
+                                        </span>
+                                    </a>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    {/if}
+                {* BRANDS PRO https://www.webasyst.ru/store/plugin/shop/brand/ *}
+                {else if class_exists('shopBrandViewHelper')}
+                    {$brandsImg = shopBrandViewHelper::getAllBrands()}
+                    {if !empty($brandsImg)}
+                        <ul class="h-menu__img-ul">
+                            {foreach $brandsImg as $brand}
+                                <li class="h-menu__img-li">
+                                    <a href="{$brand.frontend_url}" class="h-menu__img-link">
+                                        {$img = "`$wa_theme_url`img/dummy200.png"}
+                                        {if !empty($brand.image_url)}
+                                            {$img = $brand.image_url}
+                                        {/if}
+                                        <span class="h-menu__img-icon">
+                                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img}" alt="{$brand.name}">
+                                        </span>
+                                        <span class="h-menu__img-name">{$brand.name}</span>
+                                    </a>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    {/if}
+                {* BRANDS IMAGES AND DESCRIPTION https://www.webasyst.ru/store/plugin/shop/productbrands/ *}
+                {else if class_exists('shopProductbrandsPlugin')}
+                    {$brandsImg = shopProductbrandsPlugin::getBrands()}
+                    {if !empty($brandsImg)}
+                        <ul class="h-menu__img-ul">
+                            {foreach $brandsImg as $b}
+                                <li class="h-menu__img-li">
+                                    <a href="{$b.url}" class="h-menu__img-link">
+                                        {$img = "`$wa_theme_url`img/dummy200.png"}
+                                        {if !empty($b.image)}
+                                            {$img = "`$wa_url`wa-data/public/shop/brands/`$b.id`/`$b.id``$b.image`"}
+                                        {/if}
+                                        <span class="h-menu__img-icon">
+                                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img}" alt="{$b.name}">
+                                        </span>
+                                        <span class="h-menu__img-name">{$b.name}</span>
+                                    </a>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    {/if}
+                {/if}
+            </div>
+        </div>
+    </li>
+</ul>
+
+{/strip}

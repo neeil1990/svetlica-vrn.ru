@@ -1,0 +1,47 @@
+{strip}
+
+    {$actionCheck = ['brand','brandPage','search','sale','tag','reviews','novelties','page','map','valueslist','freedelivery']}
+    {if !empty($action) && in_array($action, $actionCheck)}
+        <div class="main__wrap wrap">
+            {* LEFT *}
+            {$type = 'category'}
+            {if $action == 'shop'}
+                {$type = 'shop'}
+            {elseif $action == 'page'}
+                {$type = 'site'}
+            {/if}
+
+            {include file="`$wa_parent_theme_path`/left/left.html" type=$type}
+
+            {* RIGHT *}
+            <div class="in-right">
+                {* BREADCRUMBS *}
+                {include file="`$wa_parent_theme_path`/breadcrumbs.html" action=$action}
+                {$content}
+            </div>
+        </div>
+    {else}
+        {$actionBrands = ['brands','brands_list']}
+        {if !empty($action) && in_array($action, $actionBrands)}
+            {* BRANDS PRO https://www.webasyst.ru/store/plugin/shop/brand/ *}
+            {* BRANDS IMAGES AND DESCRIPTION https://www.webasyst.ru/store/plugin/shop/productbrands/ *}
+            <div class="wrap">
+                {include file="./brands.all.html"}
+            </div>
+        {else}
+            {$content}
+        {/if}
+    {/if}
+
+    {* BRANDS PRO https://www.webasyst.ru/store/plugin/shop/brand/ *}
+    {* BRANDS IMAGES AND DESCRIPTION https://www.webasyst.ru/store/plugin/shop/productbrands/ *}
+    {if (class_exists('shopBrandViewHelper') || class_exists('shopProductbrandsPlugin')) && !empty($filters)}
+        <link href="{$wa_static_url}wa-content/css/jquery-ui/base/jquery.ui.slider.css" rel="stylesheet"/>
+        <script src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa->version(true)}" defer></script>
+        <script src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa->version(true)}" defer></script>
+        <script src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa->version(true)}" defer></script>
+        <script src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa->version(true)}" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" defer></script>
+    {/if}
+
+{/strip}

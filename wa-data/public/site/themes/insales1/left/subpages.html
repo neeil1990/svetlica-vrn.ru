@@ -1,0 +1,70 @@
+{strip}
+
+{* PAGES APP - SITE, SHOP*}
+{if !empty($page.id)}
+    {if $wa_app=='shop'}
+        {$menu = $wa->shop->pages()}
+    {elseif $wa_app=='site'}
+        {$menu = $wa->site->pages()}
+    {/if}
+{/if}
+
+{if !empty($menu)}
+    {$sel = 0}
+    {$selUrl = $wa->currentUrl()}
+
+    {if isset($category.id) && !empty($category.id)}
+        {$sel = $category.id}
+
+    {elseif isset($product.category_id) && !empty($product.category_id)}
+        {$sel = $product.category_id}
+
+    {elseif isset($page.id) && !empty($page.id)}
+        {$sel = $page.id}
+    {/if}
+
+    {function name=dopMenu}
+        <ul class="l-menu__dop"{if $selParrent == $sel || $selParrentUrl == "`$selUrl`"} style="display:block;"{/if}>
+            {foreach $dop as $m}
+                <li class="l-menu__dop-item">
+                    <a class="l-menu__dop-link{if $m.id == $sel || $m.url == "`$selUrl`"} l-menu__active{/if}" href="{$m.url}">
+                        {$m.name}
+                    </a>
+
+                    {if !empty($m.childs) && lv<4}
+                        <div class="l-menu__angle">
+                            <svg class="icon8 i-angle-right ">
+                                <use xlink:href="#i-angle-right"></use>
+                            </svg>
+                        </div>
+                        {dopMenu dop=$m.childs lv=$lv+1 selParrent=$m.id selParrentUrl=$m.url}
+                    {/if}
+                </li>
+            {/foreach}
+        </ul>
+    {/function}
+
+    <ul class="l-menu">
+        {foreach $menu as $m}
+            {if !isset($m.hide) && !isset($m.params.hide)}
+                <li class="l-menu__item">
+                    <a class="l-menu__link{if $m.id == $sel || $m.url == "`$selUrl`"} l-menu__active{/if}" href="{$m.url}">
+                        {$m.name}
+                    </a>
+
+                    {if !empty($m.childs)}
+                        <div class="l-menu__angle">
+                            <svg class="icon10 i-angle-right">
+                                <use xlink:href="#i-angle-right"></use>
+                            </svg>
+                        </div>
+
+                        {dopMenu dop=$m.childs lv=1 selParrent=$m.id selParrentUrl=$m.url}
+                    {/if}
+                </li>
+            {/if}
+        {/foreach}
+    </ul>
+{/if}
+
+{/strip}

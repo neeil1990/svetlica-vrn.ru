@@ -1,0 +1,57 @@
+{strip}
+
+<div class="m-menu__contact">
+    <div class="m-menu-links">
+        <ul class="m-menu__ul-1">
+            <li class="m-menu__li-1">
+                <div class="m-menu__info">
+                    <div class="h-phone h-phone_big m-menu__a-1">
+                        <div class="h-phone__home h-phone__home_end">
+                            <div class="h-phone__icon">
+                                <svg class="icon20 i-phone">
+                                    <use xlink:href="#i-phone"></use>
+                                </svg>
+                            </div>
+                            <div class="h-phone__content">
+                                <div class="h-phone__content-tel">
+                                    {capture assign="num_1"}
+                                        {eval var=$ts.header_phone_num_1}
+                                    {/capture}
+                                    <a class="h-phone__tel" href="tel:{$num_1|replace:' ':''}">
+                                        {$num_1}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-menu__down">
+                        <svg class="icon12 i-angle-right">
+                            <use xlink:href="#i-angle-right"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div class="m-menu-links__dop">
+                    <div class="m-menu-links__top">
+                        <div class="m-menu-links__prev">
+                            <svg class="icon12 i-angle-left">
+                                <use xlink:href="#i-angle-left"></use>
+                            </svg>
+                        </div>
+                        <div class="m-menu-links__title">
+                            [`Contact us`]
+                        </div>
+                        <div class="m-menu-links__close">
+                            <svg class="icon12 i-remove">
+                                <use xlink:href="#i-remove"></use>
+                            </svg>
+                        </div>
+                    </div>
+
+                    {include file="./phone.info.html" mobile=1}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+{/strip}

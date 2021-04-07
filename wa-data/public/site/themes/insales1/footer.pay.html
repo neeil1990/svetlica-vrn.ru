@@ -1,0 +1,61 @@
+{strip}
+
+<div class="f-pay">
+    {if $ts.footer_pay_mastercard}
+        <div class="f-pay-list">
+            <svg class="icon30 i-pay-mastercard">
+                <use xlink:href="#i-pay-mastercard"></use>
+            </svg>
+        </div>
+    {/if}
+
+    {if $ts.footer_pay_visa}
+        <div class="f-pay-list">
+            <svg class="icon30 i-pay-visa">
+                <use xlink:href="#{if $ts.footer_pay_visa_black}i-pay-visa-black{else}i-pay-visa{/if}"></use>
+            </svg>
+        </div>
+    {/if}
+
+    {if $ts.footer_pay_yandex}
+        <div class="f-pay-list">
+            <svg class="icon30 i-pay-yandex">
+                <use xlink:href="#i-pay-yandex"></use>
+            </svg>
+        </div>
+    {/if}
+
+    {if $ts.footer_pay_webmoney}
+        <div class="f-pay-list">
+            <svg class="icon30 i-pay-webmoney">
+                <use xlink:href="#i-pay-webmoney"></use>
+            </svg>
+        </div>
+    {/if}
+
+    {if $ts.footer_pay_qiwi}
+        <div class="f-pay-list">
+            <svg class="icon30 i-pay-qiwi">
+                <use xlink:href="#i-pay-qiwi"></use>
+            </svg>
+        </div>
+    {/if}
+
+    {if $ts.footer_pay_sberbank}
+        <div class="f-pay-list">
+            <svg class="icon30 i-pay-sberbank">
+                <use xlink:href="#i-pay-sberbank"></use>
+            </svg>
+        </div>
+    {/if}
+
+    {if $ts.footer_pay_alphabank}
+        <div class="f-pay-list">
+            <svg class="icon30 i-pay-alphabank">
+                <use xlink:href="#i-pay-alphabank"></use>
+            </svg>
+        </div>
+    {/if}
+</div>
+
+{/strip}

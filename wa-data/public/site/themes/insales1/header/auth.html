@@ -1,0 +1,100 @@
+{strip}
+
+{if $wa->shop && $wa->isAuthEnabled()}
+
+    {if !empty($section) && $section == 'fix'}
+        {$ts.header_auth = $ts.header_fix_auth}
+    {/if}
+
+    {if !empty($mobile)}
+        {$ts.header_auth = 'img/settings/header_auth-7.png'}
+    {/if}
+
+    {$auth = [
+        'img/settings/header_auth-1.png'  => ['class' => 's-hicon', 'name' => 's-hicon__name', 'icon' => 'icon18'],
+        'img/settings/header_auth-2.png'  => ['class' => 'hicon', 'name' => 'hicon__name', 'icon' => 'icon20'],
+        'img/settings/header_auth-3.png'  => ['class' => 'c-hicon', 'name' => 'c-hicon__name', 'icon' => 'icon20'],
+        'img/settings/header_auth-4.png'  => ['class' => 'c-hicon c-hicon_small', 'name' => 'c-hicon__name', 'icon' => 'icon18'],
+        'img/settings/header_auth-5.png'  => ['class' => 'c-hicon c-hicon_rad', 'name' => 'c-hicon__name', 'icon' => 'icon20'],
+        'img/settings/header_auth-6.png'  => ['class' => 'c-hicon c-hicon_rad c-hicon_small', 'name' => 'c-hicon__name', 'icon' => 'icon16'],
+        'img/settings/header_auth-7.png'  => ['class' => 'hicon', 'name' => 'c-hicon__name', 'icon' => 'icon18']
+    ]}
+
+    <div class="{$auth[$ts.header_auth].class} in-auth">
+        <a href="{if $wa->user()->isAuth()}{$wa->getUrl('shop/frontend/myProfile')}{else}{$wa->loginUrl()}{/if}">
+            {if $ts.header_auth_size == 'no'}
+                {$iconClass = $auth[$ts.header_auth].icon}
+            {else}
+                {$iconClass = "icon`$ts.header_auth_size`"}
+            {/if}
+
+            {if $ts.header_auth_svg}
+                <img class="{$iconClass}" src="{$ts.header_auth_svg}?v{$wa_theme_version}" alt="i-user">
+            {else}
+                <svg class="{$iconClass} i-user">
+                    <use xlink:href="#i-user"></use>
+                </svg>
+            {/if}
+
+            {if !empty($mobile)}
+                <span class="c-hicon__name">
+                    [`Сabinet`]
+                </span>
+
+            {elseif !$wa->user()->isAuth() ||
+                $ts.header_auth == 'img/settings/header_auth-1.png' || $ts.header_auth == 'img/settings/header_auth-2.png'}
+                <span class="{$auth[$ts.header_auth].name}">
+                    {if $wa->user()->isAuth()}
+                        {$wa->user('name')}
+                    {else}
+                        [`Personal Area`]
+                    {/if}
+                </span>
+            {/if}
+        </a>
+
+        {if $wa->user()->isAuth() && empty($mobile)}
+            <div class="in-auth__drop">
+                {if shopAffiliate::isEnabled()}
+                    <div class="in-auth__bonus">
+                        {*<span class="in-auth__bonus-title">[`Your bonuses:`]</span>*}
+                        <span class="in-auth__bonus-icon">
+                            <i class="icon12 star"></i>
+                        </span>
+                        <span class="in-auth__bonus-count">0</span>
+                    </div>
+                {/if}
+
+                <div class="in-auth__links">
+                    <div class="in-auth__link"><a href="{$wa->getUrl('shop/frontend/myProfile')}">[s`My profile`]</a></div>
+                    <div class="in-auth__link"><a href="{$wa->getUrl('shop/frontend/myOrders')}">[`My orders`]</a></div>
+
+                    {if shopAffiliate::isEnabled()}
+                        <div class="in-auth__link">
+                            <a href="{$wa->getUrl('shop/frontend/myAffiliate')}">[`Affiliate program`]</a>
+                        </div>
+                    {/if}
+
+                    {if $wa->mailer}
+                        <div class="in-auth__link">
+                            <a href="{$wa->getUrl('mailer/frontend/mySubscriptions')}">[`My subscriptions`]</a>
+                        </div>
+                    {/if}
+
+                    {if !empty($frontend_my_nav)}
+                        {* @event frontend_my_nav.%plugin_id% *}
+                        {foreach $frontend_my_nav as $_plugin => $_}
+                            <div class="in-auth__link">{$_}</div>
+                        {/foreach}
+                    {/if}
+                </div>
+
+                <div class="in-auth__logout">
+                    <a href="?logout">[`Log out`]</a>
+                </div>
+            </div>
+        {/if}
+    </div>
+{/if}
+
+{/strip}

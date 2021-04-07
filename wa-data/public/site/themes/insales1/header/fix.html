@@ -1,0 +1,57 @@
+{strip}
+
+{$actions = ['order','cart','checkout','compare','checkoutone']}
+{if $ts.header_fix && ((!empty($action) && !in_array($action, $actions)) || empty($action))}
+    <header class="h-fix">
+        <div class="h-fix__wrap wrap">
+            <div class="header__wrap">
+
+                {if $ts.header_fix_logo_view}
+                    <div class="h-fix__block h-fix__logo">
+                        {include file="./logo.html"}
+                    </div>
+                {/if}
+
+                {if $ts.header_fix_catalog_view}
+                    <div class="h-fix__block h-fix__catalog">
+                        {include file="./catalog.html" section=fix}
+                    </div>
+                {/if}
+
+                {if $ts.header_fix_search_view}
+                    <div class="h-fix__block h-fix__search">
+                        {include file="./search.html" section=fix}
+                    </div>
+                {/if}
+
+                {if $ts.header_fix_auth_view}
+                    <div class="h-fix__block h-fix__auth">
+                        {include file="./auth.html" section=fix}
+                    </div>
+                {/if}
+
+                {if $ts.header_fix_icon_view}
+                    <div class="h-fix__block h-fix__icon">
+                        {include file="./icon.html" section=fix}
+                    </div>
+                {/if}
+
+                {if $ts.header_fix_cart_view}
+                    <div class="h-fix__block h-fix__cart">
+                        {include file="./cart.html" section=fix}
+                    </div>
+                {/if}
+
+            </div>
+        </div>
+        {if $wa->user()->isAdmin($wa->app())}
+            <div class="e-panel-edit" data-group-edit="header_fix_blocks">
+                <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - «Шапка сайта» - фиксированная">
+                    <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                </div>
+            </div>
+        {/if}
+    </header>
+{/if}
+
+{/strip}

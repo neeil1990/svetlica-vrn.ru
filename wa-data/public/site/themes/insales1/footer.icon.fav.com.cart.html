@@ -1,0 +1,85 @@
+{strip}
+
+{$actions = ['order','cart','checkout','checkoutone']}
+{if (!empty($action) && !in_array($action, $actions)) || empty($action)}
+    {if ($ts.footer_panel && (!waRequest::isMobile(false) || !$ts.footer_panel_mobile)) || ($ts.footer_panel_mobile && waRequest::isMobile(false))}
+        <div class="f-panel f-panel-{if $ts.footer_panel_mobile && waRequest::isMobile(false)}2{else}1{/if}">
+            <div class="f-panel__wrap wrap">
+                {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                    <div class="e-panel-edit" data-group-edit="divider_footer_panel">
+                        <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки плавающего нижнего блока">
+                            <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                        </div>
+                    </div>
+                {/if}
+
+                <div class="f-panel__icon">
+                    <div class="f-panel__icon-bars">
+                        <div class="bars bars_mobile">
+                            <div class="bars__line"></div>
+                        </div>
+                    </div>
+
+                    {if !empty($filters)}
+                        <div class="f-panel__icon-filter f-filter-bar">
+                            <svg class="icon22 i-filter">
+                                <use xlink:href="#i-filter"></use>
+                            </svg>
+                        </div>
+                    {/if}
+
+                    {if !waRequest::isMobile(false) || (waRequest::isMobile(false) && !$ts.footer_panel_mobile)}
+                        {include file="./icon.html"
+                            footer=1
+                            footerFav=$ts.footer_panel_fav
+                            footerCom=$ts.footer_panel_com
+                            footerEye=$ts.footer_panel_eye}
+                    {/if}
+                </div>
+
+                {if waRequest::isMobile(false) && $ts.footer_panel_mobile}
+                    <div class="f-panel__cart">
+                        {include file="./header/cart.html" mobile='img/settings/header_cart-6.png'}
+                    </div>
+
+                {else}
+                    {if $wa->shop}
+                        {$cartCount = $wa->shop->cart->count()}
+                        {$cartTotal = $wa->shop->cart->total()}
+
+                        {if method_exists($wa->shop, 'checkout')}
+                            {$cartUrl = $wa->shop->checkout()->cartUrl()}
+                        {else}
+                            {$cartUrl = $wa->getUrl('shop/frontend/cart')}
+                        {/if}
+
+
+                        <div class="f-panel__cart">
+                            <div class="s-mcart{if $ts.footer_panel_cart == 'img/settings/footer_panel_cart-2.png'} s-mcart_rad{/if}{if $cartCount>0} s-mcart_active{/if}">
+                                <a class="s-mcart__link-footer" href="{$cartUrl}" rel="nofollow">
+                                    <span class="s-mcart__icon">
+                                        <svg class="icon16 i-cart">
+                                            <use xlink:href="#i-cart"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="s-mcart__info">
+                                        <span class="s-mcart__empty cart-empty">[`Cart empty`]</span>
+                                        <span class="s-mcart__title">[`Cart`]</span>
+                                        <span class="s-mcart__price cart-price">
+                                            {wa_currency($cartTotal, $wa->shop->currency())}
+                                        </span>
+                                    </span>
+                                    <span class="s-mcart__count cart-count hcount{if $cartCount>0} hcount_active{/if}">
+                                        {$cartCount}
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    {/if}
+                {/if}
+            </div>
+        </div>
+    {/if}
+{/if}
+
+{/strip}

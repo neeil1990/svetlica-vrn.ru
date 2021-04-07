@@ -1,0 +1,45 @@
+{strip}
+
+{if $wa->photos && $ts.left_block_photos_id}
+    {$photos = $wa->photos->photos("album/`$ts.left_block_photos_id`")}
+
+    {if !empty($photos)}
+        <div class="in-left__title in-left__title-no-b">
+            {$ts.left_block_photos_title}
+        </div>
+        <div class="l-photos">
+            <div class="l-photos__items">
+                {foreach $photos as $photo}
+                    {$img = photosPhoto::getPhotoUrl($photo, "65x65")}
+                    <div class="l-photos__item">
+                        <a class="l-photos__item-link" href="{$photo.frontend_link}">
+                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img}" data-srcset="{$img} 1x, {$img|regex_replace:'/(.*)\.([^.]*)$/':'$1@2x.$2'} 2x" alt="{$photo.name}">
+                        </a>
+                    </div>
+                    {if $photo@iteration == 24}
+                        {break}
+                    {/if}
+                {/foreach}
+            </div>
+
+            {if count($photos) > 12}
+                <div class="h-yet">
+                    <button class="h-yet__show">
+                        [`Show more`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                    <button class="h-yet__hide">
+                        [`Hide`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                </div>
+            {/if}
+        </div>
+    {/if}
+{/if}
+
+{/strip}

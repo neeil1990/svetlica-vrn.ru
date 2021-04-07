@@ -1,0 +1,24 @@
+{strip}
+
+<div class="h-info">
+    <div class="h-info__icon">
+        {if $ts.header_mode_svg}
+            <img class="icon18" src="{$ts.header_mode_svg}?v{$wa_theme_version}" alt="i-mode">
+        {else}
+            <svg class="icon18 i-clock">
+                <use xlink:href="#i-clock"></use>
+            </svg>
+        {/if}
+    </div>
+    <div>
+        <div class="h-info__title">
+            {$ts.header_mode_title}
+        </div>
+
+        <div class="h-info__content">
+            {eval var=$ts.header_mode_text}
+        </div>
+    </div>
+</div>
+
+{/strip}

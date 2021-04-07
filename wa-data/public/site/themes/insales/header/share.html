@@ -1,0 +1,38 @@
+{strip}
+
+{$classSmall = ''}
+{$classIcon = 'icon26'}
+{$classIconV = 'icon24'}
+{if $ts.header_share == 'img/settings/header_share-2.png' && empty($big)}
+    {$classSmall = ' share_small'}
+    {$classIcon = 'icon22'}
+    {$classIconV = 'icon20'}
+{/if}
+
+<div class="share{$classSmall}">
+    {if $ts.header_share_telegram}
+        <a class="share__link" href="tg://resolve?domain={$ts.header_share_telegram}" target="_blank" style="background-color:#64a9dc;">
+            <svg class="{$classIcon} i-tg">
+                <use xlink:href="#i-tg"></use>
+            </svg>
+        </a>
+    {/if}
+
+    {if $ts.header_share_whatsapp}
+        <a class="share__link" href="https://api.whatsapp.com/send?phone={$ts.header_share_whatsapp}" target="_blank" style="background-color:#65bc54;">
+            <svg class="{$classIcon} i-wat">
+                <use xlink:href="#i-wat"></use>
+            </svg>
+        </a>
+    {/if}
+
+    {if $ts.header_share_viber}
+        <a class="share__link" href="viber://chat?number={$ts.header_share_viber}" target="_blank" style="background-color:#7b519d;">
+            <svg class="{$classIconV} i-wat">
+                <use xlink:href="#i-vib"></use>
+            </svg>
+        </a>
+    {/if}
+</div>
+
+{/strip}

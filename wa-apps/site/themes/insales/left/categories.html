@@ -1,0 +1,60 @@
+{strip}
+
+{if !empty($categ)}
+    {$sel = 0}
+    {if isset($category.id) && !empty($category.id)}
+        {$sel = $category.id}
+    {elseif isset($product.category_id) && !empty($product.category_id)}
+        {$sel = $product.category_id}
+    {/if}
+
+    {function name=menu_icon}
+        {if $ts.header_category_img_show}
+            {$icon = ''}
+            {if class_exists('shopCategoryImagesPlugin')}
+                {$icon = shopCategoryImagesPlugin::getCategoryImageUrl($c.id)}
+            {elseif class_exists('shopCatimgPlugin')}
+                {$icon = shopCatimgPlugin::getImage($c.id, $type)}
+            {elseif class_exists('shopSkcatimageHelper')}
+                {$icon = shopSkcatimageHelper::getImages($c.id, $type)}
+            {/if}
+
+            {if $type=="image" && isset($c.params.img)}
+                {$icon = $c.params.img}
+            {elseif isset($c.params[$type])}
+                {$icon = $c.params[$type]}
+            {/if}
+
+            {if !empty($icon)}
+                <span class="{$class_name}">
+                    <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$icon}" alt="{$c.name}" />
+                </span>
+            {/if}
+        {/if}
+    {/function}
+
+    <div class="l-catalog
+        {if $ts.header_menu_bg && $ts.left_block_catalog_type != 'mega-3' && $ts.left_block_catalog_type != 'mega-4'} h-menu_hover{/if}">
+        <div class="l-catalog-title
+            {if $ts.left_block_catalog_type == 'mega-1' || $ts.left_block_catalog_type == 'mega-3'} l-catalog-title_big{/if}
+            {if $ts.left_block_catalog_type == 'mega-3' || $ts.left_block_catalog_type == 'mega-4'} l-catalog-title_drop{/if}">
+            <div class="l-catalog-bars">
+                <div class="bars">
+                    <div class="bars__line"></div>
+                </div>
+            </div>
+            <div class="l-catalog-name">
+                {$ts.left_block_catalog_title}
+            </div>
+        </div>
+        <div class="l-catalog-menu">
+            {include file="../header/catalog.big.html"
+                megaBig=($ts.left_block_catalog_type == 'mega-1' || $ts.left_block_catalog_type == 'mega-3')
+                dropDown=($ts.left_block_catalog_type == 'mega-3' || $ts.left_block_catalog_type == 'mega-4')
+                brandsMenu=$ts.left_block_catalog_brands
+                leftBlock=1}
+        </div>
+    </div>
+{/if}
+
+{/strip}

@@ -1,0 +1,64 @@
+{strip}
+
+{if $wa->shop}
+    {$viewed = waRequest::cookie("viewed", '', waRequest::TYPE_STRING)}
+
+    {if !empty($viewed)}
+        {$viewedArray = $wa->shop->products('id/'|cat:$viewed)}
+
+        {if !empty($viewedArray)}
+            {$viewedSort = explode(",", $viewed)}
+            {foreach $viewedSort as $id}
+                {if !empty($viewedArray[$id]) && (empty($product.id) || $product.id != $id)}
+                    {$viewedList[$id] = $viewedArray[$id]}
+                {/if}
+            {/foreach}
+        {/if}
+
+        {if !empty($viewedList)}
+            <div class="in-left__title">
+                {$ts.left_block_viewed_title}
+            </div>
+
+            <div class="l-products">
+                {foreach $viewedList as $p}
+                    {if $p@iteration > $ts.left_block_viewed_count}
+                        {break}
+                    {/if}
+
+                    {$img = $wa->shop->productImgUrl($p, "0x96")}
+                    {$imgDefault = "`$wa_parent_theme_url|default:$wa_theme_url``$ts.product_default|default:'img/dummy96.png'`"}
+
+                    <a href="{$p.frontend_url}" class="l-products__item">
+                        <span class="l-products__item-img">
+                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img|default:$imgDefault}"  alt="{$p.name}">
+                        </span>
+                        <span class="l-products__item-info">
+                            <span class="l-products__item-name">
+                                {$p.name}
+                            </span>
+
+                            {if $ts.product_zero_text && $p.price==0}
+                                <div class="products__zero-text">
+                                    {$ts.product_zero_text}
+                                </div>
+                            {else}
+                                <div class="l-products__item-price">
+                                    {shop_currency_html($p.price)}
+                                </div>
+                            {/if}
+
+                            {if $p.compare_price > 0}
+                                <span class="l-products__item-price-old">
+                                    {shop_currency_html($p.compare_price)}
+                                </span>
+                            {/if}
+                        </span>
+                    </a>
+                {/foreach}
+            </div>
+        {/if}
+    {/if}
+{/if}
+
+{/strip}

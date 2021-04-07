@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
+<theme id="insales" app="blog" vendor="989788" author="steemy.ru" parent_theme_id="site:insales" version="2.1.0">
+    <name locale="en_US">InSale for Blog</name>
+    <name locale="ru_RU">InSale для Blog</name>
+    <description locale="en_US">Responsive Theme «InSale»</description>
+    <description locale="ru_RU">Адаптивная тема «InSale»</description>
+    <support locale="en_US">https://steemy.ru</support>
+    <support locale="ru_RU">https://steemy.ru</support>
+    <files>
+        <file path="css/insale.blog.css"/>
+        <file path="comment.html"/>
+        <file path="comments.html"/>
+        <file path="footer.html"/>
+        <file path="head.html"/>
+        <file path="header.html"/>
+        <file path="main.html"/>
+        <file path="my.nav.html"/>
+        <file path="post.album.html"/>
+        <file path="post.html"/>
+        <file path="post.photos.html"/>
+        <file path="post.columns_bg.html"/>
+        <file path="post.full_width.html"/>
+        <file path="post.mixed.html"/>
+        <file path="post.preview.html"/>
+        <file path="sidebar.html"/>
+        <file path="stream.html"/>
+        <file path="index.html" parent="1"/>
+        <file path="error.html" parent="1"/>
+        <file path="signup.html" parent="1"/>
+        <file path="login.html" parent="1"/>
+        <file path="forgotpassword.html" parent="1"/>
+        <file path="page.html" parent="1"/>
+        <file path="my.profile.html" parent="1"/>
+    </files>
+</theme>

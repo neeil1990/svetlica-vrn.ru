@@ -1,0 +1,16 @@
+{strip}
+
+{if $ts.filters_title}
+    <div class="filters-title{if !$ts.filters_view} filters-title_active{/if}">
+        <div class="filters-title__bars">
+            <div class="bars">
+                <div class="bars__line"></div>
+            </div>
+        </div>
+        <div class="filters-title__name">{$ts.filters_title_text}</div>
+    </div>
+{/if}
+
+{include file="`$wa_active_theme_path`/category/filters.html"}
+
+{/strip}

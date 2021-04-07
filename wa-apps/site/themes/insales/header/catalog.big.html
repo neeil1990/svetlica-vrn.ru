@@ -1,0 +1,317 @@
+{strip}
+
+{if !empty($leftBlock) && $brandsMenu}
+    {$ts.header_catalog_brands_photos = $ts.left_block_catalog_brands_photos}
+    {$ts.header_catalog_brands_links = $ts.left_block_catalog_brands_links}
+    {$ts.header_catalog_brands_title = $ts.left_block_catalog_brands_title}
+    {$ts.header_catalog_yet_count = $ts.left_block_catalog_yet_count}
+    {$ts.header_catalog_yet = $ts.left_block_catalog_yet}
+{/if}
+
+{function name=label}
+    {if !empty($cat.params.badge)}
+        <span class="label" style="
+                {if !empty($cat.params.badge_bg)}background-color:{$cat.params.badge_bg};{/if}
+                {if !empty($cat.params.badge_color)}color:{$cat.params.badge_color};{/if}">
+                {$cat.params.badge}
+        </span>
+    {/if}
+{/function}
+
+{function name=dropDownMenu}
+    <div class="c-menu__drop">
+        <ul class="c-menu__drop-ul">
+            {foreach $cat as $c}
+                {if !isset($c.params.hide)}
+                    <li class="c-menu__drop-li">
+                        <a href="{$c.url}" class="c-menu__drop-link{if $c.id == $sel} h-menu__link_active{/if}">
+                            {call menu_icon c=$c class_name="c-menu__item-icon" type="icon"}
+
+                            <span class="c-menu__item-bl">
+                                <span class="c-menu__item-name">
+                                    {$c.name}
+                                </span>
+                                {label cat=$c}
+                            </span>
+
+                            {if !empty($c.childs) && $lv < 4}
+                                <svg class="icon8 i-angle-right">
+                                    <use xlink:href="#i-angle-right"></use>
+                                </svg>
+                            {/if}
+                        </a>
+                        {if !empty($c.childs) && $lv < 4}
+                            {dropDownMenu cat=$c.childs lv=$lv+1}
+                        {/if}
+                    </li>
+                {/if}
+            {/foreach}
+        </ul>
+    </div>
+{/function}
+
+
+{if empty($leftBlock)}
+<div class="c-menu">
+{/if}
+    <div class="c-menu__wrap">
+        <div class="c-menu__wrap-left">
+            <ul class="c-menu__left
+                {if !empty($megaBig)} c-menu__left_big{/if}
+                {if !empty($dropDown)} c-menu__left_drop{/if}">
+                {foreach $categ as $c}
+                    {if !isset($c.params.hide)}
+                        <li class="c-menu__item{if $c@first && empty($leftBlock)} c-menu__item_active h-menu__link_active{/if}" data-id="{$c.id}">
+                            <a href="{$c.url}" class="c-menu__item-link">
+                                {call menu_icon c=$c class_name="c-menu__item-icon" type="icon"}
+
+                                <span class="c-menu__item-bl">
+                                    <span class="c-menu__item-name">
+                                        {$c.name}
+                                    </span>
+                                    {label cat=$c}
+                                </span>
+
+                                {if !empty($c.childs)}
+                                    <svg class="icon8 i-angle-right">
+                                        <use xlink:href="#i-angle-right"></use>
+                                    </svg>
+                                {/if}
+                            </a>
+
+                            {if !empty($dropDown) && !empty($c.childs)}
+                                {dropDownMenu cat=$c.childs lv=1}
+                            {/if}
+                        </li>
+                    {/if}
+                {/foreach}
+
+                {if !empty($brandsMenu)}
+                    <li class="c-menu__item" data-id="brands">
+                        <a class="c-menu__item-link c-menu__item-link_brands" href="{$ts.header_catalog_brands_links}">
+                            <span class="c-menu__item-bl">
+                                <span class="c-menu__item-name">
+                                    {$ts.header_catalog_brands_title}
+                                </span>
+                            </span>
+                            <svg class="icon8 i-angle-right">
+                                <use xlink:href="#i-angle-right"></use>
+                            </svg>
+                        </a>
+
+                        {if !empty($dropDown)}
+                            {* BRANDS PRO https://www.webasyst.ru/store/plugin/shop/brand/ *}
+                            {if class_exists('shopBrandViewHelper')}
+                                {$brandsImg = shopBrandViewHelper::getAllBrands()}
+                                {if !empty($brandsImg)}
+                                    <div class="c-menu__drop">
+                                        <ul class="c-menu__drop-ul">
+                                            {foreach $brandsImg as $brand}
+                                                <li class="c-menu__drop-li">
+                                                    <a href="{$brand.frontend_url}" class="c-menu__drop-link">
+                                                        {if !empty($brand.image_url)}
+                                                            <span class="c-menu__item-icon">
+                                                                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$brand.image_url}" alt="{$brand.name}">
+                                                            </span>
+                                                        {/if}
+                                                        <span class="c-menu__item-bl">
+                                                            <span class="c-menu__item-name">{$brand.name}</span>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            {/foreach}
+                                        </ul>
+                                    </div>
+                                {/if}
+                            {* BRANDS IMAGES AND DESCRIPTION https://www.webasyst.ru/store/plugin/shop/productbrands/ *}
+                            {else if class_exists('shopProductbrandsPlugin')}
+                                {$brandsImg = shopProductbrandsPlugin::getBrands()}
+                                {if !empty($brandsImg)}
+                                    <div class="c-menu__drop">
+                                        <ul class="c-menu__drop-ul">
+                                            {foreach $brandsImg as $b}
+                                                <li class="c-menu__drop-li">
+                                                    <a href="{$b.url}" class="c-menu__drop-link">
+                                                        {if !empty($b.image)}
+                                                            <span class="c-menu__item-icon">
+                                                                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$wa_url}wa-data/public/shop/brands/{$b.id}/{$b.id}{$b.image}" alt="{$b.name}">
+                                                            </span>
+                                                        {/if}
+                                                        <span class="c-menu__item-bl">
+                                                            <span class="c-menu__item-name">{$b.name}</span>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            {/foreach}
+                                        </ul>
+                                    </div>
+                                {/if}
+                            {/if}
+                        {/if}
+                    </li>
+                {/if}
+            </ul>
+        </div>
+
+        {if empty($dropDown)}
+            <div class="c-menu__right">
+                <div class="c-menu__right-wrap">
+                    {foreach $categ as $c}
+                        {if !isset($c.params.hide)}
+                            <div class="c-menu__items{if $c@first} c-menu__items_active{/if} c-menu__items-{$c.id}">
+                                <div class="c-menu__items-title">
+                                    <div class="c-menu__items-title-name">{$c.name}</div>
+                                    {label cat=$c}
+                                </div>
+
+                                {if isset($c.params.menu_banner)}
+                                    <div class="c-menu__items-content">
+                                        <div class="c-menu__items-left">
+                                {/if}
+
+                                <ul class="c-menu__items-ul">
+                                    {foreach $c.childs as $c1}
+                                        {if !isset($c1.params.hide)}
+                                            <li class="h-menu__img-li">
+                                                <a href="{$c1.url}" class="h-menu__img-link{if $c1.id == $sel} h-menu__link_active{/if}">
+                                                    {call menu_icon c=$c1 class_name="h-menu__img-icon" type="image"}
+                                                    <span class="h-menu__img-name h-menu__name">
+                                                        {$c1.name}
+                                                    </span>
+                                                    {label cat=$c1}
+                                                </a>
+
+                                                {if !empty($c1.childs)}
+                                                    <ul class="h-menu__img-ul-1">
+                                                        {foreach $c1.childs as $c2}
+                                                            {if !isset($c2.params.hide) && $c2@iteration <= $ts.header_catalog_yet_count}
+                                                                <li class="h-menu__img-li-1">
+                                                                    <a href="{$c2.url}" class="h-menu__img-link-1{if $c2.id == $sel} h-menu__link_active{/if}">
+                                                                        <span class="h-menu__name">
+                                                                            {$c2.name}
+                                                                        </span>
+                                                                        {label cat=$c2}
+                                                                    </a>
+                                                                </li>
+                                                            {/if}
+                                                        {/foreach}
+                                                        {if $ts.header_catalog_yet_count < count($c1.childs)}
+                                                            <li class="h-menu__img-li-1">
+                                                                <a href="{$c1.url}" class="h-menu__img-next">
+                                                                    {$ts.header_catalog_yet}
+                                                                </a>
+                                                            </li>
+                                                        {/if}
+                                                    </ul>
+                                                {/if}
+                                            </li>
+                                        {/if}
+                                    {/foreach}
+                                </ul>
+
+                                {if isset($c.params.menu_banner)}
+                                    </div>
+                                    <div class="c-menu__items-right">
+                                        <div class="c-menu__items-img">
+                                            {if isset($c.params.menu_banner_link)}
+                                                <a class="c-menu__items-img" href="{$c.params.menu_banner_link}">
+                                            {/if}
+
+                                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$c.params.menu_banner}" alt="{$c.name}">
+
+                                            {if isset($c.params.menu_banner_title)}
+                                                <span class="c-menu__items-img-name">{$c.params.menu_banner_title}</span>
+                                            {/if}
+                                            {if isset($c.params.menu_banner_des)}
+                                                <span class="c-menu__items-img-des">{$c.params.menu_banner_des}</span>
+                                            {/if}
+
+                                            {if isset($c.params.menu_banner_link)}
+                                                </a>
+                                            {/if}
+                                        </div>
+                                    </div>
+                                </div>
+                                {/if}
+                            </div>
+                        {/if}
+                    {/foreach}
+
+                    {if !empty($brandsMenu)}
+                        <div class="c-menu__items c-menu__items-brands">
+                            <div class="c-menu__items-title">
+                                <div class="c-menu__items-title-name">
+                                    {$ts.header_catalog_brands_title}
+                                </div>
+                            </div>
+                            {if $wa->photos && $ts.header_catalog_brands_photos}
+                                {$brandsImg = $wa->photos->photos("album/`$ts.header_catalog_brands_photos`")}
+                                {if !empty($brandsImg)}
+                                    <ul class="m-brands c-menu__items-ul">
+                                        {foreach $brandsImg as $b}
+                                            <li class="h-menu__img-li">
+                                                <a href="{$b.description}" class="h-menu__img-link">
+                                                    <span class="h-menu__img-icon">
+                                                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{photosPhoto::getPhotoUrl($b, "0x100")}" alt="[`BRANDS`]">
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        {/foreach}
+                                    </ul>
+                                {/if}
+                            {* BRANDS PRO https://www.webasyst.ru/store/plugin/shop/brand/ *}
+                            {else if class_exists('shopBrandViewHelper')}
+                                {$brandsImg = shopBrandViewHelper::getAllBrands()}
+                                {if !empty($brandsImg)}
+                                    <ul class="m-brands c-menu__items-ul">
+                                        {foreach $brandsImg as $brand}
+                                            <li class="h-menu__img-li">
+                                                <a href="{$brand.frontend_url}" class="h-menu__img-link">
+                                                    {$img = "`$wa_theme_url`img/dummy200.png"}
+                                                    {if !empty($brand.image_url)}
+                                                        {$img = $brand.image_url}
+                                                    {/if}
+                                                    {if !empty($brand.image_url)}
+                                                        <span class="h-menu__img-icon">
+                                                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img}" alt="{$brand.name}">
+                                                        </span>
+                                                    {/if}
+                                                    <span class="h-menu__img-name">{$brand.name}</span>
+                                                </a>
+                                            </li>
+                                        {/foreach}
+                                    </ul>
+                                {/if}
+                            {* BRANDS IMAGES AND DESCRIPTION https://www.webasyst.ru/store/plugin/shop/productbrands/ *}
+                            {else if class_exists('shopProductbrandsPlugin')}
+                                {$brandsImg = shopProductbrandsPlugin::getBrands()}
+                                {if !empty($brandsImg)}
+                                    <ul class="m-brands c-menu__items-ul">
+                                        {foreach $brandsImg as $b}
+                                            <li class="h-menu__img-li">
+                                                <a href="{$b.url}" class="h-menu__img-link">
+                                                    {$img = "`$wa_theme_url`img/dummy200.png"}
+                                                    {if !empty($b.image)}
+                                                        {$img = "`$wa_url`wa-data/public/shop/brands/`$b.id`/`$b.id``$b.image`"}
+                                                    {/if}
+                                                    <span class="h-menu__img-icon">
+                                                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img}" alt="{$b.name}">
+                                                    </span>
+                                                    <span class="h-menu__img-name">{$b.name}</span>
+                                                </a>
+                                            </li>
+                                        {/foreach}
+                                    </ul>
+                                {/if}
+                            {/if}
+                        </div>
+                    {/if}
+                </div>
+            </div>
+        {/if}
+    </div>
+{if empty($leftBlock)}
+</div>
+{/if}
+
+{/strip}

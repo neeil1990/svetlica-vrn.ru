@@ -1,0 +1,99 @@
+{strip}
+
+{function name=label}
+    {if !empty($cat.params.badge)}
+        <span class="label" style="
+            {if !empty($cat.params.badge_bg)}background-color:{$cat.params.badge_bg};{/if}
+            {if !empty($cat.params.badge_color)}color:{$cat.params.badge_color};{/if}">
+            {$cat.params.badge}
+        </span>
+    {/if}
+{/function}
+
+{if !empty($section) && $section == 'fix'}
+    {$ts.header_catalog = $ts.header_fix_catalog}
+{/if}
+
+<div class="b-catalog">
+    <div class="b-catalog__button{if $ts.header_catalog == 'img/settings/header_catalog-1.png'} b-catalog__button_small{/if}">
+        <div class="b-catalog__bars">
+            <div class="bars{if $ts.header_catalog == 'img/settings/header_catalog-1.png'} bars_small{/if}">
+                <div class="bars__line"></div>
+            </div>
+        </div>
+        <div class="b-catalog__title">
+            {$ts.header_catalog_title}
+        </div>
+        <div class="b-catalog__icon">
+            <svg class="icon8 i-angle-down">
+                <use xlink:href="#i-angle-down"></use>
+            </svg>
+        </div>
+    </div>
+
+    {if !empty($categ)}
+        {$sel = 0}
+        {if isset($category.id) && !empty($category.id)}
+            {$sel = $category.id}
+        {elseif isset($product.category_id) && !empty($product.category_id)}
+            {$sel = $product.category_id}
+        {/if}
+
+        {if $ts.header_catalog_type == 'mega-3'}
+
+            <div class="c-menu">
+                <div class="c-menu__content">
+                    <div class="c-menu__wrap">
+                        <ul class="c-menu__items-c">
+                            {foreach $categ as $c}
+                                {if !isset($c.params.hide)}
+                                    <li class="h-menu__img-li">
+                                        <a href="{$c.url}" class="h-menu__img-link{if $c.id == $sel} h-menu__img-link_active{/if}">
+                                            {menu_icon c=$c class_name="h-menu__img-icon" type="image"}
+                                            <span class="h-menu__img-name h-menu__name">
+                                                {$c.name}
+                                            </span>
+                                            {label cat=$c}
+                                        </a>
+
+                                        {if !empty($c.childs)}
+                                            <ul class="h-menu__img-ul-1">
+                                                {foreach $c.childs as $c1}
+                                                    {if !isset($c1.params.hide) && $c1@iteration <= $ts.header_catalog_yet_count}
+                                                        <li class="h-menu__img-li-1">
+                                                            <a href="{$c1.url}" class="h-menu__img-link-1{if $c1.id == $sel} h-menu__link_active{/if}">
+                                                                <span class="h-menu__name">
+                                                                    {$c1.name}
+                                                                </span>
+
+                                                                {label cat=$c1}
+                                                            </a>
+                                                        </li>
+                                                    {/if}
+                                                {/foreach}
+                                                {if $ts.header_catalog_yet_count < count($c.childs)}
+                                                    <li class="h-menu__img-li-1">
+                                                        <a href="{$c.url}" class="h-menu__img-next">
+                                                            {$ts.header_catalog_yet}
+                                                        </a>
+                                                    </li>
+                                                {/if}
+                                            </ul>
+                                        {/if}
+                                    </li>
+                                {/if}
+                            {/foreach}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        {else}
+
+            {include file="./catalog.big.html" megaBig=($ts.header_catalog_type == 'mega-1') brandsMenu=$ts.header_catalog_brands}
+
+        {/if}
+    </div>
+{/if}
+
+{/strip}

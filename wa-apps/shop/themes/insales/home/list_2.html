@@ -1,0 +1,112 @@
+{strip}
+
+{if $ts.home_list_2_id}
+
+    {$lists = $wa->shop->productSet($ts.home_list_2_id)}
+
+    {if !empty($lists)}
+        {if $ts.home_list_2_in_stock}
+            {foreach $lists as $id=>$p}
+                {$available = $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
+                {if $available}
+                    {$listsStock[$id] = $p}
+                {/if}
+            {/foreach}
+            {$lists = $listsStock}
+        {/if}
+
+        {if !empty($lists)}
+            {if $ts.home_list_2_bg}
+            <div class="in-blocks__item_p-bg" style="background-color:{$ts.home_list_2_bg}">
+            {/if}
+
+            {if $ts.home_list_2_title || $ts.home_list_2_category}
+                <div class="in-blocks__title">
+                    <div class="in-blocks__title-name" style="color:{$ts.home_list_2_title_color|default:'#222'}">
+                        {$ts.home_list_2_title}
+                    </div>
+
+                    {if $ts.home_list_2_category}
+                        {$childs = $wa->shop->categories((int)$ts.home_list_2_category, 1)}
+                        {if !empty($childs)}
+                            <div class="in-blocks__title-categ">
+                                <ul class="h-menu">
+                                    {foreach $childs as $c}
+                                        <li class="h-menu__item">
+                                            <a href="{$c.url}" class="h-menu__link" style="color:{$ts.home_list_2_title_color|default:'#222'}">
+                                                <span class="h-menu__name">{$c.name}</span>
+                                            </a>
+                                        </li>
+                                    {/foreach}
+                                    <li class="h-menu__item h-menu__yet">
+                                        <div class="h-menu__link" style="color:{$ts.home_list_2_title_color|default:'#222'}">
+                                            <svg class="icon4 i-circle"><use xlink:href="#i-circle"></use></svg>
+                                            <svg class="icon4 i-circle"><use xlink:href="#i-circle"></use></svg>
+                                            <svg class="icon4 i-circle"><use xlink:href="#i-circle"></use></svg>
+                                        </div>
+                                        <ul class="h-menu__sub h-menu__sub-1 h-menu__sub_right"></ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="in-blocks__title-link"></div>
+                        {/if}
+                    {/if}
+
+                    {if $ts.home_list_2_link && $ts.home_list_2_link_title && $ts.home_list_2_design != 'slider'}
+                        <a href="{$ts.home_list_2_link}" class="in-blocks__title-link" style="color:{$ts.home_list_2_title_color|default:'#222'}">
+                            {$ts.home_list_2_link_title} <svg class="icon10 i-angle-right">
+                                <use xlink:href="#i-angle-right"></use>
+                            </svg>
+                        </a>
+                    {/if}
+                </div>
+            {/if}
+
+            {if $ts.home_list_2_in_random}
+                {$_tmp = shuffle($lists)}
+                {foreach $lists as $id=>$p}
+                    {$listsRandom[$p.id] = $lists[$id]}
+                {/foreach}
+                {$lists = $listsRandom}
+            {/if}
+
+            {if $ts.home_list_2_img && $ts.home_list_2_design == 'slider'}
+                <div class="h-products">
+                    <div class="h-products__promo{if $ts.home_list_2_fit} h-products__promo-fit{/if} h-products__promo-{$ts.home_list_2_count}">
+                        {if $ts.home_list_2_img_link}
+                            <a href="{$ts.home_list_2_img_link}"></a>
+                        {/if}
+
+                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$wa_parent_theme_url}{$ts.home_list_2_img}?v{$wa_theme_version}" alt="{$ts.home_list_2_title}" />
+                    </div>
+
+                    <div class="h-products__right h-products__right-{$ts.home_list_2_count}">
+                        {include file="list-thumbs.html" products=$lists columns=$ts.home_list_2_count slider_view=1 slider_home=1}
+                    </div>
+                </div>
+            {else}
+                {if $ts.home_list_2_img}
+                    <div class="products products_col-{$ts.home_list_2_count}">
+                        <div class="products__item h-products__promo{if $ts.home_list_2_fit} h-products__promo-fit{/if}">
+                            {if $ts.home_list_2_img_link}
+                                <a href="{$ts.home_list_2_img_link}"></a>
+                            {/if}
+
+                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$wa_parent_theme_url}{$ts.home_list_2_img}?v{$wa_theme_version}" alt="{$ts.home_list_2_title}" />
+                        </div>
+                {/if}
+
+                {include file="list-thumbs.html" products=$lists columns=$ts.home_list_2_count slider_view=$ts.home_list_2_design == 'slider' home_img=$ts.home_list_2_img}
+                {if $ts.home_list_2_img}
+                    </div>
+                {/if}
+            {/if}
+
+            {if $ts.home_list_2_bg}
+            </div>
+            {/if}
+        {/if}
+    {/if}
+{/if}
+
+{/strip}

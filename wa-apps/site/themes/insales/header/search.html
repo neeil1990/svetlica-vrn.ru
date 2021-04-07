@@ -1,0 +1,33 @@
+{strip}
+
+{if !empty($section) && $section == 'fix'}
+    {$ts.header_search = $ts.header_fix_search}
+{/if}
+
+{$class = ''}
+{$icon = 'icon20'}
+{if $ts.header_search == 'img/settings/header_search-2.png'}
+    {$icon = 'icon18'}
+    {$class = ' search_small'}
+
+{else if $ts.header_search == 'img/settings/header_search-3.png'}
+    {$icon = 'icon14'}
+    {$class = ' search_bor-no'}
+{/if}
+
+<div class="search{$class}">
+    <form class="search__form" method="get" action="{$wa->getUrl('shop/frontend/search')}">
+        <input name="query" class="search__input" type="text" placeholder="[`Product search...`]" autocomplete="off" {if !empty($query)}value="{$query}"{/if}>
+        <button class="search__button" type="submit">
+            <svg class="{$icon} i-search">
+                <use xlink:href="#i-search"></use>
+            </svg>
+        </button>
+    </form>
+
+    {if $ts.header_settings_rez}
+        <div class="search-res"></div>
+    {/if}
+</div>
+
+{/strip}

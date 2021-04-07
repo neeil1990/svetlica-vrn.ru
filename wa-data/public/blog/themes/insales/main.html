@@ -1,0 +1,94 @@
+{strip}
+
+{$ts = $theme_settings}
+
+{$globals_blog_id = $wa->globals('blog_id')}
+
+{$current_blog = ''}
+{if !is_array($globals_blog_id)}
+    {$current_blog = $wa->blog->blog($wa->globals('blog_id'))}
+{/if}
+
+
+<div class="main__wrap wrap">
+
+    {if !isset($post.title)}
+        {include file="./left.html" inline}
+    {/if}
+
+    <div class="in-right{if isset($post.title)} in-right_mw{/if}">
+
+        {if waRequest::isMobile(false)}
+            {if count($wa->blog->blogs()) > 1}
+                <div class="in-blocks__item-s in-blocks__item-search">
+                    <ul class="l-menu">
+                        {foreach $wa->blog->blogs() as $blog}
+                            <li class="l-menu__item">
+                                <a class="l-menu__link{if $wa->globals('blog_id') eq $blog.id && empty($is_search)} l-menu__active{/if}" href="{$blog.link}">
+                                    {$blog.name}
+                                </a>
+                            </li>
+                        {/foreach}
+                    </ul>
+                </div>
+            {/if}
+
+            <div class="in-blocks__item-s in-blocks__item-search">
+                <div class="in-search">
+                    <form method="get" action="{$wa_app_url}">
+                        {$_query = $smarty.get.query|default:''|escape}
+                        <input type="text" name="query" value="{if !empty($blog_query)}{$blog_query}{/if}" placeholder="[`Search posts`]">
+
+                        <button class="in-search__button" type="submit">
+                            <svg class="icon20 i-search"><use xlink:href="#i-search"></use></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="in-blocks__item-s"></div>
+        {/if}
+
+        {$type = ''}
+        {$nameBread = ''}
+        {if !empty($current_blog) && !isset($post.title)}
+            {$type = 'current_blog'}
+            {$nameBread = $current_blog.name|escape}
+        {elseif isset($post.title)}
+            {$type = 'post_blog'}
+            {$nameBread = $post.title|escape}
+        {/if}
+
+        {* BREADCRUMBS *}
+        {include file="`$wa_parent_theme_path`/breadcrumbs.html" type=$type nameBread=$nameBread currentBlog = $current_blog}
+
+        <h1>
+            {if !empty($current_blog) && !isset($post.title)}
+                {$current_blog.name|escape}
+            {elseif isset($post.title)}
+                {$post.title|escape}
+            {else}
+                [`Blog`]
+            {/if}
+        </h1>
+
+
+        {if empty($posts) && $wa->currentUrl() == $wa_app_url}
+
+            <h1>[`Welcome to your new blog!`]</h1>
+            <p>{sprintf('[`Start by <a href="%s">writing a post</a> in your blog backend.`]', $wa_backend_url|cat:'blog/')}</p>
+
+        {else}
+
+            {$content}
+
+        {/if}
+
+        {if isset($pages) && $pages > 1}
+            <div class="in-blocks__item">
+                {wa_pagination total=$pages attrs=["class" => "pagin"]}
+            </div>
+        {/if}
+    </div>
+</div>
+
+{/strip}

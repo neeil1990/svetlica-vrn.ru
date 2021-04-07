@@ -1,0 +1,35 @@
+{strip}
+
+{$tags= $wa->shop->tags()}
+
+{if !empty($tags)}
+    <div class="in-left__title">[`Tags`]</div>
+    <div class="l-tags">
+        <div class="l-tags__items">
+            {foreach $tags as $tag}
+                <a class="l-tags__item" href="{$wa_app_url}tag/{$tag.uri_name}/">
+                    {$tag.name|escape}
+                </a>
+            {/foreach}
+        </div>
+
+        {if count($tags) > 8}
+            <div class="h-yet">
+                <button class="h-yet__show">
+                    [`Show more`]
+                    <svg class="icon10 i-angle-down">
+                        <use xlink:href="#i-angle-down"></use>
+                    </svg>
+                </button>
+                <button class="h-yet__hide">
+                    [`Hide`]
+                    <svg class="icon10 i-angle-down">
+                        <use xlink:href="#i-angle-down"></use>
+                    </svg>
+                </button>
+            </div>
+        {/if}
+    </div>
+{/if}
+
+{/strip}

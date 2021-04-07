@@ -1,0 +1,36 @@
+{strip}
+
+{if $ts.left_block_news_id && $wa->blog}
+    {$news = $wa->blog->posts((int)$ts.left_block_news_id)}
+
+    {if !empty($news)}
+        <div class="in-left__title">
+            {$ts.left_block_news_title}
+        </div>
+
+        <div class="l-news">
+            {foreach $news as $n}
+                <div class="l-news__item">
+                    <div class="l-news__item-info">
+                        <div class="l-news__item-date">{$n.datetime|wa_datetime:"humandate"}</div>
+                        <a class="l-news__item-name" href="{$n.link}">{$n.title}</a>
+                    </div>
+                </div>
+                {if $ts.left_block_news_count == $n@iteration}
+                    {break}
+                {/if}
+            {/foreach}
+        </div>
+
+        {if $ts.left_block_news_next_title && $ts.left_block_news_next}
+            <a class="l-news__next" href="{$ts.left_block_news_next}">
+                {$ts.left_block_news_next_title}
+                <svg class="icon10 i-angle-right">
+                    <use xlink:href="#i-angle-right"></use>
+                </svg>
+            </a>
+        {/if}
+    {/if}
+{/if}
+
+{/strip}

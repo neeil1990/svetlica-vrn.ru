@@ -1,0 +1,34 @@
+{strip}
+
+{if $ts.header_banner_top_view && (waRequest::cookie("banner-hash", '', waRequest::TYPE_STRING) != md5($ts.header_banner_top_hash))}
+    <div class="h-promo">
+        {if $ts.header_banner_top_close}
+            <div class="h-promo__close" data-banner-hash="{md5($ts.header_banner_top_hash)}">
+                <svg class="icon12 i-remove ">
+                    <use xlink:href="#i-remove"></use>
+                </svg>
+            </div>
+        {/if}
+        <div class="wrap h-promo__wrap">
+            <div class="h-promo__icon">
+                <svg class="icon20 i-info ">
+                    <use xlink:href="#i-info"></use>
+                </svg>
+            </div>
+            <div class="h-promo__text">{$ts.header_banner_top_text}</div>
+        </div>
+        {if $ts.header_banner_top_link}
+            <a class="h-promo__link" href="{$ts.header_banner_top_link}"></a>
+        {/if}
+
+        {if $wa->user()->isAdmin($wa->app())}
+            <div class="e-panel-edit" data-group-edit="header_banner_top">
+                <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Баннер вверху">
+                    <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                </div>
+            </div>
+        {/if}
+    </div>
+{/if}
+
+{/strip}

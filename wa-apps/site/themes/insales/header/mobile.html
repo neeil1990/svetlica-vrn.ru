@@ -1,0 +1,163 @@
+{strip}
+
+{$v=1}
+{if $ts.header_mobile=='img/settings/mobile-2.png'}
+    {$v=2}
+{elseif $ts.header_mobile=='img/settings/mobile-3.png'}
+    {$v=3}
+{elseif $ts.header_mobile=='img/settings/mobile-4.png'}
+    {$v=4}
+{/if}
+
+<nav class="m-menu">
+    <div class="m-menu__wrap">
+        <div class="m-menu__header">
+            {$ts.header_mobile_menu_title}
+
+            <div class="m-menu__close{if $v==4} m-menu__close_right{/if}">
+                <svg class="icon12 i-remove">
+                    <use xlink:href="#i-remove"></use>
+                </svg>
+            </div>
+        </div>
+
+        {if $ts.header_mobile_region && $v != 1}
+            <div class="m-menu__region">
+                {include file="./region.html" mobile=1}
+            </div>
+        {/if}
+
+        <div class="m-menu__s-l">
+            <div class="m-menu__search">
+                {include file="./search.html"}
+            </div>
+
+            {if $ts.header_mobile_locale}
+                <div class="m-menu__locale">
+                    {include file="./locale.html" mobile=1}
+                </div>
+            {/if}
+        </div>
+
+        {* PHONE *}
+        {include file="./mobile.phone.html"}
+
+        {* MENU CATALOG, PAGES *}
+        {include file="./mobile.menu.html"}
+
+        <div class="m-menu__icons">
+            <div class="m-menu__icons-wrap">
+                {include file="./auth.html" mobile=1}
+                {include file="./icon.html" mobile=1}
+            </div>
+        </div>
+    </div>
+</nav>
+
+<header class="h-mobile h-mobile_{$v}{if $ts.header_mobile_fix} h-mobile_fix{/if}">
+    <div class="h-mobile__top-wrap wrap">
+        {if $v != 4}
+            <div class="h-mobile__top-bars">
+                <div class="bars bars_mobile">
+                    <div class="bars__line"></div>
+                </div>
+            </div>
+        {/if}
+
+        {if $v == 3}
+            <div class="h-mobile__top-search">
+                <div class="h-mobile__top-search-icon">
+                    <svg class="icon20 i-search">
+                        <use xlink:href="#i-search"></use>
+                    </svg>
+                </div>
+
+                <div class="h-mobile__top-search-bl">
+                    <div class="h-mobile__top-search-close">
+                        <svg class="icon14 i-angle-left">
+                            <use xlink:href="#i-angle-left"></use>
+                        </svg>
+                    </div>
+
+                    <div class="search_small">
+                        {include file="./search.html"}
+                    </div>
+                </div>
+            </div>
+        {/if}
+
+        {if $v != 1}
+            <div class="h-mobile__top-logo">
+                <a class="header__logo" href="{$wa_url}">
+                    <img src="{$ts.header_mobile_logo_svg|default:"`$wa_theme_url``$ts.header_mobile_logo`"}?v{$wa_theme_version}" alt="{$wa->accountName()}">
+                </a>
+            </div>
+        {/if}
+
+        {if $v == 4}
+            <div class="h-mobile__top-search-4 search_small">
+                {include file="./search.html"}
+            </div>
+
+            <div class="h-mobile__top-bars">
+                <div class="bars bars_mobile">
+                    <div class="bars__line"></div>
+                </div>
+            </div>
+        {/if}
+
+        {if $v == 2 || ($ts.header_mobile_region && $v == 1)}
+            <div class="h-mobile__top-phone">
+                {include file="./phone_1.html" mobile=1}
+            </div>
+        {/if}
+
+        {if $v != 4}
+            <div class="h-mobile__top-icon">
+                <div class="h-mobile__top-auth">
+                    {include file="./auth.html" mobile=1}
+                </div>
+
+                {if $v != 3}
+                    <div class="h-mobile__top-icon_mobile">
+                        {include file="./icon.html" mobile=1}
+                    </div>
+                {/if}
+
+                <div class="h-mobile__top-cart">
+                    {include file="./cart.html" mobile=$ts.header_mobile_cart}
+                </div>
+            </div>
+        {/if}
+    </div>
+
+    {if $v == 1}
+        <div class="h-mobile__bottom-wrap wrap">
+            <div class="h-mobile__bottom-logo">
+                <a class="header__logo" href="{$wa_url}">
+                    <img src="{$ts.header_mobile_logo_svg|default:"`$wa_theme_url``$ts.header_mobile_logo`"}?v{$wa_theme_version}" alt="{$wa->accountName()}">
+                </a>
+            </div>
+
+            {if $ts.header_mobile_region}
+                <div class="h-mobile__bottom-info">
+                    {include file="./region.html" mobile=1}
+                </div>
+            {else}
+                <div class="h-mobile__bottom-phone">
+                    {include file="./phone_1.html" mobile=1}
+                </div>
+            {/if}
+
+            <div class="h-mobile__bottom-search search">
+                {include file="./search.html"}
+            </div>
+        </div>
+    {/if}
+
+    <div class="wrap">
+        {include file="./promo.html" inline}
+    </div>
+</header>
+
+{/strip}

@@ -1,0 +1,179 @@
+{strip}
+
+{if !empty($categFull) && $ts.home_category_ids}
+
+    {$home_category_ids = explode(',', $ts.home_category_ids)}
+
+    {if $ts.home_category_type == 'tile' || $ts.home_category_type == 'tile_slider'}
+        <div class="h-categ">
+            {if $ts.home_category_title}
+                <div class="in-blocks__title">
+                    <div class="in-blocks__title-name">
+                        {$ts.home_category_title}
+                    </div>
+                    <div class="in-blocks__title-link"></div>
+                </div>
+            {/if}
+
+            <div class="h-categ__wrap{if $ts.home_category_type == 'tile_slider'} h-categ__slider owl-carousel owl-theme-nav{/if}">
+                {$i=1}
+                {foreach $home_category_ids as $id}
+                    {if !empty($categFull[$id])}
+                        {$c = $categFull[$id]}
+                        <div class="h-categ__item{if $ts.home_category_type != 'tile_slider' && $ts.home_category_yet && $i > $ts.home_category_yet_count} h-hidden{/if}">
+                            <a href="{$c.url}" class="h-categ__link">
+                                {$imgDefault = "`$wa_parent_theme_url``$ts.category_default_img|default:'img/dummy200.png'`"}
+
+                                {$img = ''}
+                                {if class_exists('shopCategoryImagesPlugin')}
+                                    {$img = shopCategoryImagesPlugin::getCategoryImageUrl($c.id)}
+                                {elseif class_exists('shopCatimgPlugin')}
+                                    {$img = shopCatimgPlugin::getImage($c.id, 'image')}
+                                    {if !$img}{$img = ''}{/if}
+                                {elseif class_exists('shopSkcatimageHelper')}
+                                    {$img = shopSkcatimageHelper::getImages($c.id, 'image')}
+                                {/if}
+
+                                {if isset($c.params.img)}
+                                    {$img = $c.params.img}
+                                {/if}
+
+                                <span class="h-categ__img">
+                                    <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img|default:$imgDefault}" alt="{$c.name}">
+                                </span>
+
+                                <span class="h-categ__name">{$c.name}</span>
+
+                                {if $ts.home_category_count}
+                                    {$countProduct = $wa->shop->productsCount("category/`$c.id`")}
+                                    {if $img}
+                                        <span class="h-categ__count">{$countProduct}</span>
+                                    {else}
+                                        <span class="h-categ__count-st">
+                                            {$countProduct} {if $countProduct == 0}
+                                                [`products`]
+                                            {elseif $countProduct == 1 }
+                                                [`product`]
+                                            {elseif $countProduct > 1 && $countProduct < 5}
+                                                [`productss`]
+                                            {else}
+                                                [`products`]
+                                            {/if}
+                                        </span>
+                                    {/if}
+                                {/if}
+                            </a>
+                        </div>
+                        {$i=$i+1}
+                    {/if}
+                {/foreach}
+            </div>
+
+            {if $ts.home_category_type != 'tile_slider' && $ts.home_category_yet && count($home_category_ids) > $ts.home_category_yet_count}
+                <div class="h-yet h-yet_center in-blocks__item-s">
+                    <button class="h-yet__show" type="button">
+                        [`Show more`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                    <button class="h-yet__hide" type="button">
+                        [`Hide`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                </div>
+            {/if}
+        </div>
+
+    {else}
+        <div class="c-categ">
+            <div class="in-blocks__title">
+                <div class="in-blocks__title-name">
+                    {$ts.home_category_title}
+                </div>
+                <div class="in-blocks__title-link"></div>
+            </div>
+
+            <div class="c-categ__wrap {if $ts.home_category_type == 'tile_sub_slider'} c-categ__slider owl-carousel owl-theme-nav{/if}">
+                {$i=1}
+                {foreach $home_category_ids as $id}
+                    {if !empty($categFull[$id])}
+                        {$c = $categFull[$id]}
+                        <div class="c-categ__item{if $ts.home_category_type != 'tile_sub_slider' && $ts.home_category_yet && $i > $ts.home_category_yet_count} h-hidden{/if}">
+                            <a href="{$c.url}" class="c-categ__link">
+                                {$imgDefault = "`$wa_parent_theme_url``$ts.category_default_img|default:'img/dummy200.png'`"}
+
+                                {$img = ''}
+                                {if class_exists('shopCategoryImagesPlugin')}
+                                    {$img = shopCategoryImagesPlugin::getCategoryImageUrl($c.id)}
+                                {elseif class_exists('shopCatimgPlugin')}
+                                    {$img = shopCatimgPlugin::getImage($c.id, 'image')}
+                                    {if !$img}{$img = ''}{/if}
+                                {elseif class_exists('shopSkcatimageHelper')}
+                                    {$img = shopSkcatimageHelper::getImages($c.id, 'image')}
+                                {/if}
+
+                                {if isset($c.params.img)}
+                                    {$img = $c.params.img}
+                                {/if}
+                                <span class="c-categ__img">
+                                    <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img|default:$imgDefault}" alt="{$c.name}">
+                                </span>
+
+                                <span class="c-categ__name">{$c.name}</span>
+                            </a>
+
+                            {$childs = $wa->shop->categories($c.id, 1)}
+
+                            {if !empty($childs)}
+                                <div class="c-categ__sub">
+                                    {foreach $childs as $c1}
+                                        <div class="c-categ__sub-item">
+                                            <a class="c-categ__sub-link" href="{$c1.url}">
+                                                {$c1.name}
+                                            </a>
+                                        </div>
+                                        {if $c1@iteration == $ts.home_category_sub_count}
+                                            {break}
+                                        {/if}
+                                    {/foreach}
+
+                                    {if count($childs) > $ts.home_category_sub_count}
+                                        <div class="c-categ__sub-item c-categ__sub-next">
+                                            <a href="{$c.url}">[`See all`] <svg class="icon10 i-angle-right">
+                                                    <use xlink:href="#i-angle-right"></use>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    {/if}
+                                </div>
+                            {/if}
+                        </div>
+                        {$i=$i+1}
+                    {/if}
+                {/foreach}
+            </div>
+
+            {if $ts.home_category_type != 'tile_sub_slider' && $ts.home_category_yet && count($home_category_ids) > $ts.home_category_yet_count}
+                <div class="h-yet h-yet_center in-blocks__item-s">
+                    <button class="h-yet__show" type="button">
+                        [`Show more`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                    <button class="h-yet__hide" type="button">
+                        [`Hide`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                </div>
+            {/if}
+        </div>
+    {/if}
+{/if}
+
+{/strip}

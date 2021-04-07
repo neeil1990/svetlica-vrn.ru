@@ -1,0 +1,71 @@
+{strip}
+
+{if !$ts.category_sub_hide && !isset($category.params.sub_hide) && !empty($category.subcategories)}
+    <div class="in-blocks__item-s">
+        {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+            <div class="block-info-name">{$name}</div>
+            <div class="e-panel-edit" data-group-edit="divider_category_sub">
+                <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Подкатегории">
+                    <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                </div>
+            </div>
+        {/if}
+
+        <div class="h-categ h-categ_c{if !empty($right)}-r{/if}
+            {if waRequest::isMobile(false) && $ts.category_sub_slider_mobile} h-categ_mobile{/if}">
+            <div class="h-categ__wrap">
+                {foreach $category.subcategories as $c}
+                    {if !isset($c.params.hide)}
+                        <div class="h-categ__item">
+                            <a class="h-categ__link" href="{$c.url}">
+                                {if $ts.category_sub_img}
+                                    {$imgDefault = "`$wa_parent_theme_url``$ts.category_default_img|default:'img/dummy200.png'`"}
+
+                                    {$img = ''}
+                                    {if class_exists('shopCategoryImagesPlugin')}
+                                        {$img = shopCategoryImagesPlugin::getCategoryImageUrl($c.id)}
+                                    {elseif class_exists('shopCatimgPlugin')}
+                                        {$img = shopCatimgPlugin::getImage($c.id, 'image')}
+                                    {elseif class_exists('shopSkcatimageHelper')}
+                                        {$img = shopSkcatimageHelper::getImages($c.id, 'image')}
+                                    {/if}
+
+                                    {if isset($c.params.img)}
+                                        {$img = $c.params.img}
+                                    {/if}
+
+                                    <span class="h-categ__img">
+                                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img|default:$imgDefault}" alt="{$c.name}">
+                                    </span>
+                                {/if}
+
+                                <span class="h-categ__name">{$c.name}</span>
+
+                                {if $ts.category_sub_count}
+                                    {$countProduct = $wa->shop->productsCount("category/`$c.id`")}
+                                    {if !empty($img)}
+                                        <span class="h-categ__count">{$countProduct}</span>
+                                    {else}
+                                        <span class="h-categ__count-st">
+                                            {$countProduct} {if $countProduct == 0}
+                                                [`products`]
+                                            {elseif $countProduct == 1 }
+                                                [`product`]
+                                            {elseif $countProduct > 1 && $countProduct < 5}
+                                                [`productss`]
+                                            {else}
+                                                [`products`]
+                                            {/if}
+                                        </span>
+                                    {/if}
+                                {/if}
+                            </a>
+                        </div>
+                    {/if}
+                {/foreach}
+            </div>
+        </div>
+    </div>
+{/if}
+
+{strip}

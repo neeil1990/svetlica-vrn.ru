@@ -1,0 +1,160 @@
+{strip}
+
+{$ts = $theme_settings}
+
+{if $ts.in_breadcrumbs == 'drop' && !waRequest::isMobile(false)}
+    {if !empty($category) || !empty($product.id)}
+        {$subs = $wa->shop->categories(0, null, true, true)}
+
+    {elseif !empty($page.id)}
+        {if $wa_app=='shop'}
+            {$subs = $wa->shop->pages()}
+        {elseif $wa_app=='site'}
+            {$subs = $wa->site->pages()}
+        {/if}
+    {/if}
+{/if}
+
+{if $wa->currentUrl() != $wa_app_url}
+    <div class="bread">
+        <nav class="bread__wrap" itemprop="breadcrumb">
+            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                <div class="block-info-name">breadcrumbs</div>
+                <div class="e-panel-edit" data-group-edit="divider_settings_in_breadcrumbs">
+                    <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Хлебные крошки">
+                        <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                    </div>
+                </div>
+            {/if}
+            <div class="bread__list">
+                <a class="bread__link" href="{$wa_app_url}">{$ts.in_breadcrumbs_home}</a>
+            </div>
+
+            {if !empty($breadcrumbs)}
+                {foreach $breadcrumbs as $b}
+                    {if !empty($b)}
+                        <div class="bread__list">
+                            <div class="bread__sep">/</div>
+                            <a class="bread__link" href="{$b.url}">{$b.name|escape}</a>
+
+                            {if $ts.in_breadcrumbs == 'drop' && !waRequest::isMobile(false)
+                                && (!$b@last || ($b@last && empty($rev)))}
+
+                                {if !empty($subs) && count($subs) > 1}
+                                    <div class="bread__down">
+                                        <svg class="icon8 i-angle-down">
+                                            <use xlink:href="#i-angle-down"></use>
+                                        </svg>
+                                    </div>
+
+                                    <div class="bread__sub">
+                                        {foreach $subs as $sub}
+                                            {if $sub.url != $b.url}
+                                                <a href="{$sub.url}" class="bread__sub-link">{$sub.name}</a>
+                                            {/if}
+                                        {/foreach}
+                                    </div>
+                                {/if}
+
+                                {if !empty($subs)}
+                                    {foreach $subs as $sub}
+                                        {if $sub.url == $b.url}
+                                            {if !empty($sub.childs)}
+                                                {$subs = $sub.childs}
+                                            {else}
+                                                {$subs = null}
+                                            {/if}
+                                            {break}
+                                        {/if}
+                                    {/foreach}
+                                {/if}
+                            {/if}
+                        </div>
+                    {/if}
+                {/foreach}
+            {/if}
+
+            {* BREAD PLUGIN BRAND*}
+            {$actionCheckBread = ['brand','brandPage']}
+            {if !empty($action) && in_array($action, $actionCheckBread)}
+                <div class="bread__list">
+                    <div class="bread__sep">/</div>
+                    <a class="bread__link" href="{$ts.home_brands_link}">[`Brands`]</a>
+                </div>
+            {/if}
+
+            {* BREAD APP HELPDESK*}
+            {$actionCheckBread = ['faqCategory','faqCategoryQuestion','ask','search']}
+            {if !empty($action) && in_array($action, $actionCheckBread) && $wa_app == 'helpdesk'}
+                <div class="bread__list">
+                    <div class="bread__sep">/</div>
+                    <a class="bread__link" href="{$wa->getUrl('helpdesk/frontend/faq')}">[`Helpdesk`]</a>
+                </div>
+            {/if}
+
+            {$actionCheck = ['brand','brands','brandPage','brands_list']}
+            {if $ts.in_breadcrumbs_last}
+                <div class="bread__list">
+                    <div class="bread__sep">/</div>
+                    <div class="bread__link bread__link_last">
+                        {$nameLast = $wa->title()|escape}
+
+                        {if !empty($category.name)}
+                            {$nameLast = $category.name}
+                        {elseif !empty($page.name)}
+                            {$nameLast = $page.name}
+                        {elseif !empty($reviews) && empty($rates)}
+                            {$nameLast = "[`Reviews`]"}
+                        {elseif !empty($product.name)}
+                            {$nameLast = $product.name}
+                        {elseif !empty($post.name)}
+                            {$nameLast = $post.title}
+                        {elseif !empty($action) && $action=='search' && $wa->get('view') == 'favorite'}
+                            {$nameLast = "[`Favorite`]"}
+                        {elseif !empty($action) && $action=='search' && $wa->get('viewed') == 'viewed'}
+                            {$nameLast = "[`Viewed`]"}
+                        {elseif !empty($action) && $action=='search'}
+                            {$nameLast = "[`Search`]"}
+                        {elseif !empty($action) && $action=='compare'}
+                            {$nameLast = "[`Compare products`]"}
+                        {elseif !empty($action) && $action=='cart'}
+                            {$nameLast = "[`Cart`]"}
+                        {elseif !empty($action) && ($action=='checkout' || $action=='checkoutone' || $action=='order')}
+                            {$nameLast = "[`Checkout`]"}
+                        {elseif !empty($action) && $action=='myProfile'}
+                            {$nameLast = "[s`My profile`]"}
+                        {elseif !empty($action) && $action=='myOrders'}
+                            {$nameLast = "[`My orders`]"}
+                        {elseif !empty($action) && $action=='myOrder'}
+                            {$nameLast = "[`Order`]"}
+                        {elseif !empty($action) && $action=='myRequests'}
+                            {$nameLast = "[`My requests`]"}
+                        {/if}
+
+                        {$nameLast}
+                    </div>
+
+                    {if !empty($subs) && count($subs) > 1 && !waRequest::isMobile(false)
+                        && empty($product.id) && !empty($action) && !in_array($action, $actionCheck)}
+                        <div class="bread__down">
+                            <svg class="icon8 i-angle-down">
+                                <use xlink:href="#i-angle-down"></use>
+                            </svg>
+                        </div>
+
+                        <div class="bread__sub">
+                            {foreach $subs as $sub}
+                                {if $sub.name != $nameLast}
+                                    <a href="{$sub.url}" class="bread__sub-link">{$sub.name}</a>
+                                {/if}
+                            {/foreach}
+                        </div>
+                    {/if}
+                </div>
+            {/if}
+
+        </nav>
+    </div>
+{/if}
+
+{/strip}

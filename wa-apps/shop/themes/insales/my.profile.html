@@ -1,0 +1,115 @@
+{strip}
+
+<div class="wrap">
+
+    {* BREADCRUMBS *}
+    {include file="`$wa_parent_theme_path`/breadcrumbs.html"}
+
+    <h1>[`Edit profile`]</h1>
+
+    {$wa->myNav('my-nav')}
+
+    {* HINT *}
+    {if !empty($saved) || ( isset($smarty.get.emailconfirmed) && $smarty.get.emailconfirmed == 1 ) }
+        <p style="color:#fff;background:#43c16d;padding:.5em 1em;">[s`Contact information successfully updated!`]</p>
+    {/if}
+
+    {* FORM *}
+
+    <div class="profile">
+
+        <div class="wa-form profile__read">
+            {foreach $user_info as $id => $info}
+                <div class="wa-field">
+                    <div class="wa-name">{$info.name}</div>
+                    <div class="wa-value">{$info.value|default:'—'}</div>
+                </div>
+            {/foreach}
+
+            <div class="wa-field">
+                <button class="button button_low profile__button-edit" type="button">[s`Edit`]</button>
+            </div>
+        </div>
+
+
+        <form class="wa-form profile__edit" style="display:none;" action="" method="post" enctype="multipart/form-data">
+            {$form->html()}
+
+            <div class="wa-field button-block">
+                <div class="wa-name"></div>
+                <div class="wa-value">
+                    <button class="button button_low" type="submit">[s`Save`]</button> <button class="button button_low profile__button-cancel" type="button">[s`Cancel`]</button>
+                </div>
+            </div>
+        </form>
+
+        {* SOCIAL ACCOUNTS *}
+        {$auth_adapters = $wa->authAdapters(true)}
+        {if $auth_adapters}
+            <section class="profile__auth">
+                <h3>[s`Connected accounts`]</h3>
+
+                {$linked_adapters = []}
+                {$other_adapters = []}
+                {foreach $auth_adapters as $a}
+                    {if $wa->user("{$a->getId()}_id")}
+                        {$linked_adapters[] = $a}
+                    {else}
+                        {$other_adapters[] = $a}
+                    {/if}
+                {/foreach}
+
+                {if $linked_adapters}
+                    <ul class="profile__auth-type">
+                        {foreach $linked_adapters as $a}
+                            <li><img alt="{$a->getName()}" src="{$a->getIcon()}"/></li>
+                        {/foreach}
+                    </ul>
+                {/if}
+
+                {if $other_adapters}
+                    <p>[s`Connect this account to your social network accounts so next time you can log in without entering your password:`]</p>
+
+                    <ul class="profile__auth-type">
+                        {foreach $other_adapters as $a}
+                            <li>
+                                <a href="{$a->getUrl()}"><img alt="{$a->getName()}" src="{$a->getIcon()}"/></a>
+                            </li>
+                        {/foreach}
+                    </ul>
+                {/if}
+            </section>
+        {/if}
+    </div>
+</div>
+
+<script>
+    $(function() {
+        const pRead = $('.profile__read');
+        const pEdit = $('.profile__edit');
+        const photoVal = $('.wa-field-photo .wa-value');
+
+        if(photoVal.find('img').length == 2) {
+            photoVal.prepend("<div class=\"profile__photo-rem\"><svg class=\"icon8 i-remove\">" +
+                "<use xlink:href=\"#i-remove\"></use></svg></div>");
+        }
+
+        $(document).on('click', '.profile__photo-rem', function() {
+            $(this).hide().next().hide().next().show();
+            $('[name="profile[photo]"]').val('');
+        });
+
+        $('.profile__button-edit').click(function() {
+            pRead.hide();
+            pEdit.show();
+        });
+
+        $('.profile__button-cancel').click(function() {
+            pRead.show();
+            pEdit.hide();
+            $('body,html').animate({ scrollTop: $('.my-nav').offset().top - 100 }, 300);
+        });
+    });
+</script>
+
+{/strip}

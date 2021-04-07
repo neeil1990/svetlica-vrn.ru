@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+{strip}
+
+{$themeActive = $wa_active_theme_path}
+{$ts = $theme_settings}
+<html lang="{if $wa->globals("lang")}{$wa->globals("lang")}{else}ru{/if}">
+<head>
+    <title>{$wa->title()|escape}</title>
+
+    {* META *}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1{if waRequest::isMobile(false)}, maximum-scale=1, user-scalable=0{/if}"/>
+    <meta http-equiv="x-ua-compatible" content="IE=edge"/>
+    <meta name="keywords" content="{$wa->meta('keywords')|escape}"/>
+    <meta name="description" content="{$wa->meta('description')|escape}"/>
+
+    {if $ts.header_mobile_bg}
+        <meta name="theme-color" content="{$ts.header_mobile_bg}">
+        <meta name="msapplication-navbutton-color" content="{$ts.header_mobile_bg}">
+        <meta name="apple-mobile-web-app-status-bar-style" content="{$ts.header_mobile_bg}">
+    {/if}
+
+    {if !empty($action) && $action == 'category' && $wa->get("page", 1) > 1}
+        <meta name="robots" content="noindex, follow">
+    {/if}
+
+    {if !empty($canonical)}
+        <link rel="canonical" href="{$canonical}"/>
+    {/if}
+
+    {* ICO *}
+    <link rel="shortcut icon" href="/favicon.ico"/>
+
+    {if $wa->blog}
+        {if $rss=$wa->blog->rssUrl()}
+        <!-- rss -->
+        <link rel="alternate" type="application/rss+xml" title="{$wa->accountName()}" href="{$rss}">
+        {/if}
+    {/if}
+
+    {* SETTINGS THEME *}
+    {include file="./settings.html" inline}
+
+    {* CSS *}
+    <link href="{$wa_theme_url}css/insale.min.css?v{$wa_theme_version}" rel="stylesheet"/>
+
+    {* CUSTOM FILE, DELETE PROM *}
+    <link href="{$wa_theme_url}css/user.css?v{$wa_theme_version}" rel="stylesheet"/>
+    <style>{$wa->block("insale.css")}</style>
+
+    {* JQUERY *}
+    {if $ts.load_jquery}
+        {include file="./header/jquery.html" inline}
+    {else}
+        <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery/jquery-1.11.1.min.js" ></script>
+        <script type="text/javascript" src="{$wa_static_url}wa-content/js/jquery/jquery-migrate-1.2.1.min.js"></script>
+    {/if}
+
+    {* HEAD *}
+    {if !$ts.load_scripts_plugin_bottom}
+        {include file="./header/head.html" inline}
+    {/if}
+</head>
+
+<body>
+{if $wa->user()->isAdmin($wa->app()) || !$ts.site_develop}
+
+    {if $ts.header_catalog_parent}
+        {$categ = $wa->shop->categories($ts.header_catalog_parent, null, true, true)}
+    {else}
+        {$categ = $wa->shop->categories(0, null, true, true)}
+    {/if}
+
+    {if $ts.colors_bg_fon}
+        <div class="wrap-fon-bg">
+    {/if}
+
+        {* HEADER *}
+        {include file="./header.html" inline}
+
+        {* CONTENT *}
+        <main class="main" itemscope itemtype="http://schema.org/WebPage">
+
+            {* MAIN *}
+            {include file="`$themeActive`/main.html" inline categ=$categ}
+
+        </main>
+
+        {* FOOTER *}
+        {include file="./footer.html" inline}
+
+    {if $ts.colors_bg_fon}
+        </div>
+    {/if}
+
+    {* FONT CONNECTION *}
+    {$fonts = ['roboto','open-sans','montserrat','source-sans-pro','raleway','ubuntu']}
+    <link href="{$wa_real_theme_url}css/{$fonts[$ts.site_font-1]}.min.css" rel="stylesheet"/>
+
+    {* CSS *}
+    <link href="{$wa_theme_url}css/fancybox.css" rel="stylesheet"/>
+
+    {if $wa->shop && $wa->shop->currency() == 'RUB' && $ts.is_ruble}
+        <link href="{$wa_url}wa-content/font/ruble/arial/fontface.css" rel="stylesheet"/>
+    {/if}
+
+    {* JS *}
+    <script src="{$wa_theme_url}js/owl.carousel.min.js?v={$wa->version(true)}" defer></script>
+    <script src="{$wa_theme_url}js/jquery.fancybox.min.js?v={$wa->version(true)}" defer></script>
+    <script src="{$wa_theme_url}js/jquery.countdownTimer.min.js?v={$wa->version(true)}" defer></script>
+    <script src="{$wa_theme_url}js/insale.min.js?v{$wa_theme_version}"></script>
+
+    {$currencies = $wa->shop->currencies()}
+    {$currency = $currencies[$wa->shop->currency()]}
+
+    <script>
+        $(function() {
+            $.inSale.init({
+                "_svg": "{$wa_real_theme_url}img/svg.svg",
+                "is_mobile": "{waRequest::isMobile(false)}",
+                "home_slider_auto": "{$ts.home_slider_auto|default:0}",
+                "modal_add": {$ts.modal_add|default:0},
+                "lazy_load_false": {$ts.lazy_load_false|default:0},
+                "product_images_arrow": {$ts.product_images_arrow|default:0},
+                "filters_ajax": {$ts.filters_ajax|default:0},
+                "days": "[`days`]",
+                "hours": "[`hours`]",
+                "minutes": "[`minutes`]",
+                "seconds": "[`seconds`]",
+                "sign": '{$currency.sign_html}',
+                "sign_position": {$currency.sign_position|default:1},
+                "sign_delim": "{$currency.sign_delim|default:' '}",
+                "precision": {$currency.precision|default:2}
+            });
+
+            {* BONUS FOR IS_AUTH USER, GET QUERY -> shop/frontend/myAffiliate *}
+            {if $wa->user()->isAuth() && shopAffiliate::isEnabled()}
+                $.ajax({
+                    url: "{$wa->getUrl('shop/frontend/myAffiliate')} ",
+                    success: function(response) {
+                        $('.in-auth__bonus-count').html($(response).find('.bonus-affiliate').html());
+                    }});
+            {/if}
+        });
+    </script>
+
+    {* CUSTOM FILE, DELETE PROM *}
+    <script src="{$wa_theme_url}js/user.js?v{$wa_theme_version}" defer></script>
+    <script>{$wa->block("insale.js")}</script>
+
+    {* HEAD *}
+    {if $ts.load_scripts_plugin_bottom}
+        {include file="./header/head.html" inline}
+    {/if}
+
+    {if $wa_app=='shop'}
+        {* @event frontend_footer.%plugin_id% *}
+        {foreach $frontend_footer as $_}{$_}{/foreach}
+    {/if}
+
+    {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/belllight/ *}
+    {if $wa->shop && class_exists('shopBelllightPlugin')}
+        {shopBelllightPlugin::head()}
+        {shopBelllightPlugin::display()}
+    {/if}
+
+    {include file="./banner.base.html" inline}
+    {include file="./panel.edit.html" inline}
+
+    {$wa->block("insale.metrika")}
+{else}
+
+    {* IN DEVELOPMENT*}
+    {include file="./development.html" inline}
+
+{/if}
+</body>
+</html>
+
+{/strip}

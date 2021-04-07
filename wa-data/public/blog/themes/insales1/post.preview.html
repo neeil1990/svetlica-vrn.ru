@@ -1,0 +1,68 @@
+{strip}
+
+{if $theme_settings.blog_view == 'list'}
+    <article class="in-blocks__item in-post"
+        {if $wa->param('blog_url')} itemprop="blogPosts"{/if} itemscope itemtype="http://schema.org/BlogPosting">
+
+        <meta itemprop="datePublished" content="{$post.datetime|date_format:'Y-m-d\TH:i'}">
+        <meta itemprop="author" content="{$post.user.name}">
+
+        <h2>
+            <a href="{$post.link}" itemprop="url">
+                {$post.title}
+                {* @event prepare_posts_frontend.%plugin_id%.post_title *}
+                {if !empty($post.plugins.post_title)}
+                    {foreach $post.plugins.post_title as $plugin => $output}{$output}{/foreach}
+                {/if}
+            </a>
+        </h2>
+
+        <div class="in-post__date">{$post.datetime|wa_datetime:"humandate"}</div>
+
+        <div class="page" itemprop="articleBody">
+            {$post.text}
+        </div>
+
+        <a class="in-post__next" href="{$post.link}">[`Read more`]
+            <svg class="icon10 i-angle-right"><use xlink:href="#i-angle-right"></use></svg>
+        </a>
+
+        {* @event prepare_posts_frontend.%plugin_id%.after *}
+        {if !empty($post.plugins.after)}
+            <div class="text_after">
+                {foreach $post.plugins.after as $plugin => $output}{$output}{/foreach}
+            </div>
+        {/if}
+    </article>
+{else}
+    <article class="h-news__item"
+        {if $wa->param('blog_url')} itemprop="blogPosts"{/if} itemscope itemtype="http://schema.org/BlogPosting">
+
+        <meta itemprop="datePublished" content="{$post.datetime|date_format:'Y-m-d\TH:i'}">
+        <meta itemprop="author" content="{$post.user.name}">
+
+        {if !empty($post.img)}
+            <div class="h-news__item-img">
+                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$post.img}" alt="{$post.title|escape}">
+            </div>
+        {/if}
+
+        <div class="h-news__item-date">{$post.datetime|wa_datetime:"humandate"}</div>
+        <div class="h-news__item-name">
+            {$post.title}
+            {* @event prepare_posts_frontend.%plugin_id%.post_title *}
+            {if !empty($post.plugins.post_title)}
+                {foreach $post.plugins.post_title as $plugin => $output}{$output}{/foreach}
+            {/if}
+        </div>
+        <div class="h-news__item-text">{strip_tags($post.text)|truncate:200}</div>
+
+        <a href="{$post.link}" class="h-news__item-next">
+            [`more`] <svg class="icon8 i-angle-right">
+                <use xlink:href="#i-angle-right"></use>
+            </svg>
+        </a>
+    </article>
+{/if}
+
+{/strip}

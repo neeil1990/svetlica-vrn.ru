@@ -1,0 +1,68 @@
+{strip}
+
+{* BRANDS PRO https://www.webasyst.ru/store/plugin/shop/brand/ *}
+{if class_exists('shopBrandViewHelper')}
+    {$brandsImg = shopBrandViewHelper::getAllBrands()}
+    {if !empty($brandsImg)}
+        <div class="in-left__title">[`Brands`]</div>
+        <div class="l-brands">
+            <ul class="menu-v">
+                {foreach $brandsImg as $brand}
+                    <li>
+                        <a href="{$brand.frontend_url}">{$brand.name}</a>
+                    </li>
+                {/foreach}
+            </ul>
+            {if count($brandsImg) > 8}
+                <div class="h-yet">
+                    <button class="h-yet__show">
+                        [`Show more`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                    <button class="h-yet__hide">
+                        [`Hide`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                </div>
+            {/if}
+        </div>
+    {/if}
+
+{* BRANDS IMAGES AND DESCRIPTION https://www.webasyst.ru/store/plugin/shop/productbrands/ *}
+{else if class_exists('shopProductbrandsPlugin')}
+    {$brandsImg = shopProductbrandsPlugin::getBrands()}
+    {if !empty($brandsImg)}
+        <div class="in-left__title">[`Brands`]</div>
+        <div class="l-brands">
+            <ul class="menu-v">
+                {foreach $brandsImg as $b}
+                    <li>
+                        <a href="{$b.url}">{$b.name}</a>
+                    </li>
+                {/foreach}
+            </ul>
+            {if count($brandsImg) > 8}
+                <div class="h-yet">
+                    <button class="h-yet__show">
+                        [`Show more`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                    <button class="h-yet__hide">
+                        [`Hide`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                </div>
+            {/if}
+        </div>
+    {/if}
+{/if}
+
+{/strip}

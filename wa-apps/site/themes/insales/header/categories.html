@@ -1,0 +1,211 @@
+{strip}
+
+{function name=label}
+    {if !empty($cat.params.badge)}
+        <span class="label" style="
+            {if !empty($cat.params.badge_bg)}background-color:{$cat.params.badge_bg};{/if}
+            {if !empty($cat.params.badge_color)}color:{$cat.params.badge_color};{/if}">
+            {$cat.params.badge}
+        </span>
+    {/if}
+{/function}
+
+{function name=menu_blocks columns=0}
+    <div class="h-menu__img{if $columns} h-menu__img_columns{/if}">
+        <div class="wrap">
+            {if !$columns}
+                <div class="h-menu__img-title">
+                    <div class="h-menu__img-title-name">{$cat.name}</div>
+                    {label cat=$cat}
+                </div>
+            {/if}
+            <ul class="h-menu__img-ul">
+                {foreach $cat.childs as $c}
+                    {if !isset($c.params.hide)}
+                        <li class="h-menu__img-li">
+                            <a href="{$c.url}" class="h-menu__img-link{if $c.id == $sel || $c.url == "`$sel`"} h-menu__link_active{/if}">
+                                {menu_icon c=$c class_name="h-menu__img-icon" type="image"}
+                                <span class="h-menu__img-name h-menu__name">
+                                    {$c.name}
+                                </span>
+                                {label cat=$c}
+                            </a>
+
+                            {if !empty($c.childs)}
+                                <ul class="h-menu__img-ul-1">
+                                    {foreach $c.childs as $c1}
+                                        {if !isset($c1.params.hide) && $c1@iteration <= $ts.header_category_yet_count}
+                                            <li class="h-menu__img-li-1">
+                                                <a href="{$c1.url}" class="h-menu__img-link-1{if $c1.id == $sel} h-menu__link_active{/if}">
+                                                    <span class="h-menu__name">
+                                                        {$c1.name}
+                                                    </span>
+
+                                                    {label cat=$c1}
+                                                </a>
+                                            </li>
+                                        {/if}
+                                    {/foreach}
+                                    {if $ts.header_category_yet_count < count($c.childs)}
+                                        <li class="h-menu__img-li-1">
+                                            <a href="{$c.url}" class="h-menu__img-next">
+                                                {$ts.header_category_yet}
+                                            </a>
+                                        </li>
+                                    {/if}
+                                </ul>
+                            {/if}
+                        </li>
+                    {/if}
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+{/function}
+
+{function name=menu_dropdown}
+    <ul class="h-menu__sub h-menu__sub-1">
+        {foreach $cat as $c}
+            <li class="h-menu__sub-item">
+                <a href="{$c.url}" class="h-menu__sub-link{if $c.id == $sel} h-menu__link_active{/if}">
+                    {menu_icon c=$c class_name="h-menu__icon" type="icon"}
+                    <span class="h-menu__name">
+                        {$c.name}
+                    </span>
+                    {label cat=$c}
+
+                    {if !empty($c.childs)}
+                        <svg class="icon8 i-angle-right">
+                            <use xlink:href="#i-angle-right"></use>
+                        </svg>
+                    {/if}
+                </a>
+
+                {if !empty($c.childs)}
+                    <ul class="h-menu__sub h-menu__sub-2">
+                        {foreach $c.childs as $c1}
+                            {if !isset($c1.params.hide)}
+                                <li class="h-menu__sub-item">
+                                    <a href="{$c1.url}" class="h-menu__sub-link{if $c1.id == $sel} h-menu__link_active{/if}">
+                                        {menu_icon c=$c1 class_name="h-menu__icon" type="icon"}
+                                        <span class="h-menu__name">
+                                            {$c1.name}
+                                        </span>
+                                        {label cat=$c1}
+
+                                        {if !empty($c1.childs)}
+                                            <svg class="icon8 i-angle-right">
+                                                <use xlink:href="#i-angle-right"></use>
+                                            </svg>
+                                        {/if}
+                                    </a>
+                                    {if !empty($c1.childs)}
+                                        <ul class="h-menu__sub h-menu__sub-3">
+                                            {foreach $c1.childs as $c2}
+                                                {if !isset($c2.params.hide)}
+                                                    <li class="h-menu__sub-item">
+                                                        <a href="{$c2.url}" class="h-menu__sub-link{if $c2.id == $sel} h-menu__link_active{/if}">
+                                                            {menu_icon c=$c2 class_name="h-menu__icon" type="icon"}
+                                                            <span class="h-menu__name">
+                                                                {$c2.name}
+                                                            </span>
+                                                            {label cat=$c2}
+                                                        </a>
+                                                    </li>
+                                                {/if}
+                                            {/foreach}
+                                        </ul>
+                                    {/if}
+                                </li>
+                            {/if}
+                        {/foreach}
+                    </ul>
+                {/if}
+            </li>
+        {/foreach}
+    </ul>
+{/function}
+
+{if !empty($categ)}
+    {if $ts.header_category_parent}
+        {$categ = $wa->shop->categories($ts.header_category_parent, null, true, true)}
+    {/if}
+
+    {$sel = 0}
+    {if isset($category.id) && !empty($category.id)}
+        {$sel = $category.id}
+    {elseif isset($product.category_id) && !empty($product.category_id)}
+        {$sel = $product.category_id}
+    {/if}
+
+    {if $ts.header_category_menu}
+        {$sel = $wa->currentUrl()}
+        {$categ = $wa->menu->get($ts.header_category_menu)}
+    {/if}
+
+    {$menuTypesPosition = [
+        'mega',
+        'mega_big',
+        'blocks'
+    ]}
+
+    <ul class="h-menu h-menu_catalog h-menu_over{if $ts.header_category_space_between} h-menu_catalog-sb{/if}">
+        {foreach $categ as $c}
+            {if !isset($c.params.hide)}
+                <li class="h-menu__item
+                    {if !empty($c.childs) && ((isset($c.params.type_menu) && in_array($c.params.type_menu, $menuTypesPosition))
+                    || (!isset($c.params.type_menu) && in_array($ts.header_categories_default, $menuTypesPosition)))} h-menu__item-p h-menu_hover{/if}">
+
+                    <a href="{$c.url}" class="h-menu__link{if $c.id == $sel || $c.url == "`$sel`"} h-menu__link_active{/if}">
+                        {menu_icon c=$c class_name="h-menu__icon" type="icon"}
+                        <span class="h-menu__name">
+                            {$c.name}
+                        </span>
+                        {label cat=$c}
+
+                        {if !empty($c.childs)}
+                            <svg class="icon8 i-angle-down">
+                                <use xlink:href="#i-angle-down"></use>
+                            </svg>
+                        {/if}
+                    </a>
+
+                    {if !empty($c.childs)}
+                        {if ($ts.header_categories_default == 'dropdown' && !isset($c.params.type_menu))
+                                || (isset($c.params.type_menu) && $c.params.type_menu == 'dropdown')}
+                            {menu_dropdown cat=$c.childs sel=$sel}
+                        {elseif ($ts.header_categories_default == 'mega' && !isset($c.params.type_menu))
+                                || (isset($c.params.type_menu) && $c.params.type_menu == 'mega')}
+                            {include file="./catalog.big.html" categ=$c.childs}
+                        {elseif ($ts.header_categories_default == 'mega_big' && !isset($c.params.type_menu))
+                                || (isset($c.params.type_menu) && $c.params.type_menu == 'mega_big')}
+                            {include file="./catalog.big.html" categ=$c.childs megaBig=1}
+                        {elseif ($ts.header_categories_default == 'blocks' && !isset($c.params.type_menu))
+                                || (isset($c.params.type_menu) && $c.params.type_menu == 'blocks')}
+                            {menu_blocks cat=$c sel=$sel}
+                        {elseif ($ts.header_categories_default == 'columns' && !isset($c.params.type_menu))
+                                || (isset($c.params.type_menu) && $c.params.type_menu == 'columns')}
+                            {menu_blocks cat=$c sel=$sel columns=1}
+                        {/if}
+                    {/if}
+                </li>
+            {/if}
+        {/foreach}
+
+        <li class="h-menu__item h-menu__yet{if $ts.header_categories_default != 'columns'} h-menu__item-p h-menu_hover{/if}">
+            <div class="h-menu__link">
+                <svg class="icon4 i-circle"><use xlink:href="#i-circle"></use></svg>
+                <svg class="icon4 i-circle"><use xlink:href="#i-circle"></use></svg>
+                <svg class="icon4 i-circle"><use xlink:href="#i-circle"></use></svg>
+            </div>
+            <div class="h-menu__img{if $ts.header_categories_default == 'columns'} h-menu__img_columns{/if}">
+                <div class="wrap">
+                    <ul class="h-menu__img-ul"></ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+{/if}
+
+
+{/strip}

@@ -1,0 +1,81 @@
+{strip}
+
+{$class = 'h-phone'}
+{$home = 'h-phone__home'}
+{$icon = 'h-phone__icon'}
+{$iconSize = 'icon16'}
+
+{if !empty($mobile)}
+    {$ts.header_phone_icon_1 = 'img/settings/header_phone-3.png'}
+{/if}
+
+{if $ts.header_phone_icon_1 != 'img/settings/header_phone-4.png'}
+    {$class = 'h-phone h-phone_big'}
+{/if}
+
+{if $ts.header_phone_icon_1 == 'img/settings/header_phone-1.png'}
+    {$icon = 'h-phone__icon h-phone__icon_big'}
+{/if}
+
+{if $ts.header_phone_icon_1 == 'img/settings/header_phone-2.png'}
+    {$icon = 'h-phone__icon h-phone__icon_big h-phone__icon_big-s'}
+{/if}
+
+{if $ts.header_phone_icon_1 == 'img/settings/header_phone-1.png' || $ts.header_phone_icon_1 == 'img/settings/header_phone-3.png'}
+    {$iconSize = 'icon20'}
+{/if}
+
+{if $ts.header_phone_icon_1 == 'img/settings/header_phone-3.png' || $ts.header_phone_icon_1 == 'img/settings/header_phone-4.png'}
+    {$home = 'h-phone__home h-phone__home_end'}
+{/if}
+
+<div class="{$class}">
+    <div class="{$home}">
+        <div class="{$icon}">
+            {if $ts.header_phone_1_svg}
+                <img class="{$iconSize}" src="{$ts.header_phone_1_svg}?v{$wa_theme_version}" alt="i-phone-1">
+            {else}
+                <svg class="{$iconSize} i-phone">
+                    <use xlink:href="#i-phone"></use>
+                </svg>
+            {/if}
+        </div>
+
+        <div class="h-phone__content">
+            <div class="h-phone__content-tel">
+                {capture assign="num_1"}
+                    {eval var=$ts.header_phone_num_1}
+                {/capture}
+                <a class="h-phone__tel" href="tel:{$num_1|replace:' ':''}">
+                    {$num_1}
+                </a>
+
+                {if $ts.header_phone_call_type == 'down' || $ts.header_phone_sign_1}
+                    <div class="h-phone__hint">
+                        {if $ts.header_phone_call_type == 'down'}
+                            <div class="h-phone__call in-callback">
+                                {$ts.header_phone_call}
+                            </div>
+                        {else}
+                            {$ts.header_phone_sign_1}
+                        {/if}
+                    </div>
+                {/if}
+            </div>
+
+            {if $ts.header_phone_drop_2}
+                <div class="h-phone__icon-down">
+                    <svg class="icon16 i-angle-down-b">
+                        <use xlink:href="#i-angle-down-b"></use>
+                    </svg>
+                </div>
+            {/if}
+        </div>
+    </div>
+
+    {if $ts.header_phone_drop_2}
+        {include file="./phone.info.html"}
+    {/if}
+</div>
+
+{/strip}

@@ -1,0 +1,54 @@
+{strip}
+
+{* APP MY LANG *}
+{if $wa->mylang && $ts.header_social_my_lang}
+
+    <div class="in-locale">
+        <div class="in-locale__my-lang">
+            {$wa->mylang->selectorFlags()}
+        </div>
+    </div>
+
+{else if !$ts.header_social_my_lang}
+    {* ВЫБОР ЛОКАЛИЗАЦИИ ДЛЯ ДВУХ ЯЗЫКОВ *}
+    {* ДЛЯ БОЛЬШЕГО ВЫБОРА ЯЗЫКОВ ИСПОЛЬЗУЙТЕ ПРИЛОЖЕНИЕ - MY LANG (https://www.webasyst.ru/store/app/mylang/docs/)*}
+
+    {$locale = [
+        'ru_RU' => [ name => '[`Russian`]', icon => 'i-russia', url => '/'],
+        'en_US' => [ name => '[`English`]', icon => 'i-usa', url => $ts.header_locale_en]
+    ]}
+
+    {if $wa->locale() && !empty($locale[$wa->locale()])}
+        <div class="in-locale">
+            <div class="in-locale__active">
+                <svg class="{if !empty($mobile)}icon30{else}icon20{/if} {$locale[$wa->locale()].icon}">
+                    <use xlink:href="#{$locale[$wa->locale()].icon}"></use>
+                </svg>
+
+                {if empty($mobile)}
+                    <div class="in-locale__name">
+                        {$locale[$wa->locale()].name}
+                    </div>
+                {/if}
+
+                <div class="in-locale__icon-down">
+                    <svg class="icon16 i-angle-down-b">
+                        <use xlink:href="#i-angle-down-b"></use>
+                    </svg>
+                </div>
+            </div>
+            <div class="in-locale__drop">
+                {foreach $locale as $v=>$l}
+                    <a class="in-locale__drop-item" href="{$l.url}?locale={$v}" rel="alternate">
+                        <svg class="icon20 {$l.icon}">
+                            <use xlink:href="#{$l.icon}"></use>
+                        </svg>
+                        <span class="in-locale__drop-name">{$l.name}</span>
+                    </a>
+                {/foreach}
+            </div>
+        </div>
+    {/if}
+{/if}
+
+{/strip}

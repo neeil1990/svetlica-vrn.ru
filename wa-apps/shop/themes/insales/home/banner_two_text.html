@@ -1,0 +1,100 @@
+{strip}
+
+{if $ts.home_banner_two_text_img_1 && $ts.home_banner_two_text_img_2}
+    {if $ts.home_banner_two_text_title}
+        <div class="in-blocks__title">
+            <div class="in-blocks__title-name">
+                {$ts.home_banner_two_text_title}
+            </div>
+            <a href="{$ts.home_banner_two_text_link}" class="in-blocks__title-link">
+                {$ts.home_banner_two_text_link_title} <svg class="icon10 i-angle-right">
+                <use xlink:href="#i-angle-right"></use>
+            </svg>
+            </a>
+        </div>
+    {/if}
+
+    <div class="b-promo">
+        <div class="b-promo__item">
+            <div class="b-promo__item-img in-effect-glare">
+                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$wa_parent_theme_url}{$ts.home_banner_two_text_img_1}?v{$wa_theme_version}" alt="{$ts.home_banner_two_text_title_1}">
+            </div>
+
+            <div class="b-promo__item-content">
+                <div class="b-promo__item-name">
+                    {$ts.home_banner_two_text_title_1}
+                </div>
+
+                <div class="b-promo__item-bott">
+                    {if $ts.home_banner_two_text_timer_1}
+                        <div class="b-promo__item-timer">
+                            <div class="b-promo__item-timer-n">[`To stay`]</div>
+                            <div class="b-promo__item-timer-d">
+                                {$day = round( (strtotime($ts.home_banner_two_text_timer_1) - strtotime(date('Y-m-d')))/(60*60*24) )}
+                                {if $day > 0}
+                                    {$day} {if $day == 1 }
+                                        [`day`]
+                                    {elseif $day < 5}
+                                        [`of the day`]
+                                    {else}
+                                        [`days`]
+                                    {/if}
+                                {else}
+                                    [`the stock is over`]
+                                {/if}
+                            </div>
+                        </div>
+                    {/if}
+
+                    <a href="{$ts.home_banner_two_text_link_1}" class="b-promo__item-next">
+                        [`more`] <svg class="icon8 i-angle-right">
+                            <use xlink:href="#i-angle-right"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="b-promo__item">
+            <div class="b-promo__item-img in-effect-glare">
+                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$wa_parent_theme_url}{$ts.home_banner_two_text_img_2}?v{$wa_theme_version}" alt="{$ts.home_banner_two_text_title_2}">
+            </div>
+
+            <div class="b-promo__item-content">
+                <div class="b-promo__item-name">
+                    {$ts.home_banner_two_text_title_2}
+                </div>
+
+                <div class="b-promo__item-bott">
+                    {if $ts.home_banner_two_text_timer_2}
+                        <div class="b-promo__item-timer">
+                            <div class="b-promo__item-timer-n">[`To stay`]</div>
+                            <div class="b-promo__item-timer-d">
+                                {$day = round( (strtotime($ts.home_banner_two_text_timer_2) - strtotime(date('Y-m-d')))/(60*60*24) )}
+                                {if $day > 0}
+                                    {$day} {if $day == 1 }
+                                        [`day`]
+                                    {elseif $day < 5}
+                                        [`of the day`]
+                                    {else}
+                                        [`days`]
+                                    {/if}
+                                {else}
+                                    [`the stock is over`]
+                                {/if}
+                            </div>
+                        </div>
+                    {/if}
+
+                    <a href="{$ts.home_banner_two_text_link_2}" class="b-promo__item-next">
+                        [`more`] <svg class="icon8 i-angle-right">
+                            <use xlink:href="#i-angle-right"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{/if}
+
+{/strip}

@@ -1,0 +1,37 @@
+{strip}
+
+<div class="subscribe">
+    <div class="subscribe__wrap">
+        <div class="subscribe__info">
+            <div class="subscribe__icon">
+                <svg class="icon30 i-email">
+                    <use xlink:href="#i-email"></use>
+                </svg>
+            </div>
+            <div class="subscribe__content">
+                <div class="subscribe__title">{$ts.home_subscribe_title}</div>
+                <div class="subscribe__des">{$ts.home_subscribe_text}</div>
+            </div>
+        </div>
+        <div class="subscribe__form">
+            {$act = $wa->getUrl('mailer/frontend/subscribe')}
+            <form action="{$act|default:'/'}" method="post">
+                <input type="hidden" name="form_id" value="{$ts.home_subscribe_form}">
+                <input type="hidden" name="lists[]" value="{$ts.home_subscribe_list}">
+
+                <input class="subscribe__input" name="subscriber[email]" autocomplete="off" required="" type="email" placeholder="[`Your email address`]">
+
+                <button class="subscribe__button button">[`Subscribe`]</button>
+
+                <p class="subscribe__label">
+                    <label>
+                        <input type="checkbox" name="rules"> {$ts.home_subscribe_politika}
+                    </label>
+                </p>
+            </form>
+            <p style="display:none" class="subscribe__thank">[s`Thank you! We’ll keep you posted.`]</p>
+        </div>
+    </div>
+</div>
+
+{/strip}

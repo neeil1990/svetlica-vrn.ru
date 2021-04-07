@@ -1,0 +1,344 @@
+{strip}
+
+{$ts = $theme_settings}
+
+<div class="wrap reviews">
+    {* BREADCRUMBS *}
+    {include file="`$wa_parent_theme_path`/breadcrumbs.html" category=1 rev=1}
+
+    <h1>{sprintf('[`%s reviews`]', $product.name|escape)}</h1>
+    <div class="in-blocks__title">
+        <div class="in-blocks__title-name" itemprop="name">
+            {sprintf('[`%s reviews`]', $product.name|escape)}
+        </div>
+
+        {if $ts.product_share}
+            <div class="in-blocks__title-link product">
+                <script src="https://yastatic.net/share2/share.js"></script>
+                <div class="ya-share2" data-services="{$ts.product_share}"></div>
+            </div>
+        {/if}
+    </div>
+
+    <div class="product__pages">
+        <a class="product__pages-item" href="{$wa->shop->productUrl($product)}">[`Overview`]</a></li>
+        <a class="product__pages-item product__pages-item_active" href="{$wa->shop->productUrl($product, 'reviews')}">
+            [`Reviews`] ({$reviews_count})
+        </a>
+
+        {foreach $product.pages as $p}
+            <a href="{$wa->shop->productUrl($product, 'page', ['page_url' => $p.url])}" class="product__pages-item">
+                {$p.name}
+            </a>
+        {/foreach}
+    </div>
+
+    <div class="reviews__wrap">
+        <div class="reviews__left">
+            {$wa->title(sprintf('[`%s reviews`]', $product.name))}
+
+            {if count($reviews) > 0}
+                <div class="p-rating">
+                    <div class="p-rating__all">
+                        <div class="p-rating__all-star">
+                            {$wa->shop->ratingHtml($product.rating, 16)}
+                        </div>
+                        <div class="p-rating__all-hint">
+                            {sprintf('[`%s out of 5 stars`]', $product.rating)}
+                        </div>
+                        -  [`average customer rating`]
+                    </div>
+
+                    {$rates = [0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0]}
+                    {foreach $reviews as $r}
+                        {if $r['rate'] == 5}
+                            {$rates[5] = $rates[5]+1}
+                        {elseif $r['rate'] == 4}
+                            {$rates[4] = $rates[4]+1}
+                        {elseif $r['rate'] == 3}
+                            {$rates[3] = $rates[3]+1}
+                        {elseif $r['rate'] == 2}
+                            {$rates[2] = $rates[2]+1}
+                        {elseif $r['rate'] == 1}
+                            {$rates[1] = $rates[1]+1}
+                        {elseif $r['rate'] == 0}
+                            {$rates[0] = $rates[0]+1}
+                        {/if}
+                    {/foreach}
+
+                    <div class="p-rating__wrap">
+                        <div class="p-rating__left">
+                            <table class="p-rating__dis">
+                                {$_total_count = 0}
+                                {foreach $rates as $_rate => $_count}
+                                    {$_total_count = $_total_count + $_count}
+                                {/foreach}
+                                {for $i = 5 to 0 step -1}
+                                    {if empty($rates[$i]) || !$rates[$i]}
+                                        {$_count = 0}
+                                    {else}
+                                        {$_count = $rates[$i]}
+                                    {/if}
+
+                                    {if $i || $_count}
+                                        <tr>
+                                            <td class="p-rating__dis-1">
+                                                {for $j=1 to $i}
+                                                    <i class="icon12 star"></i>
+                                                {forelse}
+                                                    [`no rate`]
+                                                {/for}
+
+                                                {if $i > 0 && $i < 5}
+                                                    {for $j=4 to $i step -1}
+                                                        <i class="icon12 star-empty"></i>
+                                                    {/for}
+                                                {/if}
+                                            </td>
+                                            <td class="p-rating__dis-2">
+                                                <div class="p-rating__dis-bar">
+                                                    <div class="p-rating__dis-fill" style="width:
+                                                        {if $_total_count > 0}
+                                                            {str_replace(',','.', 100*$_count/$_total_count)}
+                                                        {else}0{/if}%;">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="p-rating__dis-3">
+                                                {$_count} {if $_count == 1 }
+                                                    [`Review`]
+                                                {elseif $_count > 1 && $_count < 5}
+                                                    [`Recall`]
+                                                {else}
+                                                    [`Reviewss`]
+                                                {/if}
+                                            </td>
+                                        </tr>
+                                    {/if}
+                                {/for}
+                            </table>
+                        </div>
+                        <div class="p-rating__right">
+                            <div class="p-rating__circle">
+                                <div class="p-rating__circle-c">
+                                    <div class="p-rating__circle-num">
+                                        {$product.rating}
+                                    </div>
+                                </div>
+
+                                <svg>
+                                    <circle cx="70" cy="70" r="64" stroke-dasharray="{$product.rating*402/5} 402"></circle>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="p-reviews__header">
+                            <div class="p-reviews__header-title">
+                                [`Leave feedback about this product`]
+                            </div>
+                            <div class="p-reviews__header-button">
+                                <button class="button p-reviews_button">
+                                    [`Write a feedback`]
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {/if}
+
+            <div class="p-reviews">
+
+                {* FORMS ADD *}
+                {include file="./reviews.form.html" inline}
+
+                {if count($reviews) > 0}
+
+                    {$current = 1}
+                    {$onPage = $ts.product_reviews_count}
+                    {$countPage = ceil(count($reviews)/$onPage)}
+
+                    {if !empty($smarty.get.page)}
+                        {$current = $smarty.get.page}
+                    {/if}
+
+                    <div class="p-reviews__items">
+                        <div class="p-reviews__items-loading">
+                            <svg class="icon30 i-loading ">
+                                <use xlink:href="#i-loading"></use>
+                            </svg>
+                        </div>
+
+                        {if $ts.product_reviews_photos}
+                            <div class="p-reviews__images">
+                                <div class="p-reviews__items-title">Фотографии покупателей</div>
+                                <div class="p-reviews__images-slider owl-carousel owl-theme-nav-2">
+                                    {$reviewsImages = ''}
+                                    {foreach $reviews as $review}
+                                        {if !empty($review.images)}
+                                            {$reviewsImages = 1}
+                                            {foreach $review.images as $_image}
+                                                <a data-fancybox="p-reviews-{$review.id}" href="{$_image.url_0|escape}" title="{$_image.description|escape}" target="_blank">
+                                                    <img src="{$_image.url_3|escape}" alt="{$_image.description|escape}">
+                                                </a>
+                                            {/foreach}
+                                        {/if}
+
+                                        {if !empty($review.comments)}
+                                            {foreach $review.comments|@array_reverse as $rev}
+                                                {if !empty($rev.images)}
+                                                    {$reviewsImages = 1}
+                                                    {foreach $rev.images as $_image}
+                                                        <a data-fancybox="reviews-{$rev.id}" href="{$_image.url_0|escape}" title="{$_image.description|escape}" target="_blank">
+                                                            <img src="{$_image.url_3|escape}" alt="{$_image.description|escape}">
+                                                        </a>
+                                                    {/foreach}
+                                                {/if}
+                                            {/foreach}
+                                        {/if}
+                                    {/foreach}
+                                </div>
+                                {if $reviewsImages}
+                                    <style>.p-reviews__images{ display:block; }</style>
+                                {/if}
+                            </div>
+                        {/if}
+
+                        <div class="p-reviews__items-title">
+                            {_w('%d review for ','%d reviews for ', $reviews_count)|cat:$product.name|escape}
+                        </div>
+
+                        {if $countPage > 1}
+                            <div class="in-blocks__item">
+                                {wa_pagination total=$countPage attrs=["class" => "pagin"]}
+                            </div>
+                        {/if}
+
+
+                        <div class="p-reviews__items-wrap">
+                            {foreach $reviews as $review}
+                                {if $review@iteration <= $onPage*$current && $review@iteration > ($onPage*$current - $onPage)}
+                                    <div class="p-reviews__item" data-id="{$review.id}" itemscope itemprop="review" itemtype="http://schema.org/Review">
+                                        <meta itemprop="itemReviewed" content="{$product.name|escape}">
+                                        <meta itemprop="datePublished" content="{$review.datetime|date_format:'Y-m-d'}">
+
+                                        <div class="p-reviews__item-icon">
+                                            <div class="p-reviews__item-icon-text">
+                                                {$review.author.name|truncate:1:''}
+                                            </div>
+                                        </div>
+
+                                        <div class="p-reviews__item-content">
+                                            <div class="p-reviews__item-header">
+                                                <div class="p-reviews__item-name" itemprop="author">
+                                                    {$review.author.name}
+
+                                                    {if ifempty($review.author.is_user) > 0}
+                                                        <div class="p-reviews__item-company">{$wa->shop->settings('name')}</div>
+                                                    {/if}
+                                                </div>
+                                                <div class="p-reviews__item-date">{$review.datetime|wa_datetime:"humandatetime"}</div>
+                                            </div>
+
+                                            {if !$review.parent_id && !empty($review.rate)}
+                                                <div class="p-reviews__item-rating" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                                                    {$rate = round($review.rate)}
+
+                                                    <div class="p-reviews__item-rates">
+                                                        {for $i = 1 to 5}
+                                                            {$icon_class = "star"}
+                                                            {if ($rate < $i)}
+                                                                {$icon_class = "star-empty"}
+                                                            {/if}
+                                                            <i class="icon14 star {$icon_class}" data-rate-count="{$i}"></i>
+                                                        {/for}
+                                                    </div>
+
+                                                    <div class="p-reviews__item-rates-num">({$rate} [`out of`] 5)</div>
+
+                                                    <meta itemprop="worstRating" content = "1">
+                                                    <meta itemprop="ratingValue" content="{$rate}">
+                                                    <meta itemprop="bestRating" content = "5">
+                                                </div>
+                                            {/if}
+
+                                            {* TITLE HIDE*}
+                                            {*<div class="p-reviews__item-title" itemprop="name">{$review.title}</div>*}
+                                            <div class="p-reviews__item-text" itemprop="description">{$review.text}</div>
+
+                                            {if !empty($review.images)}
+                                                <div class="s-images-list">
+                                                    {foreach $review.images as $_image}
+                                                        <a class="s-image-wrapper js-show-image" data-fancybox="reviews-{$review.id}" href="{$_image.url_0|escape}" title="{$_image.description|escape}" target="_blank">
+                                                            <img class="s-image" src="{$_image.url_3|escape}" alt="{$_image.description|escape}">
+                                                        </a>
+                                                    {/foreach}
+                                                </div>
+                                            {/if}
+
+                                            <div class="p-reviews__item-reply">
+                                                <svg class="icon14 i-reply">
+                                                    <use xlink:href="#i-reply"></use>
+                                                </svg>
+                                                <div class="p-reviews__item-reply-name">[`To answer`]</div>
+                                            </div>
+                                        </div>
+
+                                    {if !empty($review.comments)}
+                                        </div>
+                                        {foreach $review.comments|@array_reverse as $rev}
+                                            <div class="p-reviews__item p-reviews__item_reply" itemscope itemprop="review" itemtype="http://schema.org/Review">
+                                                <meta itemprop="itemReviewed" content="{$product.name|escape}">
+                                                <meta itemprop="datePublished" content="{$rev.datetime|date_format:'Y-m-d'}">
+
+                                                <div class="p-reviews__item-content">
+                                                    <div class="p-reviews__item-header">
+                                                        <div class="p-reviews__item-name" itemprop="author">
+                                                            {$rev.author.name}
+
+                                                            {if ifempty($rev.author.is_user) > 0}
+                                                                <div class="p-reviews__item-company">{$wa->shop->settings('name')}</div>
+                                                            {/if}
+                                                        </div>
+                                                        <div class="p-reviews__item-date">{$rev.datetime|wa_datetime:"humandatetime"}</div>
+                                                    </div>
+                                                    {* TITLE HIDE*}
+                                                    {*<div class="p-reviews__item-title" itemprop="name">{$rev.title}</div>*}
+                                                    <div class="p-reviews__item-text" itemprop="description">{$rev.text}</div>
+
+                                                    {if !empty($rev.images)}
+                                                        <div class="s-images-list">
+                                                            {foreach $rev.images as $_image}
+                                                                <a class="s-image-wrapper js-show-image" data-fancybox="reviews-{$rev.id}" href="{$_image.url_0|escape}" title="{$_image.description|escape}" target="_blank">
+                                                                    <img class="s-image" src="{$_image.url_3|escape}" alt="{$_image.description|escape}">
+                                                                </a>
+                                                            {/foreach}
+                                                        </div>
+                                                    {/if}
+                                                </div>
+                                            </div>
+                                        {/foreach}
+                                    {else}
+                                        </div>
+                                    {/if}
+                                {/if}
+                            {/foreach}
+
+                            {if $countPage > 1}
+                                <div class="in-blocks__item">
+                                    {wa_pagination total=$countPage attrs=["class" => "pagin"]}
+                                </div>
+                            {/if}
+                        </div>
+                    </div>
+                {/if}
+            </div>
+        </div>
+
+        <div class="reviews__right{if $ts.header_fix} reviews__right_h{/if}">
+            {$products = $wa->shop->products('id/'|cat:$product.id)}
+            {$theme_settings.category_product_features = 0}
+            {include file="./list-thumbs.html" products=$products}
+        </div>
+    </div>
+</div>
+{/strip}

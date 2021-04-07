@@ -1,0 +1,24 @@
+{strip}
+
+<div class="h-info">
+    <div class="h-info__icon">
+        {if $ts.header_address_svg}
+            <img class="icon18" src="{$ts.header_address_svg}?v{$wa_theme_version}" alt="i-address">
+        {else}
+            <svg class="icon18 i-address">
+                <use xlink:href="#i-address"></use>
+            </svg>
+        {/if}
+    </div>
+    <div>
+        <div class="h-info__title">
+            {$ts.header_address_title}
+        </div>
+
+        <div class="h-info__content">
+            {eval var=$ts.header_address_text}
+        </div>
+    </div>
+</div>
+
+{/strip}

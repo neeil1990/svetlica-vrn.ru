@@ -1,0 +1,225 @@
+{strip}
+
+{function name=label}
+    {if !empty($cat.params.badge)}
+        <span class="label" style="
+                {if !empty($cat.params.badge_bg)}background-color:{$cat.params.badge_bg};{/if}
+                {if !empty($cat.params.badge_color)}color:{$cat.params.badge_color};{/if}">
+            {$cat.params.badge}
+        </span>
+    {/if}
+{/function}
+
+{function menu_mobile}
+    {if !empty($menu)}
+        <ul class="m-menu__ul-{$lv}">
+            {foreach $menu as $m}
+                {if !isset($m.hide) && !isset($m.params.hide)}
+                    <li class="m-menu__li-{$lv}">
+                        <div class="m-menu__info">
+                            <a href="{$m.url}" class="m-menu__a-{$lv}">
+                                {if empty($pages)}
+                                    {$icon = ''}
+                                    {if class_exists('shopCategoryImagesPlugin')}
+                                        {$icon = shopCategoryImagesPlugin::getCategoryImageUrl($m.id)}
+                                    {elseif class_exists('shopCatimgPlugin')}
+                                        {$icon = shopCatimgPlugin::getImage($m.id, 'icon')}
+                                        {if !$icon}{$icon = ''}{/if}
+                                    {elseif class_exists('shopSkcatimageHelper')}
+                                        {$icon = shopSkcatimageHelper::getImages($m.id, 'icon')}
+                                    {/if}
+
+                                    {if isset($m.params.icon)}
+                                        {$icon = $m.params.icon}
+                                    {/if}
+
+                                    {if !empty($icon)}
+                                        <span class="m-menu__icon">
+                                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$icon}" alt="{$m.name}" />
+                                        </span>
+                                    {/if}
+                                {/if}
+
+                                <span class="m-menu__name">
+                                    {$m.name}
+                                </span>
+
+                                {if empty($pages)}
+                                    {label cat=$m}
+                                {/if}
+                            </a>
+                            {if !empty($m.childs) && $lv < 4}
+                                <div class="m-menu__down">
+                                    <svg class="icon10 i-angle-right">
+                                        <use xlink:href="#i-angle-right"></use>
+                                    </svg>
+                                </div>
+                            {/if}
+                        </div>
+                        {if !empty($m.childs) && $lv < 4}
+                            {menu_mobile menu=$m.childs lv=$lv+1}
+                        {/if}
+                    </li>
+                {/if}
+            {/foreach}
+        </ul>
+    {/if}
+{/function}
+
+{function menu_mobile_step}
+    {if !empty($menu)}
+        {foreach $menu as $m}
+            {if !isset($m.hide) && !isset($m.params.hide)}
+                <li class="m-menu__li-1">
+                    <div class="m-menu__info">
+                        <a href="{$m.url}" class="m-menu__a-1">
+                            {if empty($pages)}
+                                {$icon = ''}
+                                {if class_exists('shopCategoryImagesPlugin')}
+                                    {$icon = shopCategoryImagesPlugin::getCategoryImageUrl($m.id)}
+                                {elseif class_exists('shopCatimgPlugin')}
+                                    {$icon = shopCatimgPlugin::getImage($m.id, 'icon')}
+                                    {if !$icon}{$icon = ''}{/if}
+                                {elseif class_exists('shopSkcatimageHelper')}
+                                    {$icon = shopSkcatimageHelper::getImages($m.id, 'icon')}
+                                {/if}
+
+                                {if isset($m.params.icon)}
+                                    {$icon = $m.params.icon}
+                                {/if}
+
+                                {if !empty($icon)}
+                                    <span class="m-menu__icon">
+                                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$icon}" alt="{$m.name}" />
+                                    </span>
+                                {/if}
+                            {/if}
+
+                            <span class="m-menu__name">
+                                {$m.name}
+                            </span>
+
+                            {if empty($pages)}
+                                {label cat=$m}
+                            {/if}
+                        </a>
+                        {if !empty($m.childs)}
+                            <div class="m-menu__down">
+                                <svg class="icon10 i-angle-right">
+                                    <use xlink:href="#i-angle-right"></use>
+                                </svg>
+                            </div>
+                        {/if}
+                    </div>
+                    {if !empty($m.childs)}
+                        <div class="m-menu-links__dop">
+                            <div class="m-menu-links__top">
+                                <div class="m-menu-links__prev">
+                                    <svg class="icon12 i-angle-left">
+                                        <use xlink:href="#i-angle-left"></use>
+                                    </svg>
+                                </div>
+                                <div class="m-menu-links__title">
+                                    {$m.name}
+                                </div>
+                                <div class="m-menu-links__close">
+                                    <svg class="icon12 i-remove">
+                                        <use xlink:href="#i-remove"></use>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <ul class="m-menu__ul-1">
+                                {if empty($pages)}
+                                    <li class="m-menu__li-1">
+                                        <a href="{$m.url}" class="m-menu__a-1">
+                                            <strong>[`All`] {$m.name|lower}</strong>
+                                        </a>
+                                    </li>
+                                {/if}
+                                {menu_mobile_step menu=$m.childs}
+                            </ul>
+                        </div>
+                    {/if}
+                </li>
+            {/if}
+        {/foreach}
+    {/if}
+{/function}
+
+{if $ts.header_mobile_menu_step}
+    <div class="m-menu-catalog">
+        <div class="m-menu-catalog__bars">
+            <svg class="icon18 i-thumbs">
+                <use xlink:href="#i-thumbs"></use>
+            </svg>
+        </div>
+        <div class="m-menu-catalog__title">
+            {$ts.header_mobile_catalog_title}
+        </div>
+        <div class="m-menu-catalog__arrow">
+            <svg class="icon12 i-angle-right">
+                <use xlink:href="#i-angle-right"></use>
+            </svg>
+        </div>
+    </div>
+
+    <div class="m-menu-links">
+        <div class="m-menu-links__dop">
+            <div class="m-menu-links__top">
+                <div class="m-menu-links__prev">
+                    <svg class="icon12 i-angle-left">
+                        <use xlink:href="#i-angle-left"></use>
+                    </svg>
+                </div>
+                <div class="m-menu-links__title">
+                    {$ts.header_mobile_catalog_title}
+                </div>
+                <div class="m-menu-links__close">
+                    <svg class="icon12 i-remove">
+                        <use xlink:href="#i-remove"></use>
+                    </svg>
+                </div>
+            </div>
+            <ul class="m-menu__ul-1">
+                {menu_mobile_step menu=$categ}
+            </ul>
+        </div>
+    </div>
+{else}
+    {if $ts.header_mobile_catalog_title}
+        <div class="m-menu__title">
+            {$ts.header_mobile_catalog_title}
+        </div>
+    {/if}
+
+    {menu_mobile menu=$categ lv=1}
+{/if}
+
+{if $ts.header_mobile_menu_id}
+    {$mMenu = $wa->menu->get($ts.header_mobile_menu_id)}
+{elseif $ts.header_mobile_menu == 'wa_apps' && $wa->apps()}
+    {$mMenu = $wa->apps()}
+{elseif $ts.header_mobile_menu == 'shop_pages'}
+    {if $wa->shop}{$mMenu = $wa->shop->pages()}{/if}
+{elseif $ts.header_mobile_menu == 'site_pages'}
+    {if $wa->site}{$mMenu = $wa->site->pages()}{/if}
+{/if}
+
+{if $ts.header_mobile_pages_title}
+    <div class="m-menu__title">
+        {$ts.header_mobile_pages_title}
+    </div>
+{/if}
+
+{if $ts.header_mobile_menu_step}
+    <div class="m-menu-links">
+        <ul class="m-menu__ul-1">
+            {menu_mobile_step menu=$mMenu pages=1}
+        </ul>
+    </div>
+{else}
+    {menu_mobile menu=$mMenu lv=1 pages=1}
+{/if}
+
+{/strip}

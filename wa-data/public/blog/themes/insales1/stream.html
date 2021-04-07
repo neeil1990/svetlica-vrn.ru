@@ -1,0 +1,23 @@
+{strip}
+
+<div {if $wa->param('blog_url')}itemscope itemtype="http://schema.org/Blog"{/if}>
+
+    {if $theme_settings.blog_view == 'column'}
+        <div class="h-news">
+            <div class="h-news__wrap">
+                {foreach $posts as $post}
+                    {include file="./post.preview.html" post=$post inline}
+                {/foreach}
+            </div>
+        </div>
+    {else}
+
+        {foreach $posts as $post}
+            {include file="./post.preview.html" post=$post inline}
+        {/foreach}
+
+    {/if}
+
+</div>
+
+{/strip}

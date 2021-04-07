@@ -1,0 +1,31 @@
+{strip}
+
+{if $category.description && $wa->get('page', 1) == 1}
+    <div class="in-blocks__item{if !empty($small)}-s{/if}">
+        {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+            <div class="block-info-name">{$name}</div>
+            <div class="e-panel-edit" data-group-edit="divider_category_description">
+                <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Текст описания категории">
+                    <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                </div>
+            </div>
+        {/if}
+
+        <div class="desc{if $ts.category_des_yet} desc_max{/if} category-desc page">
+            {$category.description}
+        </div>
+
+        {if $ts.category_des_yet}
+            <div class="h-yet">
+                <button class="h-yet__show">
+                    [`more`] <svg class="icon10 i-angle-down"><use xlink:href="#i-angle-down"></use></svg>
+                </button>
+                <button class="h-yet__hide">
+                    [`hide`] <svg class="icon10 i-angle-down"><use xlink:href="#i-angle-down"></use></svg>
+                </button>
+            </div>
+        {/if}
+    </div>
+{/if}
+
+{/strip}

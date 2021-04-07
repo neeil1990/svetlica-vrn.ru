@@ -1,0 +1,195 @@
+{strip}
+
+{if $wa->shop}
+    {$cartCount = $wa->shop->cart->count()}
+    {$cartTotal = $wa->shop->cart->total()}
+
+    {if method_exists($wa->shop, 'checkout')}
+        {$cartUrl = $wa->shop->checkout()->cartUrl()}
+    {else}
+        {$cartUrl = $wa->getUrl('shop/frontend/cart')}
+    {/if}
+
+    {if !empty($section) && $section == 'fix'}
+        {$ts.header_cart = $ts.header_fix_cart}
+    {/if}
+
+    {if !empty($mobile)}
+        {$ts.header_cart = $mobile}
+    {/if}
+
+    {if $ts.header_cart == 'img/settings/header_cart-1.png' ||
+        $ts.header_cart == 'img/settings/header_cart-2.png' ||
+        $ts.header_cart == 'img/settings/header_cart-3.png' ||
+        $ts.header_cart == 'img/settings/header_cart-4.png' ||
+        $ts.header_cart == 'img/settings/header_cart-9.png' ||
+        $ts.header_cart == 'img/settings/header_cart-10.png' ||
+        $ts.header_cart == 'img/settings/header_cart-11.png' ||
+        $ts.header_cart == 'img/settings/header_cart-12.png' ||
+        $ts.header_cart == 'img/settings/header_cart-13.png' ||
+        $ts.header_cart == 'img/settings/header_cart-14.png' ||
+        $ts.header_cart == 'img/settings/header_cart-15.png' ||
+        $ts.header_cart == 'img/settings/header_cart-16.png'}
+
+        {$mcart = [
+            'img/settings/header_cart-1.png'  => ['class' => '', 'icon' => 'icon16'],
+            'img/settings/header_cart-2.png'  => ['class' => 's-mcart_small', 'icon' => 'icon12'],
+            'img/settings/header_cart-3.png'  => ['class' => 's-mcart_rad', 'icon' => 'icon16'],
+            'img/settings/header_cart-4.png'  => ['class' => 's-mcart_rad s-mcart_small', 'icon' => 'icon12'],
+            'img/settings/header_cart-9.png'  => ['class' => 's-mcart_pos', 'icon' => 'icon16'],
+            'img/settings/header_cart-10.png' => ['class' => 's-mcart_pos s-mcart_small', 'icon' => 'icon12'],
+            'img/settings/header_cart-11.png' => ['class' => 's-mcart_pos s-mcart_center', 'icon' => 'icon16'],
+            'img/settings/header_cart-12.png' => ['class' => 's-mcart_pos s-mcart_center s-mcart_small', 'icon' => 'icon12'],
+            'img/settings/header_cart-13.png' => ['class' => 's-mcart_pos s-mcart_circle', 'icon' => 'icon16'],
+            'img/settings/header_cart-14.png' => ['class' => 's-mcart_pos s-mcart_circle s-mcart_small', 'icon' => 'icon12'],
+            'img/settings/header_cart-15.png' => ['class' => 's-mcart_pos s-mcart_circle s-mcart_center', 'icon' => 'icon16'],
+            'img/settings/header_cart-16.png' => ['class' => 's-mcart_pos s-mcart_circle s-mcart_center s-mcart_small', 'icon' => 'icon12']
+        ]}
+
+        <div class="header__cart s-mcart {$mcart[$ts.header_cart].class}{if $cartCount>0} s-mcart_active{/if}">
+            <a href="{$cartUrl}" class="s-mcart__link" rel="nofollow">
+                <span class="s-mcart__icon">
+                    {if $ts.header_cart_size == 'no'}
+                        {$iconClass = $mcart[$ts.header_cart].icon}
+                    {else}
+                        {$iconClass = "icon`$ts.header_cart_size`"}
+                    {/if}
+
+                    {if $ts.header_cart_svg}
+                        <img class="{$iconClass}" src="{$ts.header_cart_svg}?v{$wa_theme_version}" alt="i-cart">
+                    {else}
+                        <svg class="{$iconClass} i-cart">
+                            <use xlink:href="#i-cart"></use>
+                        </svg>
+                    {/if}
+                </span>
+
+                {if $ts.header_cart == 'img/settings/header_cart-1.png' ||
+                    $ts.header_cart == 'img/settings/header_cart-2.png' ||
+                    $ts.header_cart == 'img/settings/header_cart-3.png' ||
+                    $ts.header_cart == 'img/settings/header_cart-4.png'}
+                    <span class="s-mcart__info">
+                        <span class="s-mcart__empty cart-empty">[`Cart empty`]</span>
+                        <span class="s-mcart__price cart-price">
+                            {wa_currency($cartTotal, $wa->shop->currency())}
+                        </span>
+                    </span>
+                {/if}
+
+                <span class="s-mcart__count cart-count hcount{if $cartCount>0} hcount_active{/if}">
+                    {$cartCount}
+                </span>
+            </a>
+
+            {if $ts.header_cart_dropdown && !waRequest::isMobile(false)
+                && !empty($action) && $action != 'cart' && $action != 'order' && $action != 'checkout'}
+
+                {* MINI CART DROP *}
+                {include file="./cart.drop.html"}
+            {/if}
+        </div>
+
+    {elseif $ts.header_cart == 'img/settings/header_cart-5.png' ||
+            $ts.header_cart == 'img/settings/header_cart-6.png' ||
+            $ts.header_cart == 'img/settings/header_cart-7.png' ||
+            $ts.header_cart == 'img/settings/header_cart-8.png'}
+
+        {$mcart = [
+            'img/settings/header_cart-5.png'  => ['class' => '', 'icon' => 'icon20'],
+            'img/settings/header_cart-6.png'  => ['class' => 'mcart_small', 'icon' => 'icon16'],
+            'img/settings/header_cart-7.png'  => ['class' => 'mcart_center', 'icon' => 'icon20'],
+            'img/settings/header_cart-8.png'  => ['class' => 'mcart_center mcart_small', 'icon' => 'icon16']
+        ]}
+
+        {if !empty($mobile)}
+            {$mcart['img/settings/header_cart-6.png']['icon'] = 'icon24'}
+        {/if}
+
+        <div class="header__cart mcart {$mcart[$ts.header_cart].class}{if $cartCount>0} mcart_active{/if}" rel="nofollow">
+            <a href="{$cartUrl}" class="mcart__link" rel="nofollow">
+                <span class="mcart__icon">
+                    {if $ts.header_cart_size == 'no'}
+                        {$iconClass = $mcart[$ts.header_cart].icon}
+                    {else}
+                        {$iconClass = "icon`$ts.header_cart_size`"}
+                    {/if}
+
+                    {if $ts.header_cart_svg}
+                        <img class="{$iconClass}" src="{$ts.header_cart_svg}?v{$wa_theme_version}" alt="i-cart">
+                    {else}
+                        <svg class="{$iconClass} i-cart-b">
+                            <use xlink:href="#i-cart-b"></use>
+                        </svg>
+                    {/if}
+
+                    <span class="mcart__count cart-count hcount{if $cartCount>0} hcount_active{/if}">
+                        {$cartCount}
+                    </span>
+                </span>
+                <span class="mcart__info">
+                    <span class="mcart__title">[`Cart`]</span>
+                    <span class="mcart__empty cart-empty">[`Empty`]</span>
+                    <span class="mcart__price cart-price">
+                        {wa_currency($cartTotal, $wa->shop->currency())}
+                    </span>
+                </span>
+            </a>
+
+            {if $ts.header_cart_dropdown && !waRequest::isMobile(false)
+                && !empty($action) && $action != 'cart' && $action != 'order' && $action != 'checkout'}
+
+                {* MINI CART DROP *}
+                {include file="./cart.drop.html"}
+            {/if}
+        </div>
+    {elseif $ts.header_cart == 'img/settings/header_cart-17.png' ||
+            $ts.header_cart == 'img/settings/header_cart-18.png' ||
+            $ts.header_cart == 'img/settings/header_cart-19.png' ||
+            $ts.header_cart == 'img/settings/header_cart-20.png'}
+
+            {$mcart = [
+                'img/settings/header_cart-17.png'  =>
+                    ['class' => 'hicon',   'name' => 'hicon__name',   'count' => 'hicon__count', 'icon' => 'icon18'],
+                'img/settings/header_cart-18.png'  =>
+                    ['class' => 'hicon',   'name' => '', 'count' => 'hicon__count', 'icon' => 'icon18'],
+                'img/settings/header_cart-19.png'  =>
+                    ['class' => 's-hicon', 'name' => '', 'count' => 's-hicon__count', 'icon' => 'icon18'],
+                'img/settings/header_cart-20.png'  =>
+                    ['class' => 's-hicon', 'name' => 's-hicon__name', 'count' => 's-hicon__count', 'icon' => 'icon16']
+            ]}
+
+        <div class="{$mcart[$ts.header_cart].class}">
+            <a href="{$cartUrl}" class="hicon__cart{if $cartCount>0} hicon__cart_active{/if}">
+                {if $ts.header_cart_size == 'no'}
+                    {$iconClass = $mcart[$ts.header_cart].icon}
+                {else}
+                    {$iconClass = "icon`$ts.header_cart_size`"}
+                {/if}
+
+                {if $ts.header_cart_svg}
+                    <img class="{$iconClass}" src="{$ts.header_cart_svg}?v{$wa_theme_version}" alt="i-cart">
+                {else}
+                    <svg class="{$iconClass} i-cart">
+                        <use xlink:href="#i-cart"></use>
+                    </svg>
+                {/if}
+
+                {if $mcart[$ts.header_cart].name}
+                    <span class="{$mcart[$ts.header_cart].name}">[`Cart`]</span>
+                {/if}
+
+                <span class="cart-count {$mcart[$ts.header_cart].count} hcount{if $cartCount>0} hcount_active{/if}">{$cartCount}</span>
+            </a>
+
+            {if $ts.header_cart_dropdown && !waRequest::isMobile(false)
+                && !empty($action) && $action != 'cart' && $action != 'order' && $action != 'checkout'}
+
+                {* MINI CART DROP *}
+                {include file="./cart.drop.html"}
+            {/if}
+        </div>
+
+    {/if}
+{/if}
+
+{/strip}

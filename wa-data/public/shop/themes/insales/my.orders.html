@@ -1,0 +1,109 @@
+{strip}
+
+{$ts = $theme_settings}
+
+<style>
+    .status {
+        display: flex;
+        align-items: center;
+    }
+    .status span {
+        border-radius: 3px;
+        margin-right: 10px;
+        padding: 9px;
+    }
+    @media screen and (max-width: 767px) {
+        .table_orders td:nth-child(3) { display:none; }
+    }
+    @media screen and (max-width: 580px) {
+        .table_orders th,
+        .table_orders td{ font-size:12px; }
+        .table_orders td:nth-child(4) { display:none; }
+    }
+    @media screen and (max-width: 360px) {
+        .table_orders td:nth-child(5) { display:none; }
+    }
+</style>
+
+<div class="wrap">
+
+    {* BREADCRUMBS *}
+    {include file="`$wa_parent_theme_path`/breadcrumbs.html"}
+
+    <h1>[`My orders`]</h1>
+
+    {$wa->myNav('my-nav')}
+
+    {if count($orders) > 0}
+        {$current = 1}
+        {$onPage = $ts.lk_orders_count}
+        {$countPage = ceil(count($orders)/$onPage)}
+
+        {if !empty($smarty.get.page)}
+            {$current = $smarty.get.page}
+        {/if}
+
+        <div class="page">
+            <table class="table table_orders">
+                <tr>
+                    <td class="hint">[`Order number`]</td>
+                    <td class="hint">[`Order status`]</td>
+                    <td class="hint">[`Delivery`]</td>
+                    <td class="hint">[`Payment`]</td>
+                    <td class="hint">[`Order date`]</td>
+                </tr>
+
+                {foreach $orders as $o}
+                    {if $o@iteration <= $onPage*$current && $o@iteration > ($onPage*$current - $onPage)}
+                        <tr>
+                            <td>
+                                <a href="{$o.url}">{$o.id_str}</a>
+                            </td>
+                            <td>
+                                <div class="status">
+                                    <span style="{$o.state->getStyle(1)}"></span>
+                                    {$o.state->getName()}
+                                </div>
+                            </td>
+                            <td>
+                                {if $o.shipping_name}
+                                    {$o.shipping_name|escape}
+                                {/if}
+                            </td>
+                            <td>
+                                {if $o.payment_name}
+                                    {$o.payment_name|escape}
+                                {/if}
+                            </td>
+                            <td>
+                                {$o.create_datetime|wa_datetime:'humandatetime'}
+                            </td>
+                        </tr>
+                        {/if}
+                {/foreach}
+            </table>
+        </div>
+
+        {if $countPage > 1}
+            <div class="in-blocks__item">
+                {wa_pagination total=$countPage attrs=["class" => "pagin"]}
+            </div>
+        {/if}
+    {else}
+        <div class="page">
+            <table class="table table_orders">
+                <tr>
+                    <td>[`You have no order history yet.`]</td>
+                </tr>
+            </table>
+        </div>
+    {/if}
+
+    {$wa->globals('isMyAccount', true)}
+
+    <!-- plugin hook: 'frontend_my_orders' -->
+    {* @event frontend_my_orders.%plugin_id% *}
+    {foreach $frontend_my_orders as $_}{$_}{/foreach}
+</div>
+
+{/strip}

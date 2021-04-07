@@ -1,0 +1,56 @@
+{strip}
+
+{$ts = $theme_settings}
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+
+    <meta itemprop="datePublished" content="{$post.datetime|date_format:'Y-m-d\TH:i'}">
+    <meta itemprop="author" content="{$post.user.name}">
+
+    {* @event prepare_posts_frontend.%plugin_id%.before *}
+    {if !empty($post.plugins.before)}
+        <div class="text_before">
+            {foreach $post.plugins.before as $plugin => $output}{$output}{/foreach}
+        </div>
+    {/if}
+
+    <div class="in-blogs-post__info">
+        {if $ts.blog_author}
+            <div class="in-blogs-post__author">
+                <div class="in-blogs-post__author-img">
+                    <img src="{$post.user.photo_url_20|regex_replace:'/\.20x20\./':'.100x100.'}" alt="{$post.user.name}">
+                </div>
+                <div class="in-blogs-post__author-name">{$post.user.name}</div>
+            </div>
+        {/if}
+        <div class="in-blogs-post__date">{$post.datetime|wa_datetime:"humandate"}</div>
+    </div>
+
+    <div class="page" itemprop="articleBody">
+        {$post.text}
+    </div>
+
+    {if $post.album_id && $post.album.id && $post.album.photos}
+        {include 'post.album.html' album=$post.album inline}
+    {/if}
+
+    {* @event prepare_posts_frontend.%plugin_id%.after *}
+    {if !empty($post.plugins.after)}
+        <div class="text_after">
+            {foreach $post.plugins.after as $plugin => $output}{$output}{/foreach}
+        </div>
+    {/if}
+
+    {* @event frontend_post.%plugin_id%.footer *}
+    {foreach $frontend_post as $plugin => $output}
+        {if !empty($output.footer)}{$output.footer}{/if}
+    {/foreach}
+
+    {if $show_comments && $post.comments_allowed}
+        {if $post.status eq blogPostModel::STATUS_PUBLISHED}
+            {include 'comments.html' inline}
+        {/if}
+    {/if}
+</article>
+
+{/strip}
