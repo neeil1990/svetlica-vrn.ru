@@ -1,3 +1,10 @@
 .ym-advanced-informer{
     display: none;
 }
+.category .h-slider_w,
+.slider-product .h-slider_w{
+    min-height: auto;
+}
+.slider-product{
+    margin-bottom: 15px;
+}

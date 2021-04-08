@@ -6,6 +6,9 @@
 
     <div class="wrap">
 
+        {* SLIDER *}
+        {include file="./home/slider.html"}
+
         {$name = $category.params.h1|default:$category.name}
         {if $ts.category_title_v=='top'}
             {* BREADCRUMBS *}
@@ -90,7 +93,7 @@
             {if !waRequest::isMobile(false) && ($ts.filters_drop || isset($category.params.filter_drop_show))}
                 {include file="./category/filters.dropdown.html"}
             {/if}
-            
+
             {* BANNER PARAMS CATEGORY*}
             {if !empty($category.params.banner_top)}
                 <div class="in-blocks__item-s">
