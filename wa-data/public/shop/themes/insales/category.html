@@ -108,6 +108,13 @@
                 </div>
             {/if}
 
+            {* TAGS-LIST *}
+            {if isset($category.params.meta) && $category.params.meta}
+                <div class="in-blocks__item-s">
+                    {include file='./tags.html'}
+                </div>
+            {/if}
+
             {* PRODUCT-LIST *}
             <div class="in-blocks__item-s c-products">
 
