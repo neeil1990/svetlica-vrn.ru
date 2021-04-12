@@ -140,7 +140,7 @@
                     <div class="m-products__info-price">
                         {if $ts.category_product_range && $p.frontend_min_price > 0 && $p.frontend_min_price != $p.frontend_max_price}
                             <div class="m-products__info-price-range">
-                                {shopCustom::p()} {shop_currency_html($p.frontend_min_price)} ... {shop_currency_html($p.frontend_max_price)}
+                                {shopCustom::p()} {shop_currency_html($p.frontend_min_price)} {$p.features.units}
                             </div>
                         {else}
                             {if $p.compare_price > 0}
@@ -154,7 +154,7 @@
                                 {$available = false}
                             {else}
                                 <div class="m-products__info-price-new">
-                                    {shopCustom::p()} {shop_currency_html($p.price)}
+                                    {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
                                 </div>
                             {/if}
                         {/if}

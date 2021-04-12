@@ -308,7 +308,7 @@
                             {if $ts.category_product_range && $p.frontend_min_price > 0 && $p.frontend_min_price != $p.frontend_max_price
                                 && $ts.category_product_skus == 'no' }
                                 <span class="products__price-range">
-                                    {shopCustom::p()} {shop_currency_html($p.frontend_min_price)}
+                                    {shopCustom::p()} {shop_currency_html($p.frontend_min_price)} {$p.features.units}
                                 </span>
                             {else}
                                 {if $ts.product_zero_text && $p.price==0}
@@ -318,7 +318,7 @@
                                     {$available = false}
                                 {else}
                                     <div class="products__price-new">
-                                        {shopCustom::p()} {shop_currency_html($p.price)}
+                                        {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
                                     </div>
                                 {/if}
 

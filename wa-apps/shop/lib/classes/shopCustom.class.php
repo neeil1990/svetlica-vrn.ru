@@ -3,8 +3,11 @@
 class shopCustom
 {
 
-    public static function p(){
-        return 'Цена от';
+    public static function p($data = false){
+        if($data)
+            return 'от';
+        else
+            return 'Цена от';
     }
 
 }
