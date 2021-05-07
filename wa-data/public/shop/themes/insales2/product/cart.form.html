@@ -154,7 +154,7 @@
                 </div>
             </div>
         {/if}
-        
+
         <div class="product__item">
             <div style="font-size: 1.875rem;font-weight: 700;float: left;">{shopCustom::p(true)}&nbsp;</div>
             <div style="float: left;" class="price product__price" data-price="{shop_currency($product.price, null, null, 0)}"
@@ -248,21 +248,9 @@
                 {/foreach}
             {else}
                 {* FLAT SKU LIST selling mode *}
-                <p class="product__item-title">Ширина:</p>
-                <p>
-                    <input type="text" class="" name="wa_width" placeholder="302 мм" style="width:100%" required>
-                </p>
 
-                <p class="product__item-title">Высота:</p>
-                <p>
-                    <input type="text" class="" name="wa_height" placeholder="500 мм" style="width:100%" required>
-                </p>
-
-                {if $product.category_id == "52"}
-                <p class="product__item-title">Глубина:</p>
-                <p>
-                    <input type="text" class="" name="wa_deep" placeholder="200 мм" style="width:100%" required>
-                </p>
+                {if class_exists('shopOrderpropertiesPlugin')}
+                    {shopOrderpropertiesPlugin::getOrderProperties($product)}
                 {/if}
 
                 {$product_available = false}

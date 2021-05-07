@@ -258,7 +258,7 @@
                 {if class_exists('shopOrderpropertiesPlugin')}
                     {shopOrderpropertiesPlugin::getOrderProperties($product)}
                 {/if}
-            
+
                 {$product_available = false}
                 {if count($product.skus) > 1}
                     <ul class="skus">
