@@ -2,7 +2,7 @@
 
 {if $category.description && $wa->get('page', 1) == 1}
     <div class="in-blocks__item{if !empty($small)}-s{/if}">
-        {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+        {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
             <div class="block-info-name">{$name}</div>
             <div class="e-panel-edit" data-group-edit="divider_category_description">
                 <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Текст описания категории">

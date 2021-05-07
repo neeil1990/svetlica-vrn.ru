@@ -1,0 +1,19 @@
+{strip}
+
+{if $type == 'blog'}
+
+    {if count($wa->blog->blogs()) > 1}
+        <ul class="l-menu">
+            {foreach $wa->blog->blogs() as $blog}
+                <li class="l-menu__item">
+                    <a class="l-menu__link{if $wa->globals('blog_id') eq $blog.id && empty($is_search)} l-menu__active{/if}" href="{$blog.link}">
+                        {$blog.name}
+                    </a>
+                </li>
+            {/foreach}
+        </ul>
+    {/if}
+
+{/if}
+
+{/strip}

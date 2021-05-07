@@ -2,11 +2,6 @@
 
 {$ts = $theme_settings}
 
-<div class="wrap slider-product">
-    {* SLIDER *}
-    {include file="./home/slider.html"}
-</div>
-
 <div class="wrap">
     {* BREADCRUMBS *}
     {include file="`$wa_parent_theme_path`/breadcrumbs.html"}
@@ -23,7 +18,7 @@
             <div class="in-blocks__title-link">
                 <script src="https://yastatic.net/share2/share.js"></script>
                 <div class="ya-share2" data-services="{$ts.product_share}"></div>
-                {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                     <div class="e-panel-edit" data-group-edit="divider_product_top">
                         <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Верх товара">
                             <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
@@ -49,7 +44,7 @@
                 {/foreach}
             {/if}
 
-            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+            {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                 <div class="e-panel-edit" data-group-edit="divider_product_top">
                     <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Верх товара">
                         <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
@@ -73,7 +68,7 @@
         {include file="./product/images.html" inline}
 
         <div class="product__content{if $ts.product_cart == 2}-2{/if}">
-            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+            {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                 <div class="e-panel-edit" data-group-edit="divider_product_settings">
                     <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Основные настройки">
                         <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
@@ -89,11 +84,15 @@
 
         </div>
 
+        {if !empty($product.features.brand)}
+            <meta itemprop="brand" content="{$product.features.brand}">
+        {/if}
+
         {if count($rates) > 0}
             <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                 <meta itemprop="ratingValue" content="{$product.rating}" />
                 <meta itemprop="bestRating" content="5" />
-                <meta itemprop="worstRating" content="0" />
+                <meta itemprop="worstRating" content="1" />
                 <meta itemprop="ratingCount" content="{count($rates)}" />
                 <meta itemprop="reviewCount" content="{count($rates)}" />
             </div>
@@ -121,7 +120,7 @@
 
     {if $bannerImg}
         <div class="in-blocks__item">
-            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+            {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                 <div class="e-panel-edit" data-group-edit="divider_product_banner">
                     <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Баннер после основного контента">
                         <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
@@ -162,12 +161,10 @@
                         {include file="./list-thumbs-short.html" products=$products button_view=$ts.$butt}
                     </div>
                 {else}
-                    <div class="products products_col-{$ts.$count}{if $ts.$view == 'slider'} products_slider owl-carousel owl-theme-nav{/if}">
-                        {include file="./list-thumbs.html" products=$products inline}
-                    </div>
+                    {include file="./list-thumbs.html" products=$products columns={$ts.$count} slider_view=$ts.$view == 'slider'}
                 {/if}
 
-                {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                     <div class="block-info-name">
                         {if $type == 'product_cross_selling'}CROSSELLING{else}UPSELLING{/if}
                     </div>
@@ -236,10 +233,10 @@
             {* PROMO ICON *}
             {include file="./product/promo.html" view='bottom' blocks='in-blocks__item'}
 
-            {if $ts.divider_product_viewed}
+            {if $ts.product_viewed}
                 <div class="in-blocks__item">
                     {include file="./home/viewed.html" product_view=1}
-                    {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                    {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                         <div class="block-info-name">viewed</div>
                         <div class="e-panel-edit" data-group-edit="divider_product_selling">
                             <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Подборка рекомендуемых товаров">
@@ -254,7 +251,7 @@
                 </div>
                 <div class="in-left">
                     {include file="./product/right.info.html"}
-                    {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                    {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                         <div class="e-panel-edit" data-group-edit="divider_product_right">
                             <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Правый блок информации">
                                 <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>

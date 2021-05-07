@@ -1,12 +1,18 @@
 {strip}
 
 {$_is_success = ( $checkout_current_step == "success" )}
+{$ts = $theme_settings}
 
 <div class="wrap">
-    <h1 itemprop="name">[`Checkout`]</h1>
+    {* BREADCRUMBS *}
+    {include file="`$wa_parent_theme_path`/breadcrumbs.html" action='checkout'}
 
-    <div class="s-checkout-page" id="checkout">
+    {if !$_is_success}
+        <h1 itemprop="name">[`Checkout`]</h1>
+    {/if}
 
+    {$cart_total = $wa->shop->cart->total()}
+    <div class="s-checkout-page checkout" id="checkout">
         {if isset($checkout_steps)}
             <ul class="s-checkout-nav w-box-sh">
                 {foreach $checkout_steps as $step_id => $s}
@@ -65,7 +71,6 @@
                         {if isset($checkout_steps)}
                         <div class="s-cart-total">
                             {$discount = $wa->shop->cart->discount()}
-                            {$cart_total = $wa->shop->cart->total()}
 
                             <h2>[`Your order`]</h2>
 
@@ -123,7 +128,6 @@
                 </form>
             {/if}
         </div>
-
     </div>
 </div>
 

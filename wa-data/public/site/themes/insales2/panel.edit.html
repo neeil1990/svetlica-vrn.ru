@@ -1,0 +1,674 @@
+{strip}
+
+{if $ts.frontend_settings && $wa->user()->isAdmin('shop') && !waRequest::isMobile(false)}
+    {$actionSettings = "`$wa_backend_url`site/?module=design&theme=insales&action=themeSettings"}
+
+    {$colors = [
+        '--cheme-color'     => [ 'n' => 'c_common',     'd' => "#4E7DF1" ],
+        '--cheme-color-dop' => [ 'n' => 'c_common_dop', 'd' => "#4E7DF1" ],
+
+        '--c-ht-b'   => [ 'n' => 'c_h_banner',       'd' => '#4E7DF1' ],
+        '--c-ht-b-c' => [ 'n' => 'c_h_banner_color', 'd' => '#fff' ],
+
+        '--c-h-t'   => [ 'n' => 'c_h_top',         'd' => '#232b46' ],
+        '--c-h-t-w' => [ 'n' => 'c_h_top_w',       'd' => $ts.c_h_top ],
+        '--c-h-t-b' => [ 'n' => 'c_h_top_border',  'd' => '' ],
+
+        '--c-h-m'   => [ 'n' => 'c_h_midd',        'd' => '#fff' ],
+        '--c-h-m-w' => [ 'n' => 'c_h_midd_w',      'd' => $ts.c_h_midd ],
+        '--c-h-m-b' => [ 'n' => 'c_h_midd_border', 'd' => '' ],
+
+        '--c-h-b'   => [ 'n' => 'c_h_bott',        'd' => '#fff' ],
+        '--c-h-b-w' => [ 'n' => 'c_h_bott_w',      'd' => $ts.c_h_bott ],
+        '--c-h-b-b' => [ 'n' => 'c_h_bott_border', 'd' => '' ],
+
+        '--c-h-li-1'   => [ 'n' => 'c_h_links_1',        'd' => '#222' ],
+        '--c-h-li-1-h' => [ 'n' => 'c_h_links_1_hover',  'd' => '#4e7df1' ],
+        '--c-h-li-1-b' => [ 'n' => 'c_h_links_1_border', 'd' => '#4e7df1' ],
+
+        '--c-h-li-2'   => [ 'n' => 'c_h_links_1',        'd' => '#222' ],
+        '--c-h-li-2-h' => [ 'n' => 'c_h_links_1_hover',  'd' => '#4e7df1' ],
+        '--c-h-li-2-b' => [ 'n' => 'c_h_links_1_border', 'd' => '#4e7df1' ],
+
+        '--c-h-li-3'   => [ 'n' => 'c_h_links_1',        'd' => '#222' ],
+        '--c-h-li-3-h' => [ 'n' => 'c_h_links_1_hover',  'd' => '#4e7df1' ],
+        '--c-h-li-3-b' => [ 'n' => 'c_h_links_1_border', 'd' => '#4e7df1' ],
+
+        '--c-h-lo'     => [ 'n' => 'c_h_local',            'd' => '#ccc' ],
+        '--c-h-lo-h'   => [ 'n' => 'c_h_local_hover',      'd' => '#ccc' ],
+        '--c-h-lo-i'   => [ 'n' => 'c_h_local_icon',       'd' => '#ccc' ],
+        '--c-h-lo-i-h' => [ 'n' => 'c_h_local_icon_hover', 'd' => '#ccc' ],
+
+        '--c-h-ad-i' => [ 'n' => 'c_h_address_icon',  'd' => '#f50' ],
+        '--c-h-ad-t' => [ 'n' => 'c_h_address_title', 'd' => '#222' ],
+        '--c-h-ad'   => [ 'n' => 'c_h_address',       'd' => '#808080' ],
+
+        '--c-h-mo-i' => [ 'n' => 'c_h_mode_icon',  'd' => '#f50' ],
+        '--c-h-mo-t' => [ 'n' => 'c_h_mode_title', 'd' => '#222' ],
+        '--c-h-mo'   => [ 'n' => 'c_h_mode',       'd' => '#808080' ],
+
+        '--c-h-re-i' => [ 'n' => 'c_h_region_icon',  'd' => '#f50' ],
+        '--c-h-re-t' => [ 'n' => 'c_h_region_title', 'd' => '#222' ],
+        '--c-h-re'   => [ 'n' => 'c_h_region',       'd' => '#ссс' ],
+        '--c-h-re-h' => [ 'n' => 'c_h_region_hover', 'd' => '#fff' ],
+
+        '--c-h-ph-1'     => [ 'n' => 'c_h_phone_1',          'd' => '#222' ],
+        '--c-h-ph-1-h'   => [ 'n' => 'c_h_phone_1_hover',    'd' => '#222' ],
+        '--c-h-ph-1-t'   => [ 'n' => 'c_h_phone_1_hint',     'd' => '#808080' ],
+        '--c-h-ph-1-i-f' => [ 'n' => 'c_h_phone_1_icon_fon', 'd' => '#fff' ],
+        '--c-h-ph-1-i'   => [ 'n' => 'c_h_phone_1_icon',     'd' => '#4e7df1' ],
+
+        '--c-h-ph-3'     => [ 'n' => 'c_h_phone_3',          'd' => '#222' ],
+        '--c-h-ph-3-h'   => [ 'n' => 'c_h_phone_3_hover',    'd' => '#222' ],
+        '--c-h-ph-3-t'   => [ 'n' => 'c_h_phone_3_hint',     'd' => '#808080' ],
+        '--c-h-ph-3-i-f' => [ 'n' => 'c_h_phone_3_icon_fon', 'd' => '#fff' ],
+        '--c-h-ph-3-i'   => [ 'n' => 'c_h_phone_3_icon',     'd' => '#4e7df1' ],
+
+        '--c-h-br'     => [ 'n' => 'c_h_brands',            'd' => '#ff6635' ],
+        '--c-h-br-h'   => [ 'n' => 'c_h_brands_hover',      'd' => '#ff6635' ],
+        '--c-h-br-i'   => [ 'n' => 'c_h_brands_icon',       'd' => '#ccc' ],
+        '--c-h-br-i-h' => [ 'n' => 'c_h_brands_icon_hover', 'd' => '#ccc' ],
+
+        '--c-h-a-f'   => [ 'n' => 'c_h_auth_fon',          'd' => '#fff' ],
+        '--c-h-a-b'   => [ 'n' => 'c_h_auth_border',       'd' => '#ebebeb' ],
+        '--c-h-a-b-h' => [ 'n' => 'c_h_auth_border_hover', 'd' => '#ebebeb' ],
+        '--c-h-a-e'   => [ 'n' => 'c_h_auth_effect',       'd' => '#ebebeb' ],
+        '--c-h-a-i'   => [ 'n' => 'c_h_auth_icon',         'd' => '#222' ],
+        '--c-h-a-i-h' => [ 'n' => 'c_h_auth_icon_hover',   'd' => '#4e7df1' ],
+        '--c-h-a-t'   => [ 'n' => 'c_h_auth_text',         'd' => '#222' ],
+        '--c-h-a-t-h' => [ 'n' => 'c_h_auth_text_hover',   'd' => '#4e7df1' ],
+
+        '--c-h-i-f'   => [ 'n' => 'c_h_icon_fon',          'd' => '#fff' ],
+        '--c-h-i-b'   => [ 'n' => 'c_h_icon_border',       'd' => '#ebebeb' ],
+        '--c-h-i-b-h' => [ 'n' => 'c_h_icon_border_hover', 'd' => '#ebebeb' ],
+        '--c-h-i-e'   => [ 'n' => 'c_h_icon_effect',       'd' => '#4e7df1' ],
+        '--c-h-i'     => [ 'n' => 'c_h_icon',              'd' => '#222' ],
+        '--c-h-i-h'   => [ 'n' => 'c_h_icon_hover',        'd' => '#4E7DF1' ],
+        '--c-h-i-t'   => [ 'n' => 'c_h_icon_text',         'd' => '#222' ],
+        '--c-h-i-t-h' => [ 'n' => 'c_h_icon_text_hover',   'd' => '#4E7DF1' ],
+        '--c-h-i-c'   => [ 'n' => 'c_h_icon_count',        'd' => '#43c16d' ],
+        '--c-h-i-c-d' => [ 'n' => 'c_h_icon_count_d',      'd' => '#e3e3e3' ],
+        '--c-h-i-c-t' => [ 'n' => 'c_h_icon_count_text',   'd' => '#fff' ],
+
+        '--c-h-c-f'     => [ 'n' => 'c_h_cart_fon',              'd' => '#fff' ],
+        '--c-h-c-f-d'   => [ 'n' => 'c_h_cart_fon_d',            'd' => '#fff' ],
+        '--c-h-c-f-h'   => [ 'n' => 'c_h_cart_fon_hover',        'd' => '#fff' ],
+        '--c-h-c-e'     => [ 'n' => 'c_h_cart_effect',           'd' => '#4e7df1' ],
+        '--c-h-c-b'     => [ 'n' => 'c_h_cart_border',           'd' => '#ebebeb' ],
+        '--c-h-c-b-d'   => [ 'n' => 'c_h_cart_border_d',         'd' => '#ebebeb' ],
+        '--c-h-c-b-h'   => [ 'n' => 'c_h_cart_border_hover',     'd' => '#ebebeb' ],
+        '--c-h-c-t'     => [ 'n' => 'c_h_cart_text',             'd' => '#222' ],
+        '--c-h-c-t-d'   => [ 'n' => 'c_h_cart_text_d',           'd' => '#222' ],
+        '--c-h-c-t-h'   => [ 'n' => 'c_h_cart_text_hover',       'd' => '#222' ],
+        '--c-h-c-i'     => [ 'n' => 'c_h_cart_icon',             'd' => '#222' ],
+        '--c-h-c-i-d'   => [ 'n' => 'c_h_cart_icon_d',           'd' => '#f3f3f3' ],
+        '--c-h-c-i-c'   => [ 'n' => 'c_h_cart_icon_color',       'd' => '#fff' ],
+        '--c-h-c-i-c-d' => [ 'n' => 'c_h_cart_icon_color_d',     'd' => '#9c9c9c' ],
+        '--c-h-c-i-c-h' => [ 'n' => 'c_h_cart_icon_color_h',     'd' => '#9c9c9c' ],
+        '--c-h-c-ic'    => [ 'n' => 'c_h_cart_icon_count',       'd' => '#222' ],
+        '--c-h-c-ic-d'  => [ 'n' => 'c_h_cart_icon_count_d',     'd' => '#e3e3e3' ],
+        '--c-h-c-ic-c'  => [ 'n' => 'c_h_cart_icon_count_color', 'd' => '#222' ],
+
+        '--c-h-m-c'     => [ 'n' => 'c_h_m_color',          'd' => '#ccc' ],
+        '--c-h-m-c-h'   => [ 'n' => 'c_h_m_color_hover',    'd' => '#fff' ],
+        '--c-h-m-c-a'   => [ 'n' => 'c_h_m_color_active',   'd' => '#fff' ],
+        '--c-h-m-i-c'   => [ 'n' => 'c_h_m_i_color',        'd' => '#ccc' ],
+        '--c-h-m-i-c-h' => [ 'n' => 'c_h_m_i_color_hover',  'd' => '#fff' ],
+        '--c-h-m-i-c-a' => [ 'n' => 'c_h_m_i_color_active', 'd' => '#fff' ],
+
+        '--c-h-m-c-c'     => [ 'n' => 'c_h_m_c_color',          'd' => '#222' ],
+        '--c-h-m-c-c-h'   => [ 'n' => 'c_h_m_c_color_hover',    'd' => '#000' ],
+        '--c-h-m-c-c-a'   => [ 'n' => 'c_h_m_c_color_active',   'd' => '#000' ],
+        '--c-h-m-c-i-c'   => [ 'n' => 'c_h_m_c_i_color',        'd' => '#BDBDBD' ],
+        '--c-h-m-c-i-c-h' => [ 'n' => 'c_h_m_c_i_color_hover',  'd' => '#BDBDBD' ],
+        '--c-h-m-c-i-c-a' => [ 'n' => 'c_h_m_c_i_color_active', 'd' => '#000' ],
+
+        '--c-h-b-c-f'    => [ 'n' => 'c_h_b_c_fon',          'd' => '#fff' ],
+        '--c-h-b-c-f-h'  => [ 'n' => 'c_h_b_c_fon_hover',    'd' => '#fff' ],
+        '--c-h-b-c-e'    => [ 'n' => 'c_h_b_c_effect',       'd' => '#4e7df1' ],
+        '--c-h-b-c-b'    => [ 'n' => 'c_h_b_c_border',       'd' => '#ebebec' ],
+        '--c-h-b-c-b-h'  => [ 'n' => 'c_h_b_c_border_hover', 'd' => '#ebebec' ],
+        '--c-h-b-c-c'    => [ 'n' => 'c_h_b_c_color',        'd' => '#fff' ],
+        '--c-h-b-c-c-h'  => [ 'n' => 'c_h_b_c_color_hover',  'd' => '#fff' ],
+        '--c-h-b-c-bb'   => [ 'n' => 'c_h_b_c_bars',         'd' => '#fff' ],
+        '--c-h-b-c-bb-h' => [ 'n' => 'c_h_b_c_bars_hover',   'd' => '#fff' ],
+
+        '--c-h-t-f-f' => [ 'n' => 'c_h_t_f_fon', 'd' => '#fff' ],
+
+        '--c-h-t-f-b-f'   => [ 'n' => 'c_h_t_f_b_fon',          'd' => '#4e7df1' ],
+        '--c-h-t-f-b-f-h' => [ 'n' => 'c_h_t_f_b_fon_hover',    'd' => '#4e7df1' ],
+        '--c-h-t-f-b-e'   => [ 'n' => 'c_h_t_f_b_effect',       'd' => '#4e7df1' ],
+        '--c-h-t-f-b-b'   => [ 'n' => 'c_h_t_f_b_border',       'd' => '#ebebec' ],
+        '--c-h-t-f-b-b-h' => [ 'n' => 'c_h_t_f_b_border_hover', 'd' => '#ebebec' ],
+        '--c-h-t-f-b-c'   => [ 'n' => 'c_h_t_f_b_color',        'd' => '#fff' ],
+        '--c-h-t-f-b-c-h' => [ 'n' => 'c_h_t_f_b_color_hover',  'd' => '#fff' ],
+        '--c-h-t-f-b'     => [ 'n' => 'c_h_t_f_bars',           'd' => '#fff' ],
+        '--c-h-t-f-b-h'   => [ 'n' => 'c_h_t_f_bars_hover',     'd' => '#fff' ],
+
+        '--c-h-t-f-a-f'   => [ 'n' => 'c_h_t_f_auth_fon',          'd' => '#fff' ],
+        '--c-h-t-f-a-b'   => [ 'n' => 'c_h_t_f_auth_border',       'd' => '#ebebeb' ],
+        '--c-h-t-f-a-b-h' => [ 'n' => 'c_h_t_f_auth_border_hover', 'd' => '#ebebeb' ],
+        '--c-h-t-f-a-e'   => [ 'n' => 'c_h_t_f_auth_effect',       'd' => '#ebebeb' ],
+        '--c-h-t-f-a-i'   => [ 'n' => 'c_h_t_f_auth_icon',         'd' => '#222' ],
+        '--c-h-t-f-a-i-h' => [ 'n' => 'c_h_t_f_auth_icon_hover',   'd' => '#4e7df1' ],
+        '--c-h-t-f-a-t'   => [ 'n' => 'c_h_t_f_auth_text',         'd' => '#222' ],
+        '--c-h-t-f-a-t-h' => [ 'n' => 'c_h_t_f_auth_text_hover',   'd' => '#4e7df1' ],
+
+        '--c-h-t-f-i-f'   => [ 'n' => 'c_h_t_f_icon_fon',          'd' => '#fff' ],
+        '--c-h-t-f-i-b'   => [ 'n' => 'c_h_t_f_icon_border',       'd' => '#ebebeb' ],
+        '--c-h-t-f-i-b-h' => [ 'n' => 'c_h_t_f_icon_border_hover', 'd' => '#ebebeb' ],
+        '--c-h-t-f-i-e'   => [ 'n' => 'c_h_t_f_icon_effect',       'd' => '#4e7df1' ],
+        '--c-h-t-f-i'     => [ 'n' => 'c_h_t_f_icon',              'd' => '#222' ],
+        '--c-h-t-f-i-h'   => [ 'n' => 'c_h_t_f_icon_hover',        'd' => '#4E7DF1' ],
+        '--c-h-t-f-i-t'   => [ 'n' => 'c_h_t_f_icon_text',         'd' => '#222' ],
+        '--c-h-t-f-i-t-h' => [ 'n' => 'c_h_t_f_icon_text_hover',   'd' => '#4E7DF1' ],
+        '--c-h-t-f-i-c'   => [ 'n' => 'c_h_t_f_icon_count',        'd' => '#43c16d' ],
+        '--c-h-t-f-i-c-d' => [ 'n' => 'c_h_t_f_icon_count_d',      'd' => '#e3e3e3' ],
+        '--c-h-t-f-i-c-t' => [ 'n' => 'c_h_t_f_icon_count_text',   'd' => '#fff' ],
+
+        '--c-h-t-f-c-f'     => [ 'n' => 'c_h_t_f_cart_fon',              'd' => '#fff' ],
+        '--c-h-t-f-c-f-d'   => [ 'n' => 'c_h_t_f_cart_fon_d',            'd' => '#fff' ],
+        '--c-h-t-f-c-f-h'   => [ 'n' => 'c_h_t_f_cart_fon_hover',        'd' => '#fff' ],
+        '--c-h-t-f-c-e'     => [ 'n' => 'c_h_t_f_cart_effect',           'd' => '#4e7df1' ],
+        '--c-h-t-f-c-b'     => [ 'n' => 'c_h_t_f_cart_border',           'd' => '#ebebeb' ],
+        '--c-h-t-f-c-b-d'   => [ 'n' => 'c_h_t_f_cart_border_d',         'd' => '#ebebeb' ],
+        '--c-h-t-f-c-b-h'   => [ 'n' => 'c_h_t_f_cart_border_hover',     'd' => '#ebebeb' ],
+        '--c-h-t-f-c-t'     => [ 'n' => 'c_h_t_f_cart_text',             'd' => '#222' ],
+        '--c-h-t-f-c-t-d'   => [ 'n' => 'c_h_t_f_cart_text_d',           'd' => '#222' ],
+        '--c-h-t-f-c-t-h'   => [ 'n' => 'c_h_t_f_cart_text_hover',       'd' => '#222' ],
+        '--c-h-t-f-c-i'     => [ 'n' => 'c_h_t_f_cart_icon',             'd' => '#222' ],
+        '--c-h-t-f-c-i-d'   => [ 'n' => 'c_h_t_f_cart_icon_d',           'd' => '#f3f3f3' ],
+        '--c-h-t-f-c-i-c'   => [ 'n' => 'c_h_t_f_cart_icon_color',       'd' => '#fff' ],
+        '--c-h-t-f-c-i-c-d' => [ 'n' => 'c_h_t_f_cart_icon_color_d',     'd' => '#9c9c9c' ],
+        '--c-h-t-f-c-i-c-h' => [ 'n' => 'c_h_t_f_cart_icon_color_h',     'd' => '#9c9c9c' ],
+        '--c-h-t-f-c-ic'    => [ 'n' => 'c_h_t_f_cart_icon_count',       'd' => '#222' ],
+        '--c-h-t-f-c-ic-d'  => [ 'n' => 'c_h_t_f_cart_icon_count_d',     'd' => '#e3e3e3' ],
+        '--c-h-t-f-c-ic-c'  => [ 'n' => 'c_h_t_f_cart_icon_count_color', 'd' => '#222' ],
+
+        '--c-b'     => [ 'n' => 'c_b',             'd' => '#4e7df1' ],
+        '--c-b-h'   => [ 'n' => 'c_b_hover',       'd' => '#5b88f7' ],
+        '--c-b-c'   => [ 'n' => 'c_b_color',       'd' => '#fff' ],
+        '--c-b-c-h' => [ 'n' => 'c_b_color_hover', 'd' => '#fff' ],
+
+        '--c-l-c-t-f'   => [ 'n' => 'c_l_c_title_fon',     'd' => '#232b46' ],
+        '--c-l-c-t-c'   => [ 'n' => 'c_l_c_title_color',   'd' => '#fff' ],
+        '--c-l-c-a-f'   => [ 'n' => 'c_l_c_a_fon',         'd' => '#f7f7f7' ],
+        '--c-l-c-a-f-h' => [ 'n' => 'c_l_c_a_fon_hover',   'd' => '#eaeaea' ],
+        '--c-l-c-a-c'   => [ 'n' => 'c_l_c_a_color',       'd' => '#222' ],
+        '--c-l-c-a-c-h' => [ 'n' => 'c_l_c_a_color_hover', 'd' => '#4e7df1' ],
+        '--c-l-c-b-c'   => [ 'n' => 'c_l_c_b_color',       'd' => '#ff6635' ],
+        '--c-l-c-b-c-h' => [ 'n' => 'c_l_c_b_color_hover', 'd' => '#ff6635' ],
+
+        '--c-l-f-t-f'   => [ 'n' => 'c_l_f_title_fon', 'd'         => '#232b46' ],
+        '--c-l-f-t-f-h' => [ 'n' => 'c_l_f_title_fon_hover', 'd'   => '#232b46' ],
+        '--c-l-f-t-c'   => [ 'n' => 'c_l_f_title_color', 'd'       => '#fff' ],
+        '--c-l-f-t-c-h' => [ 'n' => 'c_l_f_title_color_hover', 'd' => '#fff' ],
+
+        '--c-c-l-p-f'   => [ 'n' => 'c_c_l_p_fon',    'd' => '#fff' ],
+        '--c-c-l-p-f-f' => [ 'n' => 'c_c_l_p_f_fon',  'd' => '#ff3100' ],
+        '--c-c-l-p-f-i' => [ 'n' => 'c_c_l_p_f_icon', 'd' => '#fff' ],
+        '--c-c-l-p-c-f' => [ 'n' => 'c_c_l_p_с_fon',  'd' => '#43c16d' ],
+        '--c-c-l-p-c-i' => [ 'n' => 'c_c_l_p_с_icon', 'd' => '#fff' ],
+        '--c-c-l-i-f'   => [ 'n' => 'c_c_l_i_fon',    'd' => '#4e7df1' ],
+
+        '--c-b-n' => [ 'n' => 'c_badge_new',  'd' => '#43C16D' ],
+        '--c-b-l' => [ 'n' => 'c_badge_low',  'd' => '#FF4C3C' ],
+        '--c-b-b' => [ 'n' => 'c_badge_best', 'd' => '#FF9444' ],
+
+        '--c-f-b' => [ 'n' => 'c_f_fon',   'd' => '#232B46' ],
+        '--c-f-c' => [ 'n' => 'c_f_color', 'd' => '#767b8b' ],
+
+        '--c-f-a'   => [ 'n' => 'c_f_a_color',       'd' => '#767b8b' ],
+        '--c-f-a-h' => [ 'n' => 'c_f_a_color_hover', 'd' => '#a6acc2' ],
+
+        '--c-f-t' => [ 'n' => 'c_f_t_color', 'd' => '#999fb3' ],
+
+        '--c-f-a-m'   => [ 'n' => 'c_f_a_m_color',       'd' => '#767b8b' ],
+        '--c-f-a-m-h' => [ 'n' => 'c_f_a_m_color_hover', 'd' => '#a6acc2' ],
+
+        '--c-f-i-c'  => [ 'n' => 'c_f_i_color', 'd' => '#4e7df1' ],
+
+        '--c-f-p-f'    => [ 'n' => 'c_f_p_fon',    'd' => '#fff' ],
+        '--c-f-p-b'    => [ 'n' => 'c_f_p_border', 'd' => '#e9e9e9' ],
+
+        '--c-f-p-i-f'    => [ 'n' => 'c_f_p_i_fon', 'd' => '#fff' ],
+        '--c-f-p-m'      => [ 'n' => 'c_f_p_menu',  'd' => '#4e7df1' ],
+
+        '--c-f-p-i-c'    => [ 'n' => 'c_f_p_i_color',       'd' => '#222' ],
+        '--c-f-p-i-c-h'  => [ 'n' => 'c_f_p_i_color_hover', 'd' => '#4e7df1' ],
+        '--c-f-p-i'      => [ 'n' => 'c_f_p_icon',          'd' => '#222' ],
+        '--c-f-p-i-h'    => [ 'n' => 'c_f_p_icon_hover',    'd' => '#4e7df1' ],
+        '--c-f-p-c-bg'   => [ 'n' => 'c_f_p_c_bg',          'd' => '#e3e3e3' ],
+        '--c-f-p-c-bg-a' => [ 'n' => 'c_f_p_c_bg_a',        'd' => '#43c16d' ],
+        '--c-f-p-c-c'    => [ 'n' => 'c_f_p_c_color',       'd' => '#fff' ],
+
+        '--c-f-p-c-f'      => [ 'n' => 'c_f_p_c_fon',          'd' => '#fff' ],
+        '--c-f-p-c'        => [ 'n' => 'c_f_p_cart',           'd' => '#222' ],
+        '--c-f-p-c-h'      => [ 'n' => 'c_f_p_cart_hover',     'd' => '#4e7df1' ],
+        '--c-f-p-c-i'      => [ 'n' => 'c_f_p_c_icon',         'd' => '#4e7df1' ],
+        '--c-f-p-c-i-d'    => [ 'n' => 'c_f_p_c_icon_d',       'd' => '#f3f3f3' ],
+        '--c-f-p-c-i-c'    => [ 'n' => 'c_f_p_c_icon_color',   'd' => '#fff' ],
+        '--c-f-p-c-i-c-d'  => [ 'n' => 'c_f_p_c_icon_color_d', 'd' => '#9c9c9c' ],
+        '--c-f-p-c-c-bg'   => [ 'n' => 'c_f_p_count_bg',       'd' => '#43c16d' ],
+        '--c-f-p-c-c-bg-d' => [ 'n' => 'c_f_p_count_bg_d',     'd' => '#e3e3e3' ],
+        '--c-f-p-c-c-c'    => [ 'n' => 'c_f_p_count_color',    'd' => '#fff' ],
+
+        '--w-c'     => [ 'n' => 'header_catalog_w',      'd' => '300px',  'px'=>1 ],
+        '--w-l'     => [ 'n' => 'header_left_width',     'd' => '300px',  'px'=>1 ],
+        '--h-c-r'   => [ 'n' => 'header_catalog_radius', 'd' => '6px',    'px'=>1 ],
+        '--h-c-h'   => [ 'n' => 'header_catalog_height', 'd' => '48px',   'px'=>1 ],
+        '--h-c-w'   => [ 'n' => 'header_catalog_width',  'd' => 'auto',   'px'=>1 ],
+
+        '--c-m-h-f'   => [ 'n' => 'c_m_h_fon',    'd' => '#fff'],
+        '--c-m-b-f'   => [ 'n' => 'c_m_bar_fon',  'd' => '#4e7df1'],
+        '--c-m-s'     => [ 'n' => 'c_m_search',   'd' => '#ccc'],
+
+        '--c-m-i'     => [ 'n' => 'c_m_icons',           'd' => '#222'],
+        '--c-m-i-c-a' => [ 'n' => 'c_m_icons_count_act', 'd' => '#43c16d'],
+        '--c-m-i-c'   => [ 'n' => 'c_m_icons_count',     'd' => '#e3e3e3'],
+        '--c-m-i-t'   => [ 'n' => 'c_m_icons_text',      'd' => '#fff'],
+
+        '--c-m-c-f'      => [ 'n' => 'c_m_cart_fon',              'd' => '#fff'],
+        '--c-m-c-f-d'    => [ 'n' => 'c_m_cart_fon_d',            'd' => '#fff'],
+        '--c-m-c-b'      => [ 'n' => 'c_m_cart_border',           'd' => '#ebebeb'],
+        '--c-m-c-b-d'    => [ 'n' => 'c_m_cart_border_d',         'd' => '#ebebeb'],
+        '--c-m-c-t'      => [ 'n' => 'c_m_cart_text',             'd' => '#222'],
+        '--c-m-c-t-d'    => [ 'n' => 'c_m_cart_text_d',           'd' => '#222'],
+        '--c-m-c-i'      => [ 'n' => 'c_m_cart_icon',             'd' => '#4e7df1'],
+        '--c-m-c-i-d'    => [ 'n' => 'c_m_cart_icon_d',           'd' => '#f3f3f3'],
+        '--c-m-c-i-c'    => [ 'n' => 'c_m_cart_icon_color',       'd' => '#5b88f7'],
+        '--c-m-c-i-c-d'  => [ 'n' => 'c_m_cart_icon_color_d',     'd' => '#9c9c9c'],
+        '--c-m-c-i-co'   => [ 'n' => 'c_m_cart_icon_count',       'd' => '#43c16d'],
+        '--c-m-c-i-co-d' => [ 'n' => 'c_m_cart_icon_count_d',     'd' => '#e3e3e3'],
+        '--c-m-c-i-co-c' => [ 'n' => 'c_m_cart_icon_count_color', 'd' => '#fff'],
+
+        '--c-m-p-i' => [ 'n' => 'c_m_phone_icon', 'd' => '#4e7df1'],
+        '--c-m-p-t' => [ 'n' => 'c_m_phone_text', 'd' => '#222'],
+        '--c-m-p-d' => [ 'n' => 'c_m_phone_down', 'd' => '#222'],
+        '--c-m-p-h' => [ 'n' => 'c_m_phone_hint', 'd' => '#808080'],
+
+        '--c-m-p-b'     => [ 'n' => 'c_m_p_bars',             'd' => '#fff'],
+        '--c-m-p-b-i'   => [ 'n' => 'c_m_p_bars_icon',        'd' => '#4e7df1'],
+        '--c-m-p-f'     => [ 'n' => 'c_m_p_filtr',            'd' => '#fff'],
+        '--c-m-p-f-i'   => [ 'n' => 'c_m_p_filtr_icon',       'd' => '#222'],
+        '--c-m-p-c'     => [ 'n' => 'c_m_p_cart',             'd' => '#fff'],
+        '--c-m-p-c-i'   => [ 'n' => 'c_m_p_cart_icon',        'd' => '#4e7df1'],
+        '--c-m-p-c-i-d' => [ 'n' => 'c_m_p_cart_icon_d',      'd' => '#9c9c9c'],
+        '--c-m-p-c-c'   => [ 'n' => 'c_m_p_cart_count',       'd' => '#43c16d'],
+        '--c-m-p-c-c-d' => [ 'n' => 'c_m_p_cart_count_d',     'd' => '#e3e3e3'],
+        '--c-m-p-c-c-c' => [ 'n' => 'c_m_p_cart_count_color', 'd' => '#fff']
+    ]}
+
+    <link href="{$wa_theme_url}css/panel.edit.css?v{$wa_theme_version}" rel="stylesheet"/>
+
+    {$sidebarActive = waRequest::cookie('sidebar_active', null, waRequest::TYPE_STRING)}
+
+    <div class="e-panel">
+        <div class="e-panel__settings{if !$sidebarActive} e-panel__settings_active{/if}">
+            <div class="e-panel__item"  style="color:#fff">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"></path></svg>
+            </div>
+        </div>
+        <div class="e-panel__sidebar{if $sidebarActive} e-panel__sidebar_active{/if}">
+            <div class="e-panel__items">
+                <div class="e-panel__item e-panel__item-close"  style="color:#fff">
+                    <svg class="icon12 i-remove "><use xlink:href="#i-remove"></use></svg>
+                </div>
+
+                <div class="e-panel__item e-panel__item-colors" style="color:#28cd94">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M128 224c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.4-32-32-32zM418.6 58.1C359.2 9.3 281.3-10 204.6 5 104.9 24.4 24.7 104.2 5.1 203.7c-16.7 84.2 8.1 168.3 67.8 230.6 47.3 49.4 109.7 77.8 167.9 77.8 8.8 0 17.5-.6 26.1-2 24.2-3.7 44.6-18.7 56.1-41.1 12.3-24 12.3-52.7.2-76.6-6.1-12-5.5-26.2 1.8-38 7-11.8 18.7-18.4 32-18.4h72.2c46.4 0 82.8-35.7 82.8-81.3-.2-76.4-34.3-148.1-93.4-196.6zM429.2 288H357c-29.9 0-57.2 15.4-73 41.3-16 26.1-17.3 57.8-3.6 84.9 5.1 10.1 5.1 22.7-.2 32.9-2.6 5-8.7 13.7-20.6 15.6-49.3 7.7-108.9-16.6-152-61.6-48.8-50.9-69-119.4-55.4-188 15.9-80.6 80.8-145.3 161.6-161 62.6-12.3 126.1 3.5 174.3 43.1 48.1 39.5 75.7 97.6 75.9 159.6 0 18.6-15.3 33.2-34.8 33.2zM160 128c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.4-32-32-32zm96-32.1c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32c0-17.6-14.3-32-32-32zm96 32.1c-17.7 0-32 14.3-32 32s14.3 32 32 32 32-14.3 32-32-14.3-32-32-32z"></path></svg>
+                    <div class="e-panel__item-des">
+                        <div class="e-panel__item-title">Цветовые настройки</div>
+                        <div class="e-panel__item-content">
+                            Настройка цвета вашего сайта в режиме реального времени
+                        </div>
+                    </div>
+                </div>
+
+                <div class="e-panel__item e-panel__item-settings" style="color:#f783ac">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M496 384H160v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h80v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h336c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160h-80v-16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h336v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h80c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm0-160H288V48c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v16H16C7.2 64 0 71.2 0 80v32c0 8.8 7.2 16 16 16h208v16c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-16h208c8.8 0 16-7.2 16-16V80c0-8.8-7.2-16-16-16z"></path></svg>
+                    <div class="e-panel__item-des">
+                        <div class="e-panel__item-title">Настройка сайта</div>
+                        <div class="e-panel__item-content">
+                            Быстрая настройка блоков вашего сайта. Теперь нет необходимости искать настройки в административной панели.
+                        </div>
+                    </div>
+                </div>
+
+                {if $wa_app == 'shop' && !empty($action) && $action == 'category' && !empty($category)}
+                    {$linkEdit = "{$wa_backend_url}shop/?action=products#/products/category_id={$category.id}"}
+
+                {elseif $wa_app == 'shop' && !empty($action) && $action == 'product' && !empty($product)}
+                    {$linkEdit = "{$wa_backend_url}shop/?action=products#/product/{$product.id}/edit/"}
+
+                {elseif $wa_app == 'blog' && !empty($action) && $action == 'post' && !empty($post)}
+                    {$linkEdit = "{$wa_backend_url}blog/?module=post&id={$post.id}&action=edit"}
+
+                {elseif !empty($action) && $action == 'page' && $wa_app == 'shop' && !empty($page)}
+                    {$linkEdit = "{$wa_backend_url}{$wa_app}/?action=storefronts#/pages/{$page.id}"}
+
+                {elseif !empty($action) && $action == 'page' && $wa_app == 'blog' && !empty($page)}
+                    {$linkEdit = "{$wa_backend_url}{$wa_app}/?module=pages#/{$page.id}"}
+
+                {elseif $wa_app == 'site' && !empty($page)}
+                    {$linkEdit = "{$wa_backend_url}{$wa_app}/#/pages/{$page.id}"}
+                {/if}
+
+                {if empty($linkEdit)}
+                    {$linkEdit = "{$wa_backend_url}{$wa_app}"}
+                {/if}
+                <a href="{$linkEdit}" class="e-panel__item" style="color:#fd7e14" target="_blank">
+                    <svg class="icon18 i-edit"><use xlink:href="#i-edit"></use></svg>
+                    <div class="e-panel__item-des">
+                        <div class="e-panel__item-title">Быстрый переход</div>
+                        <div class="e-panel__item-content">
+                            Ссылка для быстрого перехода редактирования в административную панель сайта, категории, товара, страниц.
+                        </div>
+                    </div>
+                </a>
+
+                <div class="e-panel__item e-panel__item-info" style="color:#15aabf">
+                    <svg class="icon18 i-info"><use xlink:href="#i-info"></use></svg>
+                    <div class="e-panel__item-des">
+                        <div class="e-panel__item-title">Информация</div>
+                        <div class="e-panel__item-content">
+                            Подсвечивание используемых блоков на сайте.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="e-panel__item e-panel__item-save" style="color:#82c91e">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M433.941 129.941l-83.882-83.882A48 48 0 0 0 316.118 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V163.882a48 48 0 0 0-14.059-33.941zM288 64v96H96V64h192zm128 368c0 8.822-7.178 16-16 16H48c-8.822 0-16-7.178-16-16V80c0-8.822 7.178-16 16-16h16v104c0 13.255 10.745 24 24 24h208c13.255 0 24-10.745 24-24V64.491a15.888 15.888 0 0 1 7.432 4.195l83.882 83.882A15.895 15.895 0 0 1 416 163.882V432zM224 232c-48.523 0-88 39.477-88 88s39.477 88 88 88 88-39.477 88-88-39.477-88-88-88zm0 144c-30.879 0-56-25.121-56-56s25.121-56 56-56 56 25.121 56 56-25.121 56-56 56z"></path></svg>
+                    <div class="e-panel__item-des">
+                        <div class="e-panel__item-title">Сохранить настройки</div>
+                        <div class="e-panel__item-content">
+                            Быстрое сохранение ваших настроек
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="e-panel__blocks">
+            <div class="e-panel__block e-panel__block-colors">
+                <form action="{$actionSettings}" method="post" enctype="multipart/form-data">
+                    {$wa->csrf()}
+                    {$settingsColor = false}
+                    {$settingsLevel = false}
+                    {foreach $theme_settings_config as $key=>$s}
+                        {if $key == 'divider_plugins_brands'}{$settingsColor=false}{/if}
+                        {if $key == 'divider_colors' || $settingsColor}
+                            {if $s.control_type == 'group_divider' && $s.level == 1}
+                                {if $settingsColor}</div></div></div>{/if}
+                                {$panelSettingActive = waRequest::cookie('panel__setting', 'divider_colors', waRequest::TYPE_STRING)}
+                                <div class="e-panel__setting{if $panelSettingActive == $key} e-panel__setting_active{/if}">
+                                    <div class="e-panel__level-1" data-group="{$key}">{$s.name}</div>
+                                    {$settingsLevel = false}
+                                    <div class="e-panel__setting-dop">
+                            {/if}
+
+                            {if $s.control_type == 'group_divider' && $s.level == 2}
+                                {if $settingsLevel}</div>{/if}
+                                {$active = waRequest::cookie('level_active', null, waRequest::TYPE_STRING)}
+                                <div class="e-panel__level-2{if $active == $key} e-panel__level_active{/if}" data-group="{$key}">
+                                    {$s.name}
+                                </div>
+                                <div class="e-panel__setting-values">
+                                {$settingsLevel=true}
+                            {/if}
+
+                            {if $s.control_type == 'group_divider' && $s.level == 3}
+                                <div class="e-panel__level-3">{$s.name}</div>
+                            {/if}
+
+                            {if $s.control_type == 'color'}
+                                <div class="e-panel__s-color">
+                                    <div class="e-panel__s-color-name">{$s.name}</div>
+                                    <div class="e-panel__s-color-value">
+                                        <span class="e-panel__s-color-replacer">
+                                            <i class="icon18 color" style="background:{$s.value}"></i>
+                                        </span>
+                                        <input type="text" name="settings[{$key}]" data-key="{$key}" value="{$s.value}">
+                                    </div>
+                                    <div class="e-panel__s-color-picker">
+                                    </div>
+                                </div>
+                            {/if}
+
+                            {if $s.control_type == 'image_select'}
+                                {$urlTheme = $wa_parent_theme_url|default:$wa_theme_url}
+                                <div class="e-panel__s-color-view">
+                                    <img src="{$urlTheme}{$s.value}" alt="" />
+                                </div>
+                            {/if}
+
+                            {if $s.control_type == 'checkbox'}
+                                <div class="e-panel__s-color">
+                                    <div class="e-panel__s-color-name">{$s.name}</div>
+                                    <div class="e-panel__s-color-value">
+                                        <input type="hidden" name="settings[{$key}]" value="">
+                                        <input type="checkbox" name="settings[{$key}]" value="1" {if {$s.value}}checked{/if}>
+                                    </div>
+                                </div>
+                            {/if}
+
+                            {if $s.control_type == 'image'}
+                                <div class="e-panel__s-color-images">
+                                    <div class="e-panel__s-color-img-name">{$s.name} (*.jpg, *.jpeg, *.png, *.gif)</div>
+                                    <div class="e-panel__s-color-input">
+                                        <input class="e-panel__images-hidden" type="hidden" name="settings[{$key}]" value="{$s.value}" />
+                                        <input class="e-panel__images" type="file" name="image[{$key}]" />
+                                    </div>
+                                    {if $s.value}
+                                        {$urlTheme = $wa_parent_theme_url|default:$wa_theme_url}
+                                        <div class="e-panel__s-color-img">
+                                            <img src="{$urlTheme}{$s.value}?v{$wa_theme_version}" alt="" />
+                                            <div class="e-panel__s-color-img-remove">
+                                                <svg class="icon8 i-remove "><use xlink:href="#i-remove"></use></svg>
+                                            </div>
+                                        </div>
+                                    {/if}
+                                </div>
+                            {/if}
+
+                            {$settingsColor=true}
+                        {/if}
+                    {/foreach}
+                    </div>
+                    </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="e-panel__block e-panel__block-settings">
+                {$settExclude = ['header_fix_img','header_blocks_variants_des','header_blocks_variants','header_primer','header_hp_header','header_hp_header_des','divider_color','divider_left_blocks_separator','divider_left_blocks','divider_left_blocks_variants','divider_category_des','divider_product_des']}
+                <form action="{$actionSettings}" method="post" enctype="multipart/form-data">
+                    {$wa->csrf()}
+                    {$settingsView = true}
+                    {$settings = false}
+                    {$settingsLevel = false}
+                    {foreach $theme_settings_config as $key=>$s}
+                        {if in_array($key, $settExclude)}{continue}{/if}
+                        {$urlTheme = $wa_parent_theme_url|default:$wa_theme_url}
+                        {if $key == 'divider_colors'}{$settingsView=false}{/if}
+                        {if $key == 'divider_plugins_brands'}{$settingsView=true}{/if}
+                        {if $settingsView}
+                            {if $s.control_type == 'group_divider' && $s.level == 1}
+                                {if $settings}</div></div></div>{/if}
+                                {$panelSettingActive = waRequest::cookie('panel__setting', 'divider_colors', waRequest::TYPE_STRING)}
+                                <div class="e-panel__setting{if $panelSettingActive == $key} e-panel__setting_active{/if}">
+                                    <div class="e-panel__level-1" data-group="{$key}">{$s.name}</div>
+                                    {$settingsLevel = false}
+                                    <div class="e-panel__setting-dop">
+                            {/if}
+
+                            {if $s.control_type == 'group_divider' && $s.level == 2}
+                                {if $settingsLevel}</div>{/if}
+                                {$active = waRequest::cookie('level_active', 'divider_colors_fon', waRequest::TYPE_STRING)}
+                                <div class="e-panel__level-2{if $active == $key} e-panel__level_active{/if}" data-group="{$key}">
+                                    {$s.name}
+                                </div>
+                                <div class="e-panel__dop" data-group="{$key}">
+                                    <div class="e-panel__dop-title">{$s.name}</div>
+                                    {if $key == 'header_top' || $key == 'header_midd' || $key == 'header_bott'}
+                                        <div class="e-panel__dop-des">
+                                            {$theme_settings_config['header_blocks_variants'].name}
+                                        </div>
+                                    {else if $key == 'divider_left_settings_all'}
+                                        <div class="e-panel__dop-des">
+                                            {$theme_settings_config['divider_left_blocks_variants'].name}
+                                        </div>
+                                    {else if $key == 'category_common'}
+                                        <div class="e-panel__dop-des">
+                                            {$theme_settings_config['divider_category_des'].name}
+                                        </div>
+                                    {else if $key == 'divider_product_settings'}
+                                        <div class="e-panel__dop-des">
+                                            {$theme_settings_config['divider_product_des'].name}
+                                        </div>
+                                    {/if}
+                                    {$settingsLevel=true}
+                            {/if}
+
+                            {if $s.control_type == 'group_divider' && $s.level == 3}
+                                <div class="e-panel__dop-title-2">{$s.name}</div>
+                            {/if}
+
+                            {if $s.control_type == 'color'}
+                                <div class="e-panel__s-color">
+                                    <div class="e-panel__s-color-name">{$s.name}</div>
+                                    <div class="e-panel__s-color-value">
+                                        <span class="e-panel__s-color-replacer">
+                                            <i class="icon18 color" style="background:{$s.value}"></i>
+                                        </span>
+                                        <input type="text" name="settings[{$key}]" data-key="{$key}" value="{$s.value}">
+                                    </div>
+                                    <div class="e-panel__s-color-picker"></div>
+                                </div>
+                            {/if}
+
+                            {if $s.control_type == 'image_select'}
+                                {$urlTheme = $wa_parent_theme_url|default:$wa_theme_url}
+                                <div class="e-panel__dop-image">
+                                    {if !empty({$s.name})}
+                                        <div class="e-panel__dop-image-name">{$s.name}</div>
+                                    {/if}
+                                    {if count($s.options) > 1}
+                                        <div class="e-panel__dop-image-value">
+                                            {foreach $s.options as $k=>$v}
+                                                <label{if $s.value == $k} class="e-panel__dop-image-active"{/if}>
+                                                    <input name="settings[{$key}]" type="radio"{if $s.value == $k} checked{/if} value="{$k}" style="display:none">
+                                                    <img src="{$urlTheme}{$k}" alt="" />
+                                                </label>
+                                            {/foreach}
+                                        </div>
+                                    {else}
+                                        <div class="e-panel__dop-image-value-one">
+                                            <img src="{$urlTheme}{$s.value}" alt="" />
+                                        </div>
+                                    {/if}
+
+                                    {if !empty($s.description)}
+                                        <div class="e-panel__dop-hint">{$s.description}</div>
+                                    {/if}
+                                </div>
+                            {/if}
+
+                            {if $s.control_type == 'checkbox'}
+                                <div class="e-panel__s-color">
+                                    <div class="e-panel__s-color-name">{$s.name}</div>
+                                    <div class="e-panel__s-color-value">
+                                        <input type="hidden" name="settings[{$key}]" value="">
+                                        <input type="checkbox" name="settings[{$key}]" value="1" {if $s.value}checked{/if}>
+                                    </div>
+                                    {if !empty($s.description)}
+                                        <div class="e-panel__dop-hint">{$s.description}</div>
+                                    {/if}
+                                </div>
+                            {/if}
+
+                            {if $s.control_type == 'image'}
+                                <div class="e-panel__s-color-images">
+                                    <div class="e-panel__s-color-img-name">{$s.name} (*.jpg, *.jpeg, *.png, *.gif)</div>
+                                    <div class="e-panel__s-color-input">
+                                        <input class="e-panel__images-hidden" type="hidden" name="settings[{$key}]" value="{$s.value}" />
+                                        <input class="e-panel__images" type="file" name="image[{$key}]" />
+                                    </div>
+                                    {if $s.value}
+                                        <div class="e-panel__s-color-img">
+                                            <img src="{$urlTheme}{$s.value}?v{$wa_theme_version}" alt="" />
+                                            <div class="e-panel__s-color-img-remove">
+                                                <svg class="icon8 i-remove "><use xlink:href="#i-remove"></use></svg>
+                                            </div>
+                                        </div>
+                                    {/if}
+                                </div>
+                            {/if}
+
+                            {if $s.control_type == 'text'}
+                                <div class="e-panel__dop-text">
+                                    <div class="e-panel__dop-text-name">{$s.name}</div>
+                                    <div class="e-panel__dop-text-value">
+                                        <textarea name="settings[{$key}]">{$s.value}</textarea>
+                                        {if !empty($s.description)}
+                                            <div class="e-panel__dop-hint">{$s.description}</div>
+                                        {/if}
+                                    </div>
+                                </div>
+                            {/if}
+
+                            {if $s.control_type == 'select'}
+                                <div class="e-panel__dop-select">
+                                    <div class="e-panel__dop-select-name">{$s.name}</div>
+                                    <div class="e-panel__dop-select-value">
+                                        <select name="settings[{$key}]">
+                                            {foreach $s.options as $k=>$v}
+                                                <option{if $s.value == $k} selected{/if} value="{$k}">{$v}</option>
+                                            {/foreach}
+                                        </select>
+                                        {if !empty($s.description)}
+                                            <div class="e-panel__dop-hint">{$s.description}</div>
+                                        {/if}
+                                    </div>
+                                </div>
+                            {/if}
+
+                            {if $s.control_type == 'paragraph'}
+                                <div class="e-panel__dop-des">{$s.name}</div>
+                            {/if}
+
+                            {$settings=true}
+                        {/if}
+                    {/foreach}
+                    </div>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="e-panel-bg"></div>
+
+    <script type="text/javascript" src="{$wa_static_url}wa-content/js/farbtastic/farbtastic.js"></script>
+    <link rel="stylesheet" href="{$wa_static_url}wa-content/js/farbtastic/farbtastic.css">
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="{$wa_theme_url}js/panel.edit.js?v{$wa_theme_version}"></script>
+    <script>
+        $(function() {
+            $.panelEdit.init({
+                csrf: '{$wa->csrf()}',
+                action: '{$actionSettings}',
+                colors: {
+                    {foreach $colors as $k=>$v}
+                        '{$v.n}':'{$k}',
+                    {/foreach}
+                }
+            });
+        });
+    </script>
+{/if}
+
+{/strip}

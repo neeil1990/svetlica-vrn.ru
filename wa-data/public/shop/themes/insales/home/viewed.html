@@ -40,9 +40,7 @@
                     {include file="../list-thumbs-short.html" products=$viewedList inline}
                 </div>
             {else}
-                <div class="products products_slider products_col-{$ts.home_viewed_col} owl-carousel owl-theme-nav owl-loaded owl-drag">
-                    {include file="../list-thumbs.html" products=$viewedList}
-                </div>
+                {include file="../list-thumbs.html" products=$viewedList columns=$ts.home_list_1_count slider_view=1}
             {/if}
         {/if}
     {/if}

@@ -29,11 +29,6 @@
 
             {$badgeHtml = $wa->shop->badgeHtml($p.badge)}
 
-            {if ($p.features.svetopropuskanie && array_key_exists('491', $p.features.svetopropuskanie))}
-                {include file="./product/badge.html" inline assign="custom_badge"}
-                {$badgeHtml = $badgeHtml|cat:$custom_badge}
-            {/if}
-
             {$img = $wa->shop->productImgUrl($p, 200)}
             {$imgDefault = "`$wa_parent_theme_url``$ts.product_default|default:'img/dummy200.png'`"}
 
@@ -43,7 +38,7 @@
 
             <div class="s-products__item" itemscope="" itemtype="http://schema.org/Product">
 
-                {if !empty($badgeHtml)}
+                {if !empty($badge_html)}
                     <div class="badges">{$badgeHtml}</div>
                 {/if}
 
@@ -168,12 +163,6 @@
                             {$p.summary}
                         </div>
 
-                        {if $p.summary}
-                            <meta itemprop="description" content="{$p.summary|escape}">
-                        {else}
-                            <meta itemprop="description" content="{$p.name|escape}">
-                        {/if}
-
                         {if !empty($p.features)}
                             <div class="s-products__features">
                                 <div class="p-features">
@@ -251,7 +240,7 @@
                         <div class="s-products__price">
                             {if $ts.category_product_range && $p.frontend_min_price > 0 && $p.frontend_min_price != $p.frontend_max_price}
                                 <span class="s-products__price-range">
-                                    {shopCustom::p()} {shop_currency_html($p.frontend_min_price)} {$p.features.units}
+                                    {shop_currency_html($p.frontend_min_price)} ... {shop_currency_html($p.frontend_max_price)}
                                 </span>
                             {else}
                                 {if $ts.product_zero_text && $p.price==0}
@@ -261,7 +250,7 @@
                                     {$available = false}
                                 {else}
                                     <div class="s-products__price-new">
-                                        {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
+                                        {shop_currency_html($p.price)}
                                     </div>
                                 {/if}
 
@@ -270,15 +259,25 @@
                                         <div class="s-products__price-old-p">
                                             {shop_currency_html($p.compare_price)}
                                         </div>
+
                                         {if $ts.category_product_discount}
-                                            <div class="stock-label">
-                                                <div class="stock-label__percent">
-                                                    {round(($p.compare_price-$p.price)*100/$p.compare_price, 2)}%
+                                            {$percentDis = ($p.compare_price-$p.price)*100/$p.compare_price}
+                                            {if $ts.category_product_discount_round == 'down'}
+                                                {$percentDis = floor($percentDis)}
+                                            {else}
+                                                {$percentDis = $percentDis|ceil}
+                                            {/if}
+
+                                            {if $percentDis >= $ts.category_product_discount_min}
+                                                <div class="stock-label">
+                                                    <div class="stock-label__percent">
+                                                        {$percentDis}%
+                                                    </div>
+                                                    <div class="stock-label__price">
+                                                        -{shop_currency_html($p.compare_price-$p.price)}
+                                                    </div>
                                                 </div>
-                                                <div class="stock-label__price">
-                                                    -{shop_currency_html($p.compare_price-$p.price)}
-                                                </div>
-                                            </div>
+                                            {/if}
                                         {/if}
                                     </div>
                                 {/if}
@@ -286,8 +285,7 @@
                         </div>
 
                         {if $ts.category_product_button_cart}
-                            <form class="s-products__addtocart purchase addtocart" action="{$wa->getUrl('/frontendCart/add')}" method="post"
-                                {if $p.sku_count > 1} data-get="true"{/if} data-app-url="{$wa_app_url}" data-url="{$p.frontend_url}">
+                            <form class="s-products__addtocart purchase addtocart" action="{$wa->getUrl('shop/frontendCart/add')}" method="post" {if $p.sku_count > 1} data-get="true"{/if} data-app-url="{$wa->getUrl('shop/frontend')}" data-url="{$p.frontend_url}">
 
                                 <input type="hidden" name="product_id" value="{$p.id}" />
 
@@ -374,9 +372,12 @@
                     </div>
                 </div>
 
+                {if !empty($p.features.brand)}
+                    <meta itemprop="brand" content="{$p.features.brand}">
+                {/if}
+                <meta itemprop="description" content="{$p.summary|default:$p.name|escape}">
                 <meta itemprop="url" content="{$p.frontend_url}">
                 <meta itemprop="image" content="{$img|default:$imgDefault}">
-                <meta itemprop="brand" content="">
                 <meta itemprop="review" content="">
                 <meta itemprop="sku" content="">
 
@@ -384,7 +385,7 @@
                     <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
                         <meta itemprop="ratingValue" content="{$product.rating}" />
                         <meta itemprop="bestRating" content="5" />
-                        <meta itemprop="worstRating" content="0" />
+                        <meta itemprop="worstRating" content="1" />
                         <meta itemprop="ratingCount" content="{$product.rating_count}" />
                         <meta itemprop="reviewCount" content="{$product.rating_count}" />
                     </div>

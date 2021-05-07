@@ -1,0 +1,38 @@
+{strip}
+
+{if $type == 'blog'}
+    {$timeline = $wa->blog->timeline()}
+    {$year=null}
+
+    {* TIMELINE NAVIGATION *}
+    {if !empty($timeline)}
+        <ul class="l-menu">
+            {foreach $timeline as $year_month => $item}
+                {if $year neq $item.year}
+                    {if $item@iteration != 1}</li></ul>{/if}
+
+                    <li class="l-menu__item">
+                        {$year=$item.year}
+                        <a class="l-menu__link" href="{$item.year_link}">
+                            {$item.year|default:'NULL'}
+                        </a>
+
+                    <div class="l-menu__angle">
+                        <svg class="icon10 i-angle-right">
+                            <use xlink:href="#i-angle-right"></use>
+                        </svg>
+                    </div>
+                    <ul class="l-menu__dop">
+                {/if}
+                <li class="l-menu__dop-item">
+                    <a class="l-menu__dop-link{if $item.selected} l-menu__active{/if}" href="{$item.link}" title="{_w("%d post","%d posts",$item.count)}">
+                        {_ws(date("F",gmmktime(0,0,0,$item.month,1)))}
+                    </a>
+                </li>
+            {/foreach}
+            </li></ul>
+        </ul>
+    {/if}
+{/if}
+
+{/strip}

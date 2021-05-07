@@ -1,0 +1,48 @@
+.in-post__date {
+  color:#808080;
+  margin-bottom: 20px;
+}
+
+.in-post__next {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  font-size: 16px;
+  font-size: 1rem;
+  margin-top: 25px;
+  text-decoration: none
+}
+
+.in-post__next .i-angle-right {
+  margin-left: 8px
+}
+
+.in-search {
+  position: relative;
+}
+
+.in-search input {
+  height:46px;
+  padding-right:50px;
+  width: 100%
+}
+
+.in-search__button {
+  background: none;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: absolute;
+  transition: color .3s ease-out;
+  right: 0;
+  top: -1px;
+  width: 50px;
+  height: 48px
+}

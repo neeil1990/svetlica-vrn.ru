@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="insales" system="0" app="shop" parent_theme_id="site:insales" vendor="989788" author="steemy.ru" version="2.0.0">
+<theme id="insales" system="0" app="shop" parent_theme_id="site:insales" vendor="989788" author="steemy.ru" version="2.2.0">
   <name locale="en_US">InSale for Shop-Script</name>
   <name locale="ru_RU">InSale для Shop-Script</name>
   <description locale="en_US">Responsive Theme «InSale»</description>
@@ -98,9 +98,7 @@
     <file path="home/banner_two_text.html"/>
     <file path="home/brands.html"/>
     <file path="home/category.html"/>
-    <file path="home/category_promo.html" custom="0" modified="1">
-      <description locale="ru_RU"/>
-    </file>
+    <file path="home/category_promo.html"/>
     <file path="home/company.html"/>
     <file path="home/list_1.html"/>
     <file path="home/list_2.html"/>
@@ -126,9 +124,7 @@
     <file path="cart.add.html"/>
     <file path="cart.html"/>
     <file path="cart.list.html"/>
-    <file path="category.html" custom="0" modified="1">
-      <description locale="ru_RU"/>
-    </file>
+    <file path="category.html"/>
     <file path="checkout.auth.html"/>
     <file path="checkout.confirmation.html"/>
     <file path="checkout.contactinfo.html"/>
@@ -140,9 +136,7 @@
     <file path="checkout.success.html"/>
     <file path="compare.html"/>
     <file path="error.html"/>
-    <file path="footer.html" custom="0" modified="1">
-      <description locale="ru_RU"></description>
-    </file>
+    <file path="footer.html"/>
     <file path="head.html"/>
     <file path="header.html"/>
     <file path="home.html"/>

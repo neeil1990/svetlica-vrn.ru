@@ -167,10 +167,12 @@ class shopWorkflowEditAction extends shopWorkflowAction
             try {
                 if ($shipping_plugin = shopShipping::getPlugin(null, $data['params']['shipping_id'])) {
                     $shipping_currency = $shipping_plugin->allowedCurrency();
-                    $data['params']['shipping_currency'] = $shipping_currency;
-                    $rate_model = new shopCurrencyModel();
-                    if ($row = $rate_model->getById($shipping_currency)) {
-                        $data['params']['shipping_currency_rate'] = str_replace(',', '.', $row['rate']);
+                    if ($shipping_currency) {
+                        $data['params']['shipping_currency'] = $shipping_currency;
+                        $rate_model = new shopCurrencyModel();
+                        if ($row = $rate_model->getById($shipping_currency)) {
+                            $data['params']['shipping_currency_rate'] = str_replace(',', '.', $row['rate']);
+                        }
                     }
                 }
 
@@ -205,6 +207,15 @@ class shopWorkflowEditAction extends shopWorkflowAction
             $return['text'] = $data['text'];
             unset($data['text']);
         }
+
+        $edited_sku_ids = array();
+        foreach ($data['items'] as $item) {
+            if (!empty($item['sku_id'])) {
+                $edited_sku_ids[] = $item['sku_id'];
+            }
+        }
+        $order_items_codes_model = new shopOrderItemCodesModel();
+        $order_items_codes_model->clearValues($data['id'], $edited_sku_ids);
 
         // SAVE ORDER ITEMS
         $this->order_model->update($data, $data['id']);

@@ -2,6 +2,8 @@
 
 {$ts = $theme_settings}
 
+{$features = $wa->shop->features($products)}
+
 {if !empty($products)}
     {$itemsCart = $wa->shop->cart->items()}
     {$itemsCartId = []}
@@ -64,11 +66,20 @@
                                 {shop_currency_html($p.compare_price)}
                             </div>
                             {if $ts.category_product_discount}
-                                <div class="stock-label">
-                                    <div class="stock-label__percent">
-                                        -{round(($p.compare_price-$p.price)*100/$p.compare_price, 2)}%
+                                {$percentDis = ($p.compare_price-$p.price)*100/$p.compare_price}
+                                {if $ts.category_product_discount_round == 'down'}
+                                    {$percentDis = floor($percentDis)}
+                                {else}
+                                    {$percentDis = $percentDis|ceil}
+                                {/if}
+
+                                {if $percentDis >= $ts.category_product_discount_min}
+                                    <div class="stock-label">
+                                        <div class="stock-label__percent">
+                                            -{$percentDis}%
+                                        </div>
                                     </div>
-                                </div>
+                                {/if}
                             {/if}
                         </div>
                     {/if}
@@ -78,8 +89,7 @@
             {if !empty($button_view)}
                 <div class="products__bottom">
                     <div class="products__cart-flex">
-                        <form class="products__addtocart purchase addtocart" method="post" action="{$wa->getUrl('/frontendCart/add')}"
-                            {if $p.sku_count > 1} data-get="true"{/if} data-app-url="{$wa_app_url}" data-url="{$p.frontend_url}">
+                        <form class="products__addtocart purchase addtocart" method="post" action="{$wa->getUrl('shop/frontendCart/add')}" {if $p.sku_count > 1} data-get="true"{/if} data-app-url="{$wa->getUrl('shop/frontend')}" data-url="{$p.frontend_url}">
 
                             <input type="hidden" name="quantity" value="1">
                             <input type="hidden" name="product_id" value="{$p.id}" />
@@ -106,9 +116,14 @@
                     <link itemprop="availability" href="http://schema.org/OutOfStock" />
                 {/if}
             </span>
+
+            {if !empty($p.features.brand)}
+                <meta itemprop="brand" content="{$p.features.brand}">
+            {/if}
+
+            <meta itemprop="description" content="{$p.summary|default:$p.name|escape}">
             <meta itemprop="url" content="{$p.frontend_url}">
             <meta itemprop="image" content="{$img|default:$imgDefault}">
-            <meta itemprop="brand" content="">
             <meta itemprop="review" content="">
             <meta itemprop="sku" content="">
             <meta itemprop="aggregateRating" content="">

@@ -1,0 +1,154 @@
+{strip}
+
+{if !empty($products) && ($ts.category_sorting || !empty($sorting))}
+    {$sort_fields = [
+        'name' => '[`Name`]',
+        'price' => '[`Price`]',
+        'total_sales' => '[`Bestsellers`]',
+        'rating' => '[`Customer rating`]',
+        'create_datetime'=>'[`Date added`]',
+        'stock' => '[`In stock`]'
+    ]}
+
+    {if empty($active_sort)}
+        {$active_sort = $wa->get('sort', 'create_datetime')}
+    {/if}
+
+    <div class="in-blocks__item-s{if $ts.category_sorting_fix} sorting-fix{/if}">
+        {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+            <div class="block-info-name">{$name}</div>
+            <div class="e-panel-edit" data-group-edit="divider_category_sorting">
+                <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки сортировки">
+                    <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                </div>
+            </div>
+        {/if}
+
+        <div class="sorting">
+            <div class="sorting__left">
+                {if !empty($category.params.products_lists)}
+                    <div class="sorting__switch sorting__switch_active" data-view="thumbs">
+                        <svg class="icon18 i-{$category.params.products_lists}">
+                            <use xlink:href="#i-{$category.params.products_lists}"></use>
+                        </svg>
+                    </div>
+                {else}
+                    {if waRequest::isMobile(false)}
+                        {$ts.category_sorting_default = $ts.category_sorting_default_mobile}
+                    {/if}
+
+                    {if !empty($category.params.products_lists)}
+                        {$cookieSwitch = $category.params.products_lists}
+                    {else}
+                        {$cookieSwitch = waRequest::cookie('sorting__switch', {$ts.category_sorting_default}, waRequest::TYPE_STRING)}
+                    {/if}
+
+                    <div class="sorting__switch{if $cookieSwitch == 'thumbs'} sorting__switch_active{/if}" data-view="thumbs">
+                        <svg class="icon18 i-thumbs">
+                            <use xlink:href="#i-thumbs"></use>
+                        </svg>
+                    </div>
+                    <div class="sorting__switch{if $cookieSwitch == 'list'} sorting__switch_active{/if}" data-view="list">
+                        <svg class="icon18 i-list">
+                            <use xlink:href="#i-list"></use>
+                        </svg>
+                    </div>
+
+                    {if !waRequest::isMobile(false)}
+                        <div class="sorting__switch{if $cookieSwitch == 'mini'} sorting__switch_active{/if}" data-view="mini">
+                            <svg class="icon18 i-bars-list">
+                                <use xlink:href="#i-bars-list"></use>
+                            </svg>
+                        </div>
+                    {/if}
+                {/if}
+            </div>
+
+            <div class="sorting__right">
+                {if $ts.category_sorting_page}
+                    <div class="sorting__page">
+                        {$limits = ['12','24','36','48','96']}
+
+                        {if $ts.category_sorting_page_count}
+                            {assign var=limits value=","|explode:$ts.category_sorting_page_count}
+                        {/if}
+
+                        {if isset($smarty.cookies.products_per_page)}
+                            {$countView = $smarty.cookies.products_per_page}
+                        {else}
+                            {$countView = $limits[0]}
+                        {/if}
+
+                        {foreach $limits as $limit}
+                            {if $limit@iteration > 1}
+                                <span class="sorting__page-sep">/</span>
+                            {/if}
+                            <span class="sorting__page-item{if $limit == $countView} sorting__page-item_sel{/if}">{$limit}</span>
+                        {/foreach}
+                    </div>
+                {/if}
+
+
+                <div class="sorting__sort">
+                    <div class="sorting__sort-name">
+                        <div class="sorting__sort-name-n">
+                            {if !array_key_exists($active_sort, $sort_fields)}
+                                [`New & Popular`]
+                            {else}
+                                {foreach $sort_fields as $sort => $name}
+                                    {if $wa->get('sort') == $sort || $active_sort == $sort}
+                                        {$name} {if $wa->get('order')}
+                                            {if $wa->get('order') == 'asc'}&darr;{else}&uarr;{/if}
+                                        {/if}
+                                    {/if}
+                                {/foreach}
+                            {/if}
+                        </div>
+
+                        <div class="sorting__sort-down">
+                            <svg class="icon8 i-angle-down">
+                                <use xlink:href="#i-angle-down"></use>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <ul class="sorting__sort-block">
+                        {if !array_key_exists($active_sort, $sort_fields)}
+                            <li class="sorting__sort-list {if !$active_sort}sorting__sort-list_active{/if}">
+                                <a href="{$wa->currentUrl(0, 1)}?">[`New & Popular`]</a>
+                            </li>
+                        {/if}
+
+                        {foreach $sort_fields as $sort => $name}
+                            <li class="sorting__sort-list{if $active_sort == $sort} sorting__sort-list_active{/if}">
+                                {if class_exists('shopSeofilterViewHelper')}
+                                    {shopSeofilterViewHelper::sortUrl($sort, $name, $active_sort)}
+                                {else}
+                                    {$wa->shop->sortUrl($sort, $name, $active_sort)}
+                                {/if}
+
+                                {if $wa->get('sort') == $sort}
+                                    {$wa->title($wa->title()|cat:' — '|cat:$name)}
+                                {/if}
+
+                                {if $active_sort == $sort && $wa->get('order')}
+                                    <span class="sorting__sort-arr">
+                                        {if $wa->get('order') == 'asc'}&darr;{else}&uarr;{/if}
+                                    </span>
+                                {/if}
+                            </li>
+                        {/foreach}
+                    </ul>
+                </div>
+
+                <div class="sorting__filter f-filter-bar">
+                    <svg class="icon18 i-filter">
+                        <use xlink:href="#i-filter"></use>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+{/if}
+
+{/strip}

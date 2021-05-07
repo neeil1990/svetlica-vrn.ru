@@ -1,0 +1,30 @@
+{strip}
+
+<div class="page" itemscope itemtype="http://schema.org/WebPage">
+    <h1>{$page.name}</h1>
+
+    {* MENU PAGE MOBILE*}
+    {if waRequest::isMobile(false)}
+        {$subpages = $wa->site->pages($page.id)}
+        {if !empty($subpages)}
+            <ul>
+                {foreach $subpages as $p}
+                    <li>
+                        <a href="{$p.url}">{$p.name}</a>
+                    </li>
+                {/foreach}
+            </ul>
+        {/if}
+    {/if}
+
+    {if class_exists('shopRegionsViewHelper')}
+        {shopRegionsViewHelper::getPageContent()}
+    {elseif $page.content}
+        {$page.content}
+    {else}
+        <p>[`This page is under construction.`]</p>
+    {/if}
+
+</div>
+
+{/strip}

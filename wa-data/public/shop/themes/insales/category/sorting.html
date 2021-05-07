@@ -2,20 +2,20 @@
 
 {if !empty($products) && ($ts.category_sorting || !empty($sorting))}
     {$sort_fields = [
-        'name' => '[`Name`]',
-        'price' => '[`Price`]',
-        'total_sales' => '[`Bestsellers`]',
-        'rating' => '[`Customer rating`]',
-        'create_datetime'=>'[`Date added`]',
-        'stock' => '[`In stock`]'
+        'name' => _w('Name'),
+        'price' => _w('Price'),
+        'total_sales' => _w('Bestsellers'),
+        'rating' => _w('Customer rating'),
+        'create_datetime'=>_w('Date added'),
+        'stock' => _w('In stock')
     ]}
 
     {if empty($active_sort)}
         {$active_sort = $wa->get('sort', 'create_datetime')}
     {/if}
 
-    <div class="in-blocks__item-s{if $ts.category_sorting_fix} sorting-fix{/if}">
-        {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+    <div class="in-blocks__item-s{if waRequest::isMobile(false) && $ts.category_sorting_fix} sorting-fix{/if}">
+        {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
             <div class="block-info-name">{$name}</div>
             <div class="e-panel-edit" data-group-edit="divider_category_sorting">
                 <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки сортировки">

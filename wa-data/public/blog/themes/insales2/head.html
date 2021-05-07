@@ -1,0 +1,11 @@
+<link href="{$wa_active_theme_url}css/insale.blog.css?v{$wa_theme_version}" rel="stylesheet">
+<script src="{$wa_active_theme_url}js/insale.blog.js?v{$wa_theme_version}"></script>
+
+{foreach $links as $role => $link}
+    <link rel="{$role}" href="{$link}">
+{/foreach}
+
+{* @event (frontend_action_default|frontend_action_post|frontend_action_page|frontend_action_error).%plugin_id%.head *}
+{foreach $frontend_action as $plugin => $output}
+    {if !empty($output.head)}{$output.head}{/if}
+{/foreach}

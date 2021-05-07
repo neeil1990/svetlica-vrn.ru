@@ -13,7 +13,7 @@
 {/if}
 
 <div class="p-images{if $ts.product_cart == 2} p-images-2{/if}">
-    {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+    {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
         <div class="e-panel-edit" data-group-edit="divider_product_img">
             <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Изображения">
                 <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
@@ -23,12 +23,6 @@
     <div class="p-images__wrap{$class}">
         <div class="p-images__right">
             {$badgeHtml = $wa->shop->badgeHtml($product.badge)}
-
-            {if ($product.features.svetopropuskanie && array_key_exists('491', $product.features.svetopropuskanie))}
-                {include file="./badge.html" inline assign="custom_badge"}
-                {$badgeHtml = $badgeHtml|cat:$custom_badge}
-            {/if}
-
             {if !empty($badgeHtml)}
                 <div class="badges">{$badgeHtml}</div>
             {/if}

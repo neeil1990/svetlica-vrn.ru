@@ -1,0 +1,156 @@
+{strip}
+
+{if !empty($filters)}
+<div class="in-blocks__item-s{if $ts.filters_drop_fix} d-filter-fix{if $ts.header_fix} d-filter-fix_h{/if}{/if}">
+    <div class="d-filter filters">
+        {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+            <div class="block-info-name">{$name}</div>
+            <div class="e-panel-edit" data-group-edit="divider_left_block_filters">
+                <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки фильтра">
+                    <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                </div>
+            </div>
+        {/if}
+
+        {$resetLink = $wa->currentUrl(0,1)}
+        {if isset($category) && class_exists('shopSeofilterViewHelper')}
+            {$resetLink = $wa->shop->categoryUrl($category)}
+        {/if}
+
+        {$filter_drop_code = array()}
+        {if !empty($category.params.filter_top_code)}
+            {$filter_drop_code = explode(',', $category.params.filter_drop_code)}
+        {/if}
+
+        <form class="d-filter__form" method="get" action="{$resetLink}">
+            <div class="d-filter__wrap">
+                {foreach $filters as $fid => $filter}
+                    {if $fid == 'price'}
+
+                        {$count = 0}
+                        {if $wa->get('price_min') && $wa->get('price_max')}
+                            {$count=2}
+                        {else if $wa->get('price_min') || $wa->get('price_max')}
+                            {$count=1}
+                        {/if}
+
+                        <div class="d-filter__param d-filter__param_price{if $count>0} d-filter__param_active{/if}" {if !empty($category.params.filter_top_code) && !in_array($fid, $filter_drop_code)} style="display:none;"{/if}>
+                            <div class="d-filter__name">
+                                <div class="d-filter__name-n">[`Price`],
+                                    {if $wa->shop->currency() == 'RUB'} ₽{else} {$wa->shop->currency()}{/if}
+                                </div>
+                                <div class="d-filter__name-v">{$count}</div>
+                                <div class="d-filter__name-icon">
+                                    <svg class="icon10 i-angle-down">
+                                        <use xlink:href="#i-angle-down"></use>
+                                    </svg>
+                                    <div class="d-filter__clear">
+                                        <svg class="icon10 i-remove">
+                                            <use xlink:href="#i-remove"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-filter__values">
+                                <div class="d-filter__sliders{if ($wa->get('price_min') || $wa->get('price_max')) && ($wa->get('price_min') != $filter.min || $wa->get('price_max') != $filter.max)} d-filter__sliders_active{/if}">
+                                    <input class="d-filter__inp min" type="text" name="price_min"{if $wa->get('price_min')} value="{(int)$wa->get('price_min')}"{/if} placeholder="{floor($filter.min)}" />
+                                    <input class="d-filter__inp max" type="text" name="price_max"{if $wa->get('price_max')} value="{(int)$wa->get('price_max')}"{/if} placeholder="{ceil($filter.max)}" />
+                                </div>
+                            </div>
+                        </div>
+
+                    {else}
+
+                        {$count = 0}
+                        {if $filter.type == 'boolean'}
+                            {if $wa->get($filter.code, '') !== ''}
+                                {$count = 1}
+                            {/if}
+
+                        {elseif isset($filter.min)}
+                            {$_v = $wa->get($filter.code)}
+                            {if !empty($_v.min) && !empty($_v.max)}
+                                {$count = 2}
+                            {elseif !empty($_v.min) || !empty($_v.max)}
+                                {$count = 1}
+                            {/if}
+                        {else}
+                            {foreach $filter.values as $v_id => $v}
+                                {if in_array($v_id, (array)$wa->get($filter.code, array()))}
+                                    {$count = $count+1}
+                                {/if}
+                            {/foreach}
+                        {/if}
+
+                        <div class="d-filter__param{if $count>0} d-filter__param_active{/if}" {if !empty($category.params.filter_top_code) && !in_array($filter.code, $filter_drop_code)} style="display:none;"{/if}>
+                            <div class="d-filter__name">
+                                <div class="d-filter__name-n">
+                                    {$filter.name|escape}
+                                    {if !empty($filter.unit)} ({$filter.unit.title}){/if}
+                                </div>
+                                <div class="d-filter__name-v">{$count}</div>
+                                <div class="d-filter__name-icon">
+                                    <svg class="icon10 i-angle-down">
+                                        <use xlink:href="#i-angle-down"></use>
+                                    </svg>
+                                    <div class="d-filter__clear">
+                                        <svg class="icon10 i-remove">
+                                            <use xlink:href="#i-remove"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-filter__values">
+                                {if $filter.type == 'boolean'}
+
+                                    <div class="d-filter__check">
+                                        <label class="d-filter__label d-filter__label-r{if $wa->get($filter.code) || $wa->get($filter.code) === '0'} d-filter__label_active{/if}">
+                                            <input type="radio" value="1" name="{$filter.code}"{if $wa->get($filter.code)} checked{/if}> <span class="d-filter__label-n">[`Yes`]</span>
+                                        </label>
+                                        <label class="d-filter__label d-filter__label-r{if $wa->get($filter.code)=== '0'} d-filter__label_active{/if}">
+                                            <input type="radio" value="0" name="{$filter.code}"{if $wa->get($filter.code) === '0'} checked{/if}> <span class="d-filter__label-n">[`No`]</span>
+                                        </label>
+                                        <label class="d-filter__label d-filter__label-r{if $wa->get($filter.code, '') === ''} d-filter__label_active{/if}">
+                                            <input type="radio" value="" name="{$filter.code}"{if $wa->get($filter.code, '') === ''}  checked{/if}> <span class="d-filter__label-n">[`Any`]</span>
+                                        </label>
+                                    </div>
+
+                                {elseif isset($filter.min)}
+
+                                    {$_v = $wa->get($filter.code)}
+                                    <div class="d-filter__sliders{if !empty($_v.min) || !empty($_v.max)} d-filter__sliders_active{/if}">
+                                        <input class="d-filter__inp min" type="text" name="{$filter.code}[min]" placeholder="{$filter.min}" {if !empty($_v.min)}value="{$_v.min}"{/if} />
+                                        <input class="d-filter__inp max" type="text" name="{$filter.code}[max]" placeholder="{$filter.max}" {if !empty($_v.max)}value="{$_v.max}"{/if} />
+                                    </div>
+
+                                    {if !empty($filter.unit)}
+                                        {if $filter.unit.value != $filter.base_unit.value}
+                                            <input type="hidden" name="{$filter.code}[unit]" value="{$filter.unit.value}">
+                                        {/if}
+                                    {/if}
+
+                                {else}
+
+                                    <div class="d-filter__check">
+                                        {foreach $filter.values as $v_id => $v}
+                                            <label class="d-filter__label{if in_array($v_id, (array)$wa->get($filter.code, array()))} d-filter__label_active{/if}">
+                                                <input type="checkbox" name="{$filter.code}[]"{if in_array($v_id, (array)$wa->get($filter.code, array()))} checked{/if} value="{$v_id}"> <span class="d-filter__label-n">{$v}</span>
+                                            </label>
+                                        {/foreach}
+                                    </div>
+
+                                {/if}
+                            </div>
+                        </div>
+                    {/if}
+                {/foreach}
+            </div>
+
+            {if $wa->get('sort')}<input type="hidden" name="sort" value="{$wa->get('sort')|escape}">{/if}
+            {if $wa->get('order')}<input type="hidden" name="order" value="{$wa->get('order')|escape}">{/if}
+        </form>
+    </div>
+</div>
+{/if}
+
+{/strip}

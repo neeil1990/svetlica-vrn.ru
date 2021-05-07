@@ -1,0 +1,122 @@
+{strip}
+
+
+{if !empty($filters) && $ts.filters_result}
+
+    {$selFilters = 0}
+
+    {foreach $filters as $fid => $filter}
+        {if $fid == 'price'}
+            {if $wa->get('price_min') || $wa->get('price_max')}
+                {$selFilters = 1}
+            {/if}
+        {else}
+            {if $filter.type == 'boolean'}
+                {if $wa->get($filter.code) || $wa->get($filter.code) === '0'}
+                    {$selFilters = 1}
+                {/if}
+            {elseif isset($filter.min)}
+                {$_v = $wa->get($filter.code)}
+                {if !empty($_v.min) || !empty($_v.max)}
+                    {$selFilters = 1}
+                {/if}
+            {else}
+                {foreach $filter.values as $v_id => $v}
+                    {if in_array($v_id, (array)$wa->get($filter.code, array()))}
+                        {$selFilters = 1}
+                    {/if}
+                {/foreach}
+            {/if}
+        {/if}
+    {/foreach}
+
+    {if $selFilters}
+        <div class="in-blocks__item-s">
+            <div class="f-finds">
+                <div class="f-finds__result">[`Found products`] - {$products_count}</div>
+
+                <div class="f-finds__wrap">
+                    {foreach $filters as $fid => $filter}
+                        {if $fid == 'price'}
+
+                            {if ($wa->get('price_min') || $wa->get('price_max')) && ($wa->get('price_min') != $filter.min || $wa->get('price_max') != $filter.max)}
+                                <div class="f-finds__list" data-type="price">
+                                    <div class="f-finds__name">
+                                        {if $wa->get('price_min')}{$wa->get('price_min')}{else}{floor($filter.min)}{/if} -
+                                        {if $wa->get('price_max')} {$wa->get('price_max')}{else} {floor($filter.max)}{/if}
+                                        {if $wa->shop->currency() == 'RUB'} ₽{else} {$wa->shop->currency()}{/if}
+                                    </div>
+                                    <div class="f-finds__remove">
+                                        <svg class="icon6 i-remove">
+                                            <use xlink:href="#i-remove"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            {/if}
+
+                        {else}
+                            {if $filter.type == 'boolean'}
+
+                                {if $wa->get($filter.code) || $wa->get($filter.code) === '0'}
+                                    <div class="f-finds__list" data-code="{$filter.code}" data-type="radio">
+                                        <div class="f-finds__name">
+                                            {$filter.name}: {if $wa->get($filter.code)}[`Yes`]{elseif $wa->get($filter.code) === '0'}[`No`]{/if}
+                                        </div>
+                                        <div class="f-finds__remove">
+                                            <svg class="icon6 i-remove">
+                                                <use xlink:href="#i-remove"></use>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                {/if}
+
+                            {elseif isset($filter.min)}
+
+                                {$_v = $wa->get($filter.code)}
+                                {if !empty($_v.min) || !empty($_v.max)}
+                                    <div class="f-finds__list" data-code="{$filter.code}" data-type="slider">
+                                        <div class="f-finds__name">
+                                            {$filter.name}: {if !empty($_v.min)}{$_v.min}{else}{$filter.min}{/if} - {if !empty($_v.max)}{$_v.max}{else}{$filter.max}{/if}
+                                        </div>
+                                        <div class="f-finds__remove">
+                                            <svg class="icon6 i-remove">
+                                                <use xlink:href="#i-remove"></use>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                {/if}
+
+                            {else}
+
+                                {foreach $filter.values as $v_id => $v}
+                                    {if in_array($v_id, (array)$wa->get($filter.code, array()))}
+                                        <div class="f-finds__list" data-code="{$filter.code}" data-type="checkbox" data-value="{$v_id}">
+                                            <div class="f-finds__name">{$v}</div>
+                                            <div class="f-finds__remove">
+                                                <svg class="icon6 i-remove">
+                                                    <use xlink:href="#i-remove"></use>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    {/if}
+                                {/foreach}
+
+                            {/if}
+                        {/if}
+                    {/foreach}
+
+                    {$resetLink = $wa->currentUrl(0,1)}
+                    {if isset($category) && class_exists('shopSeofilterViewHelper')}
+                        {$resetLink = $wa->shop->categoryUrl($category)}
+                    {/if}
+
+                    <a href="{$resetLink}{if $wa->get('sort')}?sort={$wa->get('sort')|escape}&order={$wa->get('order')|escape}{/if}#f-products" class="f-finds__list f-finds__button" data-url="{$resetLink}{if $wa->get('sort')}?sort={$wa->get('sort')|escape}&order={$wa->get('order')|escape}{else}?{/if}">
+                        [`reset`]
+                    </a>
+                </div>
+            </div>
+        </div>
+    {/if}
+{/if}
+
+{/strip}

@@ -1,0 +1,229 @@
+{strip}
+
+{$features = $wa->shop->features($products)}
+
+{if !empty($products)}
+    {$itemsCart = $wa->shop->cart->items()}
+    {$itemsCartId = []}
+    {if !empty($itemsCart)}
+        {foreach $itemsCart as $item}
+            {$itemsCartId[$item.product_id] = $item.sku_id}
+        {/foreach}
+    {/if}
+
+
+    <div class="m-products">
+        {foreach $products as $p}
+            {$available = $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
+            {$textAvailable = $ts.product_stock_ouf|default:"[`Out of stock`]"}
+
+            {if !empty($p.skus) && !empty($p.skus[$p.sku_id])}
+            {$sku = $p.skus[$p.sku_id]}
+                {if empty($sku.available) && (count($p.skus) === 1)}
+                    {$available = false}
+                    {$textAvailable = $ts.product_stock_time|default:"[`This product is not available for purchase`]"}
+                {/if}
+            {/if}
+
+            {$badgeHtml = $wa->shop->badgeHtml($p.badge)}
+
+            {if ($p.features.svetopropuskanie && array_key_exists('491', $p.features.svetopropuskanie))}
+                {include file="./product/badge.html" inline assign="custom_badge"}
+                {$badgeHtml = $badgeHtml|cat:$custom_badge}
+            {/if}
+
+            {$img = $wa->shop->productImgUrl($p, 200)}
+            {$imgDefault = "`$wa_parent_theme_url``$ts.product_default|default:'img/dummy200.png'`"}
+
+            {if !$ts.category_product_no}
+                {$product = $wa->shop->product($p.id)}
+            {/if}
+
+            <div class="m-products__item" itemscope="" itemtype="http://schema.org/Product">
+                <div class="m-products__img">
+                    <a href="{$p.frontend_url}">
+                        <span class="m-products__img-block">
+                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img|default:$imgDefault}" data-srcset="{$img|default:$imgDefault} 1x, {$img|default:$imgDefault|regex_replace:'/(.*)\.([^.]*)$/':'$1@2x.$2'} 2x" alt="{$p.name|escape}" itemprop="image">
+                        </span>
+                    </a>
+
+                    {if !empty($product) && !waRequest::isMobile(false) && count($product.images) > 1 && $ts.category_product_img_mini}
+                        <div class="products__img-dop">
+                            <div class="products__img-dop-home">
+                                {$imgDopHome = $wa->shop->productImgUrl($p, 400)}
+                                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgDopHome}" alt="{$p.name|escape}" />
+                            </div>
+                            <div class="products__img-yet">
+                                {foreach $product.images as $image}
+                                    {if $image@iteration > 5}
+                                        {break}
+                                    {/if}
+                                    <div class="products__img-yet-item{if $image@first} products__img-yet-item_active{/if}" data-src="{$wa->shop->imgUrl($image, 400)}">
+                                        {$imgDop = $wa->shop->imgUrl($image, "48x48")}
+                                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgDop}" alt="{$p.name|escape}" />
+                                    </div>
+                                {/foreach}
+                            </div>
+                        </div>
+                    {/if}
+                </div>
+
+                <div class="m-products__info">
+                    <div class="m-products__info-block">
+                        <div class="m-products__info-name">
+                            <a href="{$p.frontend_url}" itemprop="name">{$p.name}</a>
+                            {if $p.summary && $ts.category_product_summary}
+                                <meta itemprop="description" content="{$p.summary|escape}">
+                            {else}
+                                <meta itemprop="description" content="{$p.name|escape}">
+                            {/if}
+                        </div>
+
+                        <div class="m-products__info-fl">
+                            {if $ts.category_product_rating}
+                                <div class="m-products__info-rating">
+                                    {$wa->shop->ratingHtml($p.rating, 16, true)}
+                                </div>
+                            {/if}
+
+                            {if !empty($badgeHtml)}
+                                <div class="m-products__info-badges">
+                                    <div class="badges">{$badgeHtml}</div>
+                                </div>
+                            {/if}
+
+                            {if $p.video_url && $ts.category_product_video}
+                                <div class="m-products__info-video">
+                                    <svg class="icon24 i-youtube">
+                                        <use xlink:href="#i-youtube"></use>
+                                    </svg>
+                                </div>
+                            {/if}
+                        </div>
+
+                        {* РАСКОМЕНТИТЬ ЕСЛИ НУЖЕН ВЫВОД ЦВЕТА ВАРИАНТА*}
+                        {*if !empty($p.features.color) && $ts.category_product_features_color}
+                            <div class="s-products__color">
+                                {foreach $p.features.color as $v}
+                                    <div class="p-features__item-color">
+                                        {$colorHex = str_pad(dechex($v.code), 6, '0', $smarty.const.STR_PAD_LEFT)}
+                                        <i class="icon12 color" style="background-color:#{$colorHex};"></i>
+                                        <span class="p-features__item-color-name">
+                                            {$v.value}
+                                        </span>
+                                    </div>
+                                {/foreach}
+                            </div>
+                        {/if*}
+
+                        {if $ts.category_product_stock}
+                            <div class="m-products__info-available">
+                                {$classAvailable = "out-of-stock"}
+                                {if $available}
+                                    {$classAvailable = "in-stock"}
+                                    {$textAvailable = $ts.product_stock_in|default:"[`In stock`]"}
+
+                                    {if $p.count <= 0 && $p.count !== null}
+                                        {$classAvailable = "low"}
+                                        {$textAvailable = $ts.product_stock_low|default:"[`Pre-order only`]"}
+                                    {/if}
+                                {/if}
+
+                                <div class="products__available-{$classAvailable}">
+                                    {if $classAvailable == 'in-stock'}<svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>{/if}
+                                    {$textAvailable}
+                                </div>
+                            </div>
+                        {/if}
+                    </div>
+
+                    <div class="m-products__info-price">
+                        {if $ts.category_product_range && $p.frontend_min_price > 0 && $p.frontend_min_price != $p.frontend_max_price}
+                            <div class="m-products__info-price-range">
+                                {shopCustom::p()} {shop_currency_html($p.frontend_min_price)} {$p.features.units}
+                            </div>
+                        {else}
+                            {if $p.compare_price > 0}
+                                <div class="m-products__info-price-old">{shop_currency_html($p.compare_price)}</div>
+                            {/if}
+
+                            {if $ts.product_zero_text && $p.price==0}
+                                <div class="products__zero-text">
+                                    {$ts.product_zero_text}
+                                </div>
+                                {$available = false}
+                            {else}
+                                <div class="m-products__info-price-new">
+                                    {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
+                                </div>
+                            {/if}
+                        {/if}
+                    </div>
+
+                    {if $ts.category_product_button_cart}
+                        <form class="m-products__info-addcart purchase addtocart" action="{$wa->getUrl('/frontendCart/add')}" method="post"
+                            {if $p.sku_count > 1} data-get="true"{/if} data-app-url="{$wa_app_url}" data-url="{$p.frontend_url}">
+
+                            <div class="m-products__info-count">
+                                <div class="counter counter_low">
+                                    <div class="counter__minus">
+                                        <svg class="icon10 i-minus">
+                                            <use xlink:href="#i-minus"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="counter__count">
+                                        <input type="text" name="quantity" value="1">
+                                    </div>
+                                    <div class="counter__plus">
+                                        <svg class="icon10 i-plus">
+                                            <use xlink:href="#i-plus"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="product_id" value="{$p.id}" />
+
+                            <button class="m-products__button button button_low" type="submit" {if !$available} disabled{/if}>
+                                {if array_key_exists($p.id, $itemsCartId) && $itemsCartId[$p.id] == $p.sku_id}
+                                    <svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>
+                                {/if}
+                                {eval var=$ts.category_product_cart_text}
+                            </button>
+
+                            <span style="display:none;" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                                <meta itemprop="url" content="{$p.frontend_url}" />
+                                <meta itemprop="priceValidUntil" content="" />
+                                <meta itemprop="price" content="{$p.price}">
+                                <meta itemprop="priceCurrency" content="{$wa->shop->currency()}">
+                                {if $available}
+                                    <link itemprop="availability" href="http://schema.org/InStock">
+                                {else}
+                                    <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                                {/if}
+                            </span>
+                        </form>
+                    {/if}
+                </div>
+
+                <meta itemprop="url" content="{$p.frontend_url}">
+                <meta itemprop="image" content="{$img|default:$imgDefault}">
+                <meta itemprop="brand" content="">
+                <meta itemprop="review" content="">
+                <meta itemprop="sku" content="">
+
+                {if $product.rating_count > 0 && !empty($product)}
+                    <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                        <meta itemprop="ratingValue" content="{$product.rating}" />
+                        <meta itemprop="bestRating" content="5" />
+                        <meta itemprop="worstRating" content="0" />
+                        <meta itemprop="ratingCount" content="{$product.rating_count}" />
+                        <meta itemprop="reviewCount" content="{$product.rating_count}" />
+                    </div>
+                {/if}
+            </div>
+        {/foreach}
+    </div>
+{/if}
+
+{/strip}

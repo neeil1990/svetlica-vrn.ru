@@ -1,0 +1,272 @@
+{strip}
+
+{$ts = $theme_settings}
+
+<div class="category">
+
+    <div class="wrap">
+
+        {* SLIDER *}
+        {include file="./home/slider.html"}
+
+        {$name = $category.params.h1|default:$category.name}
+        {if $ts.category_title_v=='top'}
+            {* BREADCRUMBS *}
+            {include file="`$wa_parent_theme_path`/breadcrumbs.html" inline}
+
+            {* TITLE *}
+            <h1>{$name}</h1>
+            <div class="in-blocks__title">
+                {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                    <div class="block-info-name">{$name}</div>
+                    <div class="e-panel-edit" data-group-edit="divider_category_title_v">
+                        <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Заголовок и банер">
+                            <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                        </div>
+                    </div>
+                {/if}
+
+                <div class="in-blocks__title-name category-name">{$name}</div>
+            </div>
+
+            {* @event frontend_category.%plugin_id% *}
+            {foreach $frontend_category as $_}{$_}{/foreach}
+        {/if}
+
+        {* PROMO PLUGIN shopCatimgPlugin *}
+        {if class_exists('shopCatimgPlugin')}
+            {$promo = shopCatimgPlugin::getImage($category.id, 'promo')}
+            {if !empty($promo)}
+                {$category.params.banner_top = $promo}
+            {/if}
+        {/if}
+
+        {* DESCRIPTION *}
+        {if $ts.category_des=='top'}
+            {include file="./category/description.html" small=1}
+        {/if}
+
+        {* SUBCATEGORIES TOP *}
+        {if $ts.category_sub_view == 'top'}
+            {include file="./category/subcategories.html"}
+        {/if}
+    </div>
+
+    <div class="main__wrap wrap in-blocks__item-s">
+        {* LEFT *}
+        {include file="`$wa_parent_theme_path`/left/left.html" type='category'}
+
+        {* RIGHT - CENTER *}
+        <div class="in-right{if $ts.category_right_blocks} in-right_center{/if}">
+            {if $ts.category_title_v=='right'}
+                {* BREADCRUMBS *}
+                {include file="`$wa_parent_theme_path`/breadcrumbs.html" inline}
+
+                {* TITLE *}
+                <h1>{$name}</h1>
+                <div class="in-blocks__title">
+                    {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                        <div class="block-info-name">{$name}</div>
+                        <div class="e-panel-edit" data-group-edit="divider_category_title_v">
+                            <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Заголовок и банер">
+                                <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                            </div>
+                        </div>
+                    {/if}
+                    <div class="in-blocks__title-name category-name">{$name}</div>
+                </div>
+
+                {* @event frontend_category.%plugin_id% *}
+                {foreach $frontend_category as $_}{$_}{/foreach}
+            {/if}
+
+            {* DESCRIPTION *}
+            {if $ts.category_des=='right_top'}
+                {include file="./category/description.html"}
+            {/if}
+
+            {* SUBCATEGORIES RIGHT *}
+            {if $ts.category_sub_view == 'right'}
+                {include file="./category/subcategories.html" right=1}
+            {/if}
+
+            {if !waRequest::isMobile(false) && ($ts.filters_drop || isset($category.params.filter_drop_show))}
+                {include file="./category/filters.dropdown.html"}
+            {/if}
+
+            {* BANNER PARAMS CATEGORY*}
+            {if !empty($category.params.banner_top)}
+                <div class="in-blocks__item-s">
+                    <div class="promo-img">
+                        <div class="promo-img__item">
+                            {if !empty($category.params.banner_top_link)}
+                                <a href="{$category.params.banner_top_link}"></a>
+                            {/if}
+                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$category.params.banner_top}" alt="{$category.name}">
+                        </div>
+                    </div>
+                </div>
+            {/if}
+
+            {* TAGS-LIST *}
+            {if isset($category.params.meta) && $category.params.meta}
+                <div class="in-blocks__item-s">
+                    {include file='./tags.html'}
+                </div>
+            {/if}
+
+            {* PRODUCT-LIST *}
+            <div class="in-blocks__item-s c-products">
+
+                {* FILTERS RESULT *}
+                {include file="./category/filters.result.html"}
+
+                {* FILTERS SORTING *}
+                {include file="./category/sorting.html" sorting=!empty($category.params.enable_sorting)}
+
+                <div class="in-blocks__item-s c-products__dop">
+                    {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                        <div class="block-info-name">{$name}</div>
+                        <div class="e-panel-edit" data-group-edit="divider_category_product">
+                            <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Карточка товара">
+                                <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                            </div>
+                        </div>
+                    {/if}
+
+                    {if !empty($products)}
+                        {if waRequest::isMobile(false)}
+                            {$ts.category_sorting_default = $ts.category_sorting_default_mobile}
+                        {/if}
+
+                        {if !empty($category.params.products_lists)}
+                            {$cookieSwitch = $category.params.products_lists}
+                        {else}
+                            {$cookieSwitch = waRequest::cookie('sorting__switch', {$ts.category_sorting_default}, waRequest::TYPE_STRING)}
+                        {/if}
+
+                        {if isset($pages_count) && $pages_count > 1 && !empty($wa->get('page'))}
+                            <div class="in-blocks__item-s">
+                                <div class="products__sep">
+                                    <span class="products__sep-title">
+                                        {sprintf('[`Page %s from %s`]', {$wa->get('page')|default:1}, {$pages_count})}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="in-blocks__item-s"></div>
+                        {/if}
+
+                        {if $cookieSwitch == 'list' || $cookieSwitch == 'mini'}
+                            {include file="./list-thumbs-`$cookieSwitch`.html"}
+                        {else}
+                            <div class="products products_col-{$ts.category_product_columns}">
+                                {include file="./list-thumbs.html"}
+                            </div>
+                        {/if}
+
+                        {if isset($pages_count) && $pages_count > 1}
+                            <div class="in-blocks__item">
+                                {if $ts.category_products_yet &&
+                                    (empty($wa->get('page')) || (!empty($wa->get('page')) && $wa->get('page') < $pages_count))}
+                                    <div class="in-blocks__item_c">
+                                        <button class="button button_low button_bor products__yet">
+                                            [`Show more`] <svg class="icon10 i-angle-down">
+                                                <use xlink:href="#i-angle-down"></use>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                {/if}
+
+                                <div class="in-blocks__item-s">
+                                    {if class_exists('shopSeofilterViewHelper')}
+                                        {capture assign=pagination}
+                                            {wa_pagination total=$pages_count attrs=['class' => "pagin"]}
+                                        {/capture}
+                                        {shopSeofilterViewHelper::paginationDecorate($pagination)}
+                                    {else}
+                                        {wa_pagination total=$pages_count attrs=["class" => "pagin"]}
+                                    {/if}
+                                </div>
+                            </div>
+                        {/if}
+                    {else}
+                        {if !empty($filters)}
+                            <div class="in-empty-wrapper">
+                                <p class="in-empty-wrapper__title">[`No products were found.`]</p>
+                            </div>
+
+                        {else if !$ts.category_des_not}
+                            <div class="in-empty-wrapper">
+                                <p class="in-empty-wrapper__title">[`This category does not contain any products.`]</p>
+                            </div>
+                        {/if}
+                    {/if}
+                </div>
+
+                <div class="c-products__loading">
+                    <svg class="icon30 i-loading ">
+                        <use xlink:href="#i-loading"></use>
+                    </svg>
+                </div>
+            </div>
+
+            {* DESCRIPTION *}
+            {if $ts.category_des=='right_bottom'}
+                {include file="./category/description.html"}
+            {/if}
+        </div>
+
+        {* RIGHT *}
+        {include file="`$wa_parent_theme_path`/left/right.html" type='category'}
+
+        {* FILTERS FOR MOBILE *}
+        {if !empty($filters)}
+            <div class="f-mobile">
+                <div class="f-mobile__wrap">
+                    <div class="f-mobile__header">
+                        [`Product Filter`]
+                        <div class="f-mobile__close">
+                            <svg class="icon12 i-remove">
+                                <use xlink:href="#i-remove"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    {include file="category/filters.html"}
+                </div>
+            </div>
+        {/if}
+    </div>
+
+    {* DESCRIPTION *}
+    {if $ts.category_des=='bottom'}
+        <div class="in-blocks__item wrap">
+            {include file="./category/description.html"}
+        </div>
+    {/if}
+
+    {* BANNER PARAMS CATEGORY BOTTOM*}
+    {if !empty($category.params.banner_bottom)}
+        <div class="in-blocks__item wrap">
+            <div class="promo-img">
+                <div class="promo-img__item">
+                    {if !empty($category.params.banner_bottom_link)}
+                        <a href="{$category.params.banner_bottom_link}"></a>
+                    {/if}
+                    <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$category.params.banner_bottom}" alt="{$category.name}">
+                </div>
+            </div>
+        </div>
+    {/if}
+</div>
+
+{* FILTERS CATEGORY *}
+{if !empty($filters)}
+    <link href="{$wa_static_url}wa-content/css/jquery-ui/base/jquery.ui.slider.css" rel="stylesheet"/>
+    <script src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.core.min.js?v{$wa->version(true)}" defer></script>
+    <script src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js?v{$wa->version(true)}" defer></script>
+    <script src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js?v{$wa->version(true)}" defer></script>
+    <script src="{$wa_static_url}wa-content/js/jquery-ui/jquery.ui.slider.min.js?v{$wa->version(true)}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" defer></script>
+{/if}
+
+{/strip}

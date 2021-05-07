@@ -2,6 +2,10 @@
 
 {$ts = $theme_settings}
 
+{if !empty($columns)}
+    {$ts.category_product_columns = $columns}
+{/if}
+
 {$favoritePr = waRequest::cookie("shop_favorite", '', waRequest::TYPE_STRING)}
 {assign var=favoritePrsplit value=","|explode:$favoritePr}
 
@@ -54,468 +58,481 @@
         {$pSize = $ts.category_product_img_size}
     {/if}
 
-    {foreach $products as $p}
-        {$available = $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
-        {$textAvailable = $ts.product_stock_ouf|default:"[`Out of stock`]"}
+    {if empty($home_img)}
+    <div class="products {if !empty($slider_home)}h-{/if}products_col-{$ts.category_product_columns}{if !empty($slider_view)} products_slider owl-carousel owl-theme-nav{/if}">
+    {/if}
+        {foreach $products as $p}
+            {$available = $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
+            {$textAvailable = $ts.product_stock_ouf|default:"[`Out of stock`]"}
 
-        {if !empty($p.skus) && !empty($p.skus[$p.sku_id])}
-            {$sku = $p.skus[$p.sku_id]}
-            {if empty($sku.available) && (count($p.skus) === 1)}
-                {$available = false}
-                {$textAvailable = $ts.product_stock_time|default:"[`This product is not available for purchase`]"}
-            {/if}
-        {/if}
-
-        {$badgeHtml = $wa->shop->badgeHtml($p.badge)}
-
-        {if ($p.features.svetopropuskanie && array_key_exists('491', $p.features.svetopropuskanie))}
-            {include file="./product/badge.html" inline assign="custom_badge"}
-            {$badgeHtml = $badgeHtml|cat:$custom_badge}
-        {/if}
-
-        {$img = $wa->shop->productImgUrl($p, $pSize)}
-        {$imgDefault = "`$wa_parent_theme_url``$ts.product_default|default:'img/dummy200.png'`"}
-
-        <div class="products__item" itemscope="" itemtype="http://schema.org/Product">
-            {if !empty($favorit)}
-                <div class="products__item-fav-remove" data-product-id="{$p.id}">
-                    <svg class="icon8 i-remove ">
-                        <use xlink:href="#i-remove"></use>
-                    </svg>
-                </div>
+            {if !empty($p.skus) && !empty($p.skus[$p.sku_id])}
+                {$sku = $p.skus[$p.sku_id]}
+                {if empty($sku.available) && (count($p.skus) === 1)}
+                    {$available = false}
+                    {$textAvailable = $ts.product_stock_time|default:"[`This product is not available for purchase`]"}
+                {/if}
             {/if}
 
-            {if !waRequest::isMobile(false) && ($ts.category_product_view || $ts.category_product_fav || $ts.category_product_com)
-                && $ts.category_product_cart_type != 'img/settings/category_product_cart-7.png'}
-                <div class="view-fav-com">
-                    {view_fav_com icon=14}
-                </div>
-            {/if}
+            {$badgeHtml = $wa->shop->badgeHtml($p.badge)}
 
-            {if !$ts.category_product_no}
-                {$product = $wa->shop->product($p.id)}
-            {/if}
+            {$img = $wa->shop->productImgUrl($p, $pSize)}
+            {$imgDefault = "`$wa_parent_theme_url``$ts.product_default|default:'img/dummy200.png'`"}
 
-            <a href="{$p.frontend_url}">
-                <span class="products__item-tile{if !waRequest::isMobile(false)} {$ts.category_product_img_tile}{/if}">
-                    {if $p.video_url && $ts.category_product_video}
-                        <span class="products__item-video">
-                            <svg class="icon20 i-youtube">
-                                <use xlink:href="#i-youtube"></use>
-                            </svg>
-                        </span>
-                    {/if}
+            <div class="products__item" itemscope="" itemtype="http://schema.org/Product">
+                {if !empty($favorit)}
+                    <div class="products__item-fav-remove" data-product-id="{$p.id}">
+                        <svg class="icon8 i-remove ">
+                            <use xlink:href="#i-remove"></use>
+                        </svg>
+                    </div>
+                {/if}
 
-                    {if $ts.category_product_img_full}
-                        <span class="products__item-img-full">
-                    {else}
-                        <span class="products__item-img">
-                    {/if}
-                        {if !empty($badgeHtml)}
-                            <span class="badges">{$badgeHtml}</span>
+                {if !waRequest::isMobile(false) && ($ts.category_product_view || $ts.category_product_fav || $ts.category_product_com)
+                    && $ts.category_product_cart_type != 'img/settings/category_product_cart-7.png'}
+                    <div class="view-fav-com">
+                        {view_fav_com icon=14}
+                    </div>
+                {/if}
+
+                {if !$ts.category_product_no}
+                    {$product = $wa->shop->product($p.id)}
+                {/if}
+
+                <a href="{$p.frontend_url}">
+                    <span class="products__item-tile{if !waRequest::isMobile(false)} {$ts.category_product_img_tile}{/if}">
+                        {if $p.video_url && $ts.category_product_video}
+                            <span class="products__item-video">
+                                <svg class="icon20 i-youtube">
+                                    <use xlink:href="#i-youtube"></use>
+                                </svg>
+                            </span>
                         {/if}
 
-                        <span class="products__img products__img_active">
-                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img|default:$imgDefault}" data-srcset="{$img|default:$imgDefault} 1x, {$img|default:$imgDefault|regex_replace:'/(.*)\.([^.]*)$/':'$1@2x.$2'} 2x" alt="{$p.name|escape}" itemprop="image">
+                        {if $ts.category_product_img_full}
+                            <span class="products__item-img-full">
+                        {else}
+                            <span class="products__item-img">
+                        {/if}
+                            {if !empty($badgeHtml)}
+                                <span class="badges">{$badgeHtml}</span>
+                            {/if}
+
+                            <span class="products__img products__img_active">
+                                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img|default:$imgDefault}" data-srcset="{$img|default:$imgDefault} 1x, {$img|default:$imgDefault|regex_replace:'/(.*)\.([^.]*)$/':'$1@2x.$2'} 2x" alt="{$p.name|escape}" itemprop="image">
+                            </span>
+
+                            {if !empty($product)
+                                && !waRequest::isMobile(false) && $ts.category_product_img_tile != 'p-tile-one' && count($product.images) > 1}
+                                {if $ts.category_product_img_tile == 'p-tile-img'}
+                                    {foreach $product.images as $image}
+                                        {if $image@iteration == 2}
+                                            <span class="products__img">
+                                                {$imgDop = $wa->shop->imgUrl($image, $pSize)}
+                                                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgDop|default:$imgDefault}" data-srcset="{$imgDop|default:$imgDefault} 1x, {$imgDop|default:$imgDefault|regex_replace:'/(.*)\.([^.]*)$/':'$1@2x.$2'} 2x" alt="{$p.name|escape}" itemprop="image" />
+                                            </span>
+                                            {break}
+                                        {/if}
+                                    {/foreach}
+                                {elseif $ts.category_product_img_tile == 'p-tile'}
+                                    {foreach $product.images as $image}
+                                        {if $image@first}{continue}{/if}
+                                        {if $image@iteration > $ts.category_product_img_tile_count}
+                                            {break}
+                                        {/if}
+                                        {$imgDop = $wa->shop->imgUrl($image, $pSize)}
+                                        <span class="products__img">
+                                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgDop|default:$imgDefault}" data-srcset="{$imgDop|default:$imgDefault} 1x, {$imgDop|default:$imgDefault|regex_replace:'/(.*)\.([^.]*)$/':'$1@2x.$2'} 2x" alt="{$p.name|escape}" itemprop="image" />
+                                        </span>
+                                    {/foreach}
+                                {/if}
+                            {/if}
                         </span>
 
                         {if !empty($product)
-                            && !waRequest::isMobile(false) && $ts.category_product_img_tile != 'p-tile-one' && count($product.images) > 1}
-                            {if $ts.category_product_img_tile == 'p-tile-img'}
+                            && !waRequest::isMobile(false) && $ts.category_product_img_tile == 'p-tile' && count($product.images) > 1}
+                            <span class="p-tile__items{if $ts.category_product_img_full} p-tile__items_full{/if}">
                                 {foreach $product.images as $image}
-                                    {if $image@iteration == 2}
-                                        <span class="products__img">
-                                            {$imgDop = $wa->shop->imgUrl($image, $pSize)}
-                                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgDop|default:$imgDefault}" data-srcset="{$imgDop|default:$imgDefault} 1x, {$imgDop|default:$imgDefault|regex_replace:'/(.*)\.([^.]*)$/':'$1@2x.$2'} 2x" alt="{$p.name|escape}" itemprop="image" />
-                                        </span>
-                                        {break}
-                                    {/if}
-                                {/foreach}
-                            {elseif $ts.category_product_img_tile == 'p-tile'}
-                                {foreach $product.images as $image}
-                                    {if $image@first}{continue}{/if}
                                     {if $image@iteration > $ts.category_product_img_tile_count}
                                         {break}
                                     {/if}
-                                    {$imgDop = $wa->shop->imgUrl($image, $pSize)}
-                                    <span class="products__img">
-                                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgDop|default:$imgDefault}" data-srcset="{$imgDop|default:$imgDefault} 1x, {$imgDop|default:$imgDefault|regex_replace:'/(.*)\.([^.]*)$/':'$1@2x.$2'} 2x" alt="{$p.name|escape}" itemprop="image" />
+                                    <span class="p-tile__item"></span>
+                                {/foreach}
+                            </span>
+                        {/if}
+                    </span>
+
+                    {if $ts.category_product_features_color}
+                        <span class="products__item-color">
+                            {if !empty($p.features.color)}
+                                {foreach $p.features.color as $v}
+                                    <span class="p-features__item-color">
+                                        {$colorHex = str_pad(dechex($v.code), 6, '0', $smarty.const.STR_PAD_LEFT)}
+                                        <i class="icon12 color" style="background-color:#{$colorHex};"></i>
+                                        <span class="p-features__item-color-name">
+                                            {$v.value}
+                                        </span>
                                     </span>
                                 {/foreach}
                             {/if}
+                        </span>
+                    {/if}
+
+                    <span class="products__item-info">
+                        {if $ts.category_product_rating}
+                            <span class="products__item-info-rating">
+                                <span class="products__rating">
+                                    {$wa->shop->ratingHtml($p.rating, 16, true)}
+                                </span>
+                                {if !empty($product)}
+                                    <span class="products__rating-count">
+                                        <svg class="icon16 i-reviews">
+                                            <use xlink:href="#i-reviews"></use>
+                                        </svg> {$product.rating_count}
+                                    </span>
+                                {/if}
+                            </span>
+                        {/if}
+
+                        <span class="products__item-info-name" itemprop="name">
+                            {$p.name}
+                        </span>
+
+                        {if $ts.category_product_summary}
+                            <div class="products__item-info-summary">
+                                {$p.summary}
+                            </div>
+                        {/if}
+
+                        {if ($ts.category_product_features && !waRequest::isMobile(false)) || (waRequest::isMobile(false) && $ts.category_product_features_mobile)}
+                            <span class="products__item-info-features">
+                                {if !empty($p.features)}
+                                    <span class="p-features">
+                                        {$productFeatures = $p.features}
+
+                                        {if !empty($category.params.features_code)}
+                                            {$ts.category_product_features_code = $category.params.features_code}
+                                        {/if}
+
+                                        {if $ts.category_product_features_code}
+                                            {$featuresCode = explode(',',$ts.category_product_features_code)}
+                                            {$productFeaturesNew = []}
+                                            {foreach $featuresCode as $f_code}
+                                                {if !empty($productFeatures[$f_code])}
+                                                    {$productFeaturesNew[$f_code] = $productFeatures[$f_code]}
+                                                {/if}
+                                            {/foreach}
+                                            {$productFeatures = $productFeaturesNew}
+                                        {/if}
+
+                                        {if !empty($productFeatures)}
+                                            {$i = 0}
+                                            {foreach $productFeatures as $f_code => $f_value}
+                                                {if $features[$f_code].type != 'divider'}
+                                                    {if $i == 5}
+                                                        {break}
+                                                    {/if}
+                                                    <span class="p-features__item">
+                                                        <span class="p-features__item-name">{$features[$f_code].name|escape}:</span>
+                                                        <span class="p-features__item-val">
+                                                            {if is_array($f_value)}
+                                                                {if $features[$f_code].type == 'color'}
+                                                                    {foreach $f_value as $k => $v}
+                                                                        <span class="p-features__item-color" title="{$v.value}">
+                                                                            <i class="icon16 color" style="{$v->style};"></i>
+                                                                            <span class="p-features__item-color-name">
+                                                                                {$v.value}
+                                                                            </span>
+                                                                        </span>
+                                                                    {/foreach}
+                                                                {else}
+                                                                    {implode(', ', $f_value)}
+                                                                {/if}
+                                                            {else}
+                                                                {$f_value}
+                                                            {/if}
+                                                        </span>
+                                                    </span>
+                                                    {$i = $i + 1}
+                                                {/if}
+                                            {/foreach}
+                                        {/if}
+                                    </span>
+                                {/if}
+                            </span>
                         {/if}
                     </span>
+                </a>
 
-                    {if !empty($product)
-                        && !waRequest::isMobile(false) && $ts.category_product_img_tile == 'p-tile' && count($product.images) > 1}
-                        <span class="p-tile__items{if $ts.category_product_img_full} p-tile__items_full{/if}">
-                            {foreach $product.images as $image}
-                                {if $image@iteration > $ts.category_product_img_tile_count}
+                <div class="products__bottom">
+                    <form class="products__addtocart purchase addtocart" method="post" action="{$wa->getUrl('shop/frontendCart/add')}" {if $ts.category_product_skus == 'no' && $p.sku_count > 1} data-get="true"{/if} data-app-url="{$wa->getUrl('shop/frontend')}" data-url="{$p.frontend_url}">
+                        <input type="hidden" name="product_id" value="{$p.id}" />
+
+                        {if $ts.category_product_stock}
+                            <div class="products__available">
+                                {$classAvailable = "out-of-stock"}
+                                {if $available}
+                                    {$classAvailable = "in-stock"}
+                                    {$textAvailable = $ts.product_stock_in|default:"[`In stock`]"}
+
+                                    {if $p.count <= 0 && $p.count !== null}
+                                        {$classAvailable = "low"}
+                                        {$textAvailable = $ts.product_stock_low|default:"[`Pre-order only`]"}
+                                    {/if}
+                                {/if}
+
+                                <div class="products__available-{$classAvailable}">
+                                    {if $classAvailable == 'in-stock'}<svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>{/if}
+                                    {$textAvailable}
+                                </div>
+                            </div>
+                        {/if}
+
+                        {if $ts.category_product_art && !empty($p.skus)}
+                            {foreach $p.skus as $sku}
+                                {if $sku.sku}
+                                    <div class="products__code">
+                                        [`Code`]: <span class="products__code-v">{$sku.sku|escape}</span>
+                                    </div>
                                     {break}
                                 {/if}
-                                <span class="p-tile__item"></span>
-                            {/foreach}
-                        </span>
-                    {/if}
-                </span>
-
-                {if $ts.category_product_features_color}
-                    <span class="products__item-color">
-                        {if !empty($p.features.color)}
-                            {foreach $p.features.color as $v}
-                                <span class="p-features__item-color">
-                                    {$colorHex = str_pad(dechex($v.code), 6, '0', $smarty.const.STR_PAD_LEFT)}
-                                    <i class="icon12 color" style="background-color:#{$colorHex};"></i>
-                                    <span class="p-features__item-color-name">
-                                        {$v.value}
-                                    </span>
-                                </span>
                             {/foreach}
                         {/if}
-                    </span>
-                {/if}
 
-                <span class="products__item-info">
-                    {if $ts.category_product_rating}
-                        <span class="products__item-info-rating">
-                            <span class="products__rating">
-                                {$wa->shop->ratingHtml($p.rating, 16, true)}
-                            </span>
-                            {if !empty($product)}
-                                <span class="products__rating-count">
-                                    <svg class="icon16 i-reviews">
-                                        <use xlink:href="#i-reviews"></use>
-                                    </svg> {$product.rating_count}
-                                </span>
-                            {/if}
-                        </span>
-                    {/if}
-
-                    <span class="products__item-info-name" itemprop="name">
-                        {$p.name}
-                    </span>
-
-                    {if $ts.category_product_summary}
-                        <div class="products__item-info-summary">
-                            {$p.summary}
-                        </div>
-                    {/if}
-
-                    {if $p.summary}
-                        <meta itemprop="description" content="{$p.summary|escape}">
-                    {else}
-                        <meta itemprop="description" content="{$p.name|escape}">
-                    {/if}
-
-                    {if ($ts.category_product_features && !waRequest::isMobile(false)) || (waRequest::isMobile(false) && $ts.category_product_features_mobile)}
-                        <span class="products__item-info-features">
-                            {if !empty($p.features)}
-                                <span class="p-features">
-                                    {$productFeatures = $p.features}
-
-                                    {if !empty($category.params.features_code)}
-                                        {$ts.category_product_features_code = $category.params.features_code}
-                                    {/if}
-
-                                    {if $ts.category_product_features_code}
-                                        {$featuresCode = explode(',',$ts.category_product_features_code)}
-                                        {$productFeaturesNew = []}
-                                        {foreach $featuresCode as $f_code}
-                                            {if !empty($productFeatures[$f_code])}
-                                                {$productFeaturesNew[$f_code] = $productFeatures[$f_code]}
-                                            {/if}
-                                        {/foreach}
-                                        {$productFeatures = $productFeaturesNew}
-                                    {/if}
-
-                                    {if !empty($productFeatures)}
-                                        {$i = 0}
-                                        {foreach $productFeatures as $f_code => $f_value}
-                                            {if $features[$f_code].type != 'divider'}
-                                                {if $i == 5}
-                                                    {break}
-                                                {/if}
-                                                <span class="p-features__item">
-                                                    <span class="p-features__item-name">{$features[$f_code].name|escape}:</span>
-                                                    <span class="p-features__item-val">
-                                                        {if is_array($f_value)}
-                                                            {if $features[$f_code].type == 'color'}
-                                                                {foreach $f_value as $k => $v}
-                                                                    <span class="p-features__item-color" title="{$v.value}">
-                                                                        <i class="icon16 color" style="{$v->style};"></i>
-                                                                        <span class="p-features__item-color-name">
-                                                                            {$v.value}
-                                                                        </span>
-                                                                    </span>
-                                                                {/foreach}
-                                                            {else}
-                                                                {implode(', ', $f_value)}
-                                                            {/if}
-                                                        {else}
-                                                            {$f_value}
-                                                        {/if}
-                                                    </span>
-                                                </span>
-                                                {$i = $i + 1}
-                                            {/if}
-                                        {/foreach}
-                                    {/if}
-                                </span>
-                            {/if}
-                        </span>
-                    {/if}
-                </span>
-            </a>
-
-            <div class="products__bottom">
-                <form class="products__addtocart purchase addtocart" method="post" action="{$wa->getUrl('/frontendCart/add')}"
-                    {if $ts.category_product_skus == 'no' && $p.sku_count > 1} data-get="true"{/if} data-app-url="{$wa_app_url}" data-url="{$p.frontend_url}">
-                    <input type="hidden" name="product_id" value="{$p.id}" />
-
-                    {if $ts.category_product_stock}
-                        <div class="products__available">
-                            {$classAvailable = "out-of-stock"}
-                            {if $available}
-                                {$classAvailable = "in-stock"}
-                                {$textAvailable = $ts.product_stock_in|default:"[`In stock`]"}
-
-                                {if $p.count <= 0 && $p.count !== null}
-                                    {$classAvailable = "low"}
-                                    {$textAvailable = $ts.product_stock_low|default:"[`Pre-order only`]"}
-                                {/if}
-                            {/if}
-
-                            <div class="products__available-{$classAvailable}">
-                                {if $classAvailable == 'in-stock'}<svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>{/if}
-                                {$textAvailable}
-                            </div>
-                        </div>
-                    {/if}
-
-                    {if $ts.category_product_art && !empty($p.skus)}
-                        {foreach $p.skus as $sku}
-                            {if $sku.sku}
-                                <div class="products__code">
-                                    [`Code`]: <span class="products__code-v">{$sku.sku|escape}</span>
-                                </div>
-                                {break}
-                            {/if}
-                        {/foreach}
-                    {/if}
-
-                    {if $ts.category_product_skus != 'radio'}
-                        <div class="products__price">
-                            {if $ts.category_product_range && $p.frontend_min_price > 0 && $p.frontend_min_price != $p.frontend_max_price
-                                && $ts.category_product_skus == 'no' }
-                                <span class="products__price-range">
-                                    {shopCustom::p()} {shop_currency_html($p.frontend_min_price)} {$p.features.units}
-                                </span>
-                            {else}
-                                {if $ts.product_zero_text && $p.price==0}
-                                    <div class="products__zero-text">
-                                        {$ts.product_zero_text}
-                                    </div>
-                                    {$available = false}
+                        {if $ts.category_product_skus != 'radio'}
+                            <div class="products__price">
+                                {if $ts.category_product_range && $p.frontend_min_price > 0 && $p.frontend_min_price != $p.frontend_max_price
+                                    && $ts.category_product_skus == 'no' }
+                                    <span class="products__price-range">
+                                        {shop_currency_html($p.frontend_min_price)} ... {shop_currency_html($p.frontend_max_price)}
+                                    </span>
                                 {else}
-                                    <div class="products__price-new">
-                                        {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
-                                    </div>
-                                {/if}
-
-                                {if $p.compare_price > 0
-                                    || (!empty($product) && $ts.category_product_skus != 'no' && count($product.skus) > 1)}
-                                    <div class="products__price-old"{if $p.compare_price <=0} style="display:none;"{/if}>
-                                        <div class="products__price-old-p">
-                                            {shop_currency_html($p.compare_price)}
+                                    {if $ts.product_zero_text && $p.price==0}
+                                        <div class="products__zero-text">
+                                            {$ts.product_zero_text}
                                         </div>
-                                        {if $ts.category_product_discount}
-                                            <div class="stock-label">
-                                                <div class="stock-label__percent">
-                                                    {round(($p.compare_price-$p.price)*100/$p.compare_price, 2)}%
+                                        {$available = false}
+                                    {else}
+                                        <div class="products__price-new">
+                                            {shop_currency_html($p.price)}
+                                        </div>
+                                    {/if}
+
+                                    {if $p.compare_price > 0
+                                        || (!empty($product) && $ts.category_product_skus != 'no' && count($product.skus) > 1)}
+                                        <div class="products__price-old"{if $p.compare_price <=0} style="display:none;"{/if}>
+                                            <div class="products__price-old-p">
+                                                {shop_currency_html($p.compare_price)}
+                                            </div>
+
+                                            {if $ts.category_product_discount}
+                                                {$percentDis = ($p.compare_price-$p.price)*100/$p.compare_price}
+                                                {if $ts.category_product_discount_round == 'down'}
+                                                    {$percentDis = floor($percentDis)}
+                                                {else}
+                                                    {$percentDis = $percentDis|ceil}
+                                                {/if}
+
+                                                {if $percentDis >= $ts.category_product_discount_min}
+                                                    <div class="stock-label">
+                                                        <div class="stock-label__percent">
+                                                            {$percentDis}%
+                                                        </div>
+                                                        <div class="stock-label__price">
+                                                            -{shop_currency_html($p.compare_price-$p.price)}
+                                                        </div>
+                                                    </div>
+                                                {/if}
+                                            {/if}
+                                        </div>
+                                    {/if}
+                                {/if}
+                            </div>
+                        {/if}
+
+                        {if empty($slider_view) && $ts.category_product_button_drop}
+                        <div class="products__cart-drop">
+                        {/if}
+                            {if $ts.category_product_button_cart}
+                                <div class="products__cart">
+                                    {if !empty($product) && $ts.category_product_skus != 'no' && count($product.skus) > 1}
+                                        {if $ts.category_product_skus == 'radio'}
+                                            <div class="products__cart-skus">
+                                                <ul class="skus">
+                                                    {foreach $product.skus as $sku}
+                                                    <li>
+                                                        <label>
+                                                            <input{if $sku.id == $product.sku_id} checked="checked"{/if} type="radio" name="sku_id" value="{$sku.id}" data-code="{$sku.sku|escape}">
+                                                            <span class="skus__name">{$sku.name}</span>
+                                                            <span class="skus__price-bl">
+                                                                <span class="price skus__price">
+                                                                    {shop_currency_html($sku.price)}
+                                                                </span>
+                                                                {if $sku.compare_price >0}
+                                                                    <span class="skus__price-old">
+                                                                        {shop_currency_html($sku.compare_price)}
+                                                                    </span>
+                                                                {/if}
+                                                            </span>
+                                                        </label>
+                                                    </li>
+                                                    {/foreach}
+                                                </ul>
+                                            </div>
+                                        {else if $ts.category_product_skus == 'select'}
+                                            <div class="products__cart-options">
+                                                <select name="sku_id">
+                                                    {foreach $product.skus as $sku}
+                                                        {$sku_available =  $product.status && $sku.available && ($wa->shop->settings('ignore_stock_count') || $sku.count === null || $sku.count > 0)}
+                                                        <option {if $sku.id == $product.sku_id}checked="checked"{/if} {if !$sku_available}disabled="disabled"{/if} value="{$sku.id}" data-code="{$sku.sku|escape}" data-compare-price="{if $sku.compare_price >0}{$sku.compare_price}{/if}" data-price="{$sku.price}">{$sku.name}</option>
+                                                    {/foreach}
+                                                </select>
+                                            </div>
+                                        {/if}
+                                    {/if}
+
+                                    {$classButton = ''}
+                                    {if $ts.category_product_cart_type == 'img/settings/category_product_cart-2.png' ||
+                                        $ts.category_product_cart_type == 'img/settings/category_product_cart-4.png' ||
+                                        $ts.category_product_cart_type == 'img/settings/category_product_cart-6.png' ||
+                                        $ts.category_product_cart_type == 'img/settings/category_product_cart-7.png'}
+                                        {$classButton = ' button_low'}
+                                    {/if}
+
+                                    <div class="products__cart-flex">
+                                        {if $ts.category_product_cart_type != 'img/settings/category_product_cart-3.png' &&
+                                            $ts.category_product_cart_type != 'img/settings/category_product_cart-4.png'}
+                                            <input type="hidden" name="quantity" value="1" />
+                                        {/if}
+
+                                        <button class="products__button button{$classButton}" type="submit"{if !$available} disabled{/if}>
+                                            {if array_key_exists($p.id, $itemsCartId) && $itemsCartId[$p.id] == $p.sku_id}
+                                                <svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>
+                                            {/if}
+                                            {eval var=$ts.category_product_cart_text}
+                                        </button>
+
+                                        {if $ts.category_product_cart_type == 'img/settings/category_product_cart-5.png' ||
+                                            $ts.category_product_cart_type == 'img/settings/category_product_cart-6.png'}
+                                            <div class="products__view{if $ts.category_product_cart_type == 'img/settings/category_product_cart-6.png'} products__view_low{/if}">
+                                                <div class="view-fav-com__item p-view" data-href="{$p.frontend_url}">
+                                                    <svg class="icon16 i-eye"><use xlink:href="#i-eye"></use></svg>
                                                 </div>
-                                                <div class="stock-label__price">
-                                                    -{shop_currency_html($p.compare_price-$p.price)}
+                                            </div>
+                                        {/if}
+
+                                        {if $ts.category_product_cart_type == 'img/settings/category_product_cart-7.png'}
+                                            <div class="products__vfc">
+                                                {view_fav_com icon=10}
+                                            </div>
+                                        {/if}
+
+                                        {if $ts.category_product_cart_type == 'img/settings/category_product_cart-3.png' ||
+                                            $ts.category_product_cart_type == 'img/settings/category_product_cart-4.png'}
+                                            <div class="counter
+                                                {if $ts.category_product_cart_type == 'img/settings/category_product_cart-4.png'} counter_low{/if}">
+                                                <div class="counter__minus">
+                                                    <svg class="icon10 i-minus ">
+                                                        <use xlink:href="#i-minus"></use>
+                                                    </svg>
+                                                </div>
+                                                <div class="counter__count">
+                                                    <input type="text" name="quantity" value="1">
+                                                </div>
+                                                <div class="counter__plus">
+                                                    <svg class="icon10 i-plus ">
+                                                        <use xlink:href="#i-plus"></use>
+                                                    </svg>
                                                 </div>
                                             </div>
                                         {/if}
                                     </div>
-                                {/if}
-                            {/if}
-                        </div>
-                    {/if}
-
-                    {if $ts.category_product_button_cart}
-                        <div class="products__cart">
-                            {if !empty($product) && $ts.category_product_skus != 'no' && count($product.skus) > 1}
-                                {if $ts.category_product_skus == 'radio'}
-                                    <div class="products__cart-skus">
-                                        <ul class="skus">
-                                            {foreach $product.skus as $sku}
-                                            <li>
-                                                <label>
-                                                    <input{if $sku.id == $product.sku_id} checked="checked"{/if} type="radio" name="sku_id" value="{$sku.id}" data-code="{$sku.sku|escape}">
-                                                    <span class="skus__name">{$sku.name}</span>
-                                                    <span class="skus__price-bl">
-                                                        <span class="price skus__price">
-                                                            {shop_currency_html($sku.price)}
-                                                        </span>
-                                                        {if $sku.compare_price >0}
-                                                            <span class="skus__price-old">
-                                                                {shop_currency_html($sku.compare_price)}
-                                                            </span>
-                                                        {/if}
-                                                    </span>
-                                                </label>
-                                            </li>
-                                            {/foreach}
-                                        </ul>
-                                    </div>
-                                {else if $ts.category_product_skus == 'select'}
-                                    <div class="products__cart-options">
-                                        <select name="sku_id">
-                                            {foreach $product.skus as $sku}
-                                                {$sku_available =  $product.status && $sku.available && ($wa->shop->settings('ignore_stock_count') || $sku.count === null || $sku.count > 0)}
-                                                <option {if $sku.id == $product.sku_id}checked="checked"{/if} {if !$sku_available}disabled="disabled"{/if} value="{$sku.id}" data-code="{$sku.sku|escape}" data-compare-price="{if $sku.compare_price >0}{$sku.compare_price}{/if}" data-price="{$sku.price}">{$sku.name}</option>
-                                            {/foreach}
-                                        </select>
-                                    </div>
-                                {/if}
+                                </div>
                             {/if}
 
-                            {$classButton = ''}
-                            {if $ts.category_product_cart_type == 'img/settings/category_product_cart-2.png' ||
-                                $ts.category_product_cart_type == 'img/settings/category_product_cart-4.png' ||
-                                $ts.category_product_cart_type == 'img/settings/category_product_cart-6.png' ||
-                                $ts.category_product_cart_type == 'img/settings/category_product_cart-7.png'}
-                                {$classButton = ' button_low'}
+                            {if $ts.category_product_button_cart}
+                                {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/pnotice/ *}
+                                {if class_exists('shopPnoticePlugin')}
+                                    {$pnotice = shopPnoticePlugin::displayListButton($p)}
+                                {/if}
+
+                                {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/reqprice/ *}
+                                {if class_exists('shopReqpricePlugin')}
+                                    {$reqprice = shopReqpricePlugin::displayListButton($p)}
+                                {/if}
+
+                                {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/pnotice/ *}
+                                {if !empty($pnotice)}
+                                    <div class="products__one">
+                                        {$pnotice}
+                                    </div>
+
+                                {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/reqprice/ *}
+                                {elseif !empty($reqprice)}
+                                    <div class="products__one">
+                                        {$reqprice}
+                                    </div>
+
+                                {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/clicklite/ *}
+                                {elseif class_exists('shopClicklitePlugin')}
+                                    <div class="products__one">
+                                        {shopClicklitePlugin::displayListButton($p)}
+                                    </div>
+
+                                {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/quickorder/ *}
+                                {elseif class_exists('shopQuickorderPlugin')}
+                                    <div class="products__one">
+                                        {shopQuickorderPlugin::button($p)}
+                                    </div>
+
+                                {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/buy1click/ *}
+                                {elseif class_exists('shopBuy1clickViewHelper')}
+                                    <div class="products__one">
+                                        {shopBuy1clickViewHelper::getButton($p.id)}
+                                    </div>
+                                {/if}
                             {/if}
-
-                            <div class="products__cart-flex">
-                                {if $ts.category_product_cart_type != 'img/settings/category_product_cart-3.png' &&
-                                    $ts.category_product_cart_type != 'img/settings/category_product_cart-4.png'}
-                                    <input type="hidden" name="quantity" value="1" />
-                                {/if}
-
-                                <button class="products__button button{$classButton}" type="submit"{if !$available} disabled{/if}>
-                                    {if array_key_exists($p.id, $itemsCartId) && $itemsCartId[$p.id] == $p.sku_id}
-                                        <svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>
-                                    {/if}
-                                    {eval var=$ts.category_product_cart_text}
-                                </button>
-
-                                {if $ts.category_product_cart_type == 'img/settings/category_product_cart-5.png' ||
-                                    $ts.category_product_cart_type == 'img/settings/category_product_cart-6.png'}
-                                    <div class="products__view{if $ts.category_product_cart_type == 'img/settings/category_product_cart-6.png'} products__view_low{/if}">
-                                        <div class="view-fav-com__item p-view" data-href="{$p.frontend_url}">
-                                            <svg class="icon16 i-eye"><use xlink:href="#i-eye"></use></svg>
-                                        </div>
-                                    </div>
-                                {/if}
-
-                                {if $ts.category_product_cart_type == 'img/settings/category_product_cart-7.png'}
-                                    <div class="products__vfc">
-                                        {view_fav_com icon=10}
-                                    </div>
-                                {/if}
-
-                                {if $ts.category_product_cart_type == 'img/settings/category_product_cart-3.png' ||
-                                    $ts.category_product_cart_type == 'img/settings/category_product_cart-4.png'}
-                                    <div class="counter
-                                        {if $ts.category_product_cart_type == 'img/settings/category_product_cart-4.png'} counter_low{/if}">
-                                        <div class="counter__minus">
-                                            <svg class="icon10 i-minus ">
-                                                <use xlink:href="#i-minus"></use>
-                                            </svg>
-                                        </div>
-                                        <div class="counter__count">
-                                            <input type="text" name="quantity" value="1">
-                                        </div>
-                                        <div class="counter__plus">
-                                            <svg class="icon10 i-plus ">
-                                                <use xlink:href="#i-plus"></use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                {/if}
-                            </div>
+                        {if empty($slider_view) && $ts.category_product_button_drop}
                         </div>
-                    {/if}
-                </form>
+                        {/if}
+                    </form>
 
-                {if $ts.category_product_button_cart}
-                    {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/pnotice/ *}
-                    {if class_exists('shopPnoticePlugin')}
-                        {$pnotice = shopPnoticePlugin::displayListButton($p)}
-                    {/if}
-
-                    {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/reqprice/ *}
-                    {if class_exists('shopReqpricePlugin')}
-                        {$reqprice = shopReqpricePlugin::displayListButton($p)}
-                    {/if}
-
-                    {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/pnotice/ *}
-                    {if !empty($pnotice)}
-                        <div class="products__one">
-                            {$pnotice}
-                        </div>
-
-                    {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/reqprice/ *}
-                    {elseif !empty($reqprice)}
-                        <div class="products__one">
-                            {$reqprice}
-                        </div>
-
-                    {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/clicklite/ *}
-                    {elseif class_exists('shopClicklitePlugin')}
-                        <div class="products__one">
-                            {shopClicklitePlugin::displayListButton($p)}
-                        </div>
-
-                    {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/quickorder/ *}
-                    {elseif class_exists('shopQuickorderPlugin')}
-                        <div class="products__one">
-                            {shopQuickorderPlugin::button($p)}
-                        </div>
-
-                    {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/buy1click/ *}
-                    {elseif class_exists('shopBuy1clickViewHelper')}
-                        <div class="products__one">
-                            {shopBuy1clickViewHelper::getButton($p.id)}
-                        </div>
-                    {/if}
-                {/if}
-
-                <span style="display:none;" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
-                    <meta itemprop="url" content="{$p.frontend_url}" />
-                    <meta itemprop="priceValidUntil" content="" />
-                    <meta itemprop="price" content="{$p.price}">
-                    <meta itemprop="priceCurrency" content="{$wa->shop->currency()}">
-                    {if $available}
-                        <link itemprop="availability" href="http://schema.org/InStock">
-                    {else}
-                        <link itemprop="availability" href="http://schema.org/OutOfStock" />
-                    {/if}
-                </span>
-
-                {if !empty($product) && $product.rating_count > 0}
-                    <span style="display:none;" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-                        <meta itemprop="ratingValue" content="{$product.rating}" />
-                        <meta itemprop="bestRating" content="5" />
-                        <meta itemprop="worstRating" content="0" />
-                        <meta itemprop="ratingCount" content="{$product.rating_count}" />
-                        <meta itemprop="reviewCount" content="{$product.rating_count}" />
+                    <span style="display:none;" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                        <meta itemprop="url" content="{$p.frontend_url}" />
+                        <meta itemprop="priceValidUntil" content="" />
+                        <meta itemprop="price" content="{$p.price}">
+                        <meta itemprop="priceCurrency" content="{$wa->shop->currency()}">
+                        {if $available}
+                            <link itemprop="availability" href="http://schema.org/InStock">
+                        {else}
+                            <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                        {/if}
                     </span>
+
+                    {if !empty($product) && $product.rating_count > 0}
+                        <span style="display:none;" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                            <meta itemprop="ratingValue" content="{$product.rating}" />
+                            <meta itemprop="bestRating" content="5" />
+                            <meta itemprop="worstRating" content="0" />
+                            <meta itemprop="ratingCount" content="{$product.rating_count}" />
+                            <meta itemprop="reviewCount" content="{$product.rating_count}" />
+                        </span>
+                    {/if}
+                </div>
+
+                {if !empty($p.features.brand)}
+                    <meta itemprop="brand" content="{$p.features.brand}">
                 {/if}
+
+                <meta itemprop="description" content="{$p.summary|default:$p.name|escape}">
+                <meta itemprop="url" content="{$p.frontend_url}">
+                <meta itemprop="image" content="{$img|default:$imgDefault}">
+                <meta itemprop="review" content="">
+                <meta itemprop="sku" content="">
             </div>
-
-            <meta itemprop="url" content="{$p.frontend_url}">
-            <meta itemprop="image" content="{$img|default:$imgDefault}">
-            <meta itemprop="brand" content="">
-            <meta itemprop="review" content="">
-            <meta itemprop="sku" content="">
-        </div>
-    {/foreach}
-
+        {/foreach}
+    {if empty($home_img)}
+    </div>
+    {/if}
 {/if}
 
 {/strip}

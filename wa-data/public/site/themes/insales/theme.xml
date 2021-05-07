@@ -203,7 +203,7 @@
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
     <setting var="micro_phone" control_type="text">
-      <value>+7 473 229 40 48</value>
+      <value><![CDATA[+7 473 229 40 48]]></value>
       <name locale="ru_RU">Телефон компании для микроразметки</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -381,11 +381,11 @@
       </options>
     </setting>
     <setting var="header_banner_top_view" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Показывать баннер</name>
     </setting>
     <setting var="header_banner_top_close" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Иконка закрыть</name>
     </setting>
     <setting var="header_banner_top_hash" control_type="text">
@@ -571,7 +571,7 @@
       <name locale="ru_RU">«Шапка сайта» - верх</name>
     </setting>
     <setting var="header_top_blocks" control_type="text">
-      <value>menu,auth,address,phone_1,social</value>
+      <value><![CDATA[menu,auth,address,phone_1,social]]></value>
       <name locale="ru_RU">Какие блоки выводить&lt;/div&gt;&lt;div class="hp-top"&gt;</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
@@ -617,7 +617,7 @@
       <name locale="ru_RU">«Шапка сайта» - низ</name>
     </setting>
     <setting var="header_bott_blocks" control_type="text">
-      <value>categories</value>
+      <value><![CDATA[categories]]></value>
       <name locale="ru_RU">Какие блоки выводить&lt;/div&gt;&lt;div class="hp-bott"&gt;</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
@@ -792,12 +792,12 @@
       <name locale="ru_RU">Логотип сайта (id - logo)</name>
     </setting>
     <setting var="header_logo" control_type="image">
-      <value/>
+      <value></value>
       <filename>img/logo.*</filename>
       <name locale="ru_RU">Логотип&lt;/div&gt;&lt;div class="hp-primer hp-logo"&gt;</name>
     </setting>
     <setting var="header_logo_svg" control_type="text">
-      <value>https://svetlica-vrn.ru/logo/logo.svg</value>
+      <value><![CDATA[https://svetlica-vrn.ru/logo/logo.svg]]></value>
       <name locale="ru_RU">Логотип в формате svg</name>
       <description locale="ru_RU">укажите полный урл(ссылку) до файла картинки svg (пример - /wa-apps/site/themes/insale/img/logo.svg)</description>
     </setting>
@@ -914,7 +914,7 @@
       <description locale="ru_RU">можно задать свою ширину в px кнопки, удобно использовать когда задается фон панели</description>
     </setting>
     <setting var="header_catalog_title" control_type="text">
-      <value>КАТАЛОГ ИЗДЕЛИЙ</value>
+      <value><![CDATA[КАТАЛОГ ИЗДЕЛИЙ]]></value>
       <name locale="ru_RU">Название кнопки</name>
     </setting>
     <setting var="header_catalog_parent" control_type="text">
@@ -1889,7 +1889,7 @@
             </description>
     </setting>
     <setting var="header_phone_num_1" control_type="text">
-      <value>+7 473 229 40 48</value>
+      <value><![CDATA[+7 473 229 40 48]]></value>
       <name locale="ru_RU">Номер телефона</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -1909,12 +1909,12 @@
       <name locale="ru_RU">Показывать выпадающий блок</name>
     </setting>
     <setting var="header_phone_num_2" control_type="text">
-      <value>+7 473 229 40 48</value>
+      <value><![CDATA[+7 473 229 40 48]]></value>
       <name locale="ru_RU">Номер телефона</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
     <setting var="header_phone_sign_2" control_type="text">
-      <value>Бесплатный звонок по РФ</value>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Подпись под телефоном</name>
     </setting>
     <setting var="header_phone_share" control_type="checkbox">
@@ -1948,7 +1948,7 @@
       <description locale="ru_RU">Удалите текст для того что бы не показывать</description>
     </setting>
     <setting var="header_phone_mode_text" control_type="text">
-      <value>Пн-Пт 10:00 — 18:30;&lt;br/&gt;Сб 10:00 — 16:00; &lt;br/&gt;Вс — выходной</value>
+      <value><![CDATA[Пн-Пт 10:00 — 18:30;<br/>Сб 10:00 — 16:00; <br/>Вс — выходной]]></value>
       <name locale="ru_RU">Текст режим работы</name>
       <description locale="ru_RU">Удалите текст для того что бы не показывать&lt;br/&gt;Smarty разрешен</description>
     </setting>
@@ -2232,7 +2232,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="header_address_text" control_type="text">
-      <value>Воронеж, Новосибирская 13, Дружинников 13</value>
+      <value><![CDATA[Воронеж, Новосибирская 13, Дружинников 13]]></value>
       <name locale="ru_RU">Адрес</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -2318,7 +2318,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="header_mode_text" control_type="text">
-      <value>Пн-Пт 10:00—18:30; Сб 0.00—16.00; Вс вых</value>
+      <value><![CDATA[Пн-Пт 10:00—18:30; Сб 0.00—16.00; Вс вых]]></value>
       <name locale="ru_RU">Режим работы</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -2399,12 +2399,12 @@
       <description locale="ru_RU">удалите значение что бы не показывалось</description>
     </setting>
     <setting var="header_share_whatsapp" control_type="text">
-      <value>+79202114048</value>
+      <value><![CDATA[+79202114048]]></value>
       <name locale="ru_RU">Укажите телефон на whatsapp</name>
       <description locale="ru_RU">удалите значение что бы не показывалось</description>
     </setting>
     <setting var="header_share_viber" control_type="text">
-      <value>+79202114048</value>
+      <value><![CDATA[+79202114048]]></value>
       <name locale="ru_RU">Укажите телефон на viber</name>
       <description locale="ru_RU">удалите значение что бы не показывалось</description>
     </setting>
@@ -2480,7 +2480,7 @@
       </options>
     </setting>
     <setting var="social_vk" control_type="text">
-      <value>https://vk.com/svetlica36</value>
+      <value><![CDATA[https://vk.com/svetlica36]]></value>
       <name locale="ru_RU">Вконтакте</name>
     </setting>
     <setting var="social_fc" control_type="text">
@@ -2488,7 +2488,7 @@
       <name locale="ru_RU">Facebook</name>
     </setting>
     <setting var="social_tw" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Twitter</name>
     </setting>
     <setting var="social_od" control_type="text">
@@ -2496,11 +2496,11 @@
       <name locale="ru_RU">Одноклассники</name>
     </setting>
     <setting var="social_in" control_type="text">
-      <value>https://www.instagram.com/svetlicavrn/</value>
+      <value><![CDATA[https://www.instagram.com/svetlicavrn/]]></value>
       <name locale="ru_RU">Instagram</name>
     </setting>
     <setting var="social_yo" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Youtube</name>
     </setting>
     <setting var="social_plus_twv" control_type="checkbox">
@@ -2579,7 +2579,7 @@
       </options>
     </setting>
     <setting var="header_locale_en" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Ссылка на английскую версию</name>
     </setting>
     <setting var="header_social_my_lang" control_type="checkbox">
@@ -2805,12 +2805,12 @@
       </options>
     </setting>
     <setting var="header_mobile_logo" control_type="image">
-      <value/>
+      <value></value>
       <filename>img/logo-mobile.*</filename>
       <name locale="ru_RU">Логотип на мобильном</name>
     </setting>
     <setting var="header_mobile_logo_svg" control_type="text">
-      <value>https://svetlica-vrn.ru/logo/logo.svg</value>
+      <value><![CDATA[https://svetlica-vrn.ru/logo/logo.svg]]></value>
       <name locale="ru_RU">Логотип в формате svg</name>
       <description locale="ru_RU">укажите полный урл(ссылку) до файла картинки svg (пример - /wa-apps/site/themes/insale/img/logo.svg)</description>
     </setting>
@@ -2916,7 +2916,7 @@
       </options>
     </setting>
     <setting var="footer_logo" control_type="image">
-      <value/>
+      <value></value>
       <filename>img/logo-f.*</filename>
       <name locale="en_US">Logo</name>
       <name locale="ru_RU">Логотип</name>
@@ -2929,12 +2929,14 @@
             </description>
     </setting>
     <setting var="footer_copmany_text" control_type="text">
-      <value>Производственная фирма и интернет-магазин для  штор и жалюзи. Большой ассортимент, отличное качество.</value>
+      <value><![CDATA[Производственная фирма и интернет-магазин для  штор и жалюзи. Большой ассортимент, отличное качество.
+<br><br>
+Вся информация на сайте представлена для ознакомления и не является публичной офертой.]]></value>
       <name locale="ru_RU">Текст о компании</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
     <setting var="footer_currencies" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Выбор валюты</name>
     </setting>
     <setting var="footer_politika_map" control_type="checkbox">
@@ -2942,19 +2944,19 @@
       <name locale="ru_RU">Политики и карта сайта</name>
     </setting>
     <setting var="footer_politika_text" control_type="text">
-      <value>Политика персональных данных</value>
+      <value><![CDATA[Политика конфиденциальности]]></value>
       <name locale="ru_RU">Текст ссылки политика</name>
     </setting>
     <setting var="footer_politika_link" control_type="text">
-      <value>/politika/</value>
+      <value><![CDATA[https://svetlica-vrn.ru/politics.pdf]]></value>
       <name locale="ru_RU">Ссылка на политику</name>
     </setting>
     <setting var="footer_html_map_text" control_type="text">
-      <value>Карта сайта</value>
+      <value><![CDATA[Согласие на обработку персональных данных]]></value>
       <name locale="ru_RU">Текст ссылки карта сайта</name>
     </setting>
     <setting var="footer_html_map_link" control_type="text">
-      <value>/htmlmaps/</value>
+      <value><![CDATA[https://svetlica-vrn.ru/compliance.pdf]]></value>
       <name locale="en_US">Link html maps</name>
       <name locale="ru_RU">Ссылка на карту сайта</name>
     </setting>
@@ -2995,11 +2997,11 @@
       <name locale="ru_RU">Alphabank</name>
     </setting>
     <setting var="footer_copy_text" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Копирайт разработчика</name>
     </setting>
     <setting var="footer_copy" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Ссылки вебасист</name>
     </setting>
     <setting var="divider_footer_settings_2" control_type="group_divider">
@@ -3102,7 +3104,7 @@
       <name locale="ru_RU">Текст заголовка</name>
     </setting>
     <setting var="footer_contact_phone" control_type="text">
-      <value>+7 (473) 229 40 48;  +8 920 211 40 48</value>
+      <value><![CDATA[+7 (473) 229 40 48;  +8 920 211 40 48]]></value>
       <name locale="ru_RU">Телефоны</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -3114,12 +3116,12 @@
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
     <setting var="footer_contact_email" control_type="text">
-      <value>2294048@inbox.ru</value>
+      <value><![CDATA[2294048@inbox.ru]]></value>
       <name locale="ru_RU">Эл. адрес</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
     <setting var="footer_contact_mode" control_type="text">
-      <value>[`Operation mode:`] &lt;br/&gt;Пн-Пт 9:00—18:30; Сб 10:00-16:00; Вс выходной.</value>
+      <value><![CDATA[[`Operation mode:`] <br/>Пн-Пт 9:00—18:30; Сб 10:00-16:00; Вс выходной.]]></value>
       <name locale="ru_RU">Режим работы</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -3144,7 +3146,7 @@
       <name locale="ru_RU">Кнопка на верх</name>
     </setting>
     <setting var="footer_bottom_copy" control_type="text">
-      <value>© {time()|wa_datetime:"Y"} Светлица. [`All rights reserved`]</value>
+      <value><![CDATA[© {time()|wa_datetime:"Y"} Светлица. [`All rights reserved`]]]></value>
       <name locale="ru_RU">Текст копирайта внизу</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -3160,7 +3162,7 @@
       </options>
     </setting>
     <setting var="footer_panel" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Нижняя панель</name>
     </setting>
     <setting var="footer_panel_fav" control_type="checkbox">
@@ -3207,7 +3209,7 @@
       </options>
     </setting>
     <setting var="cookies" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Информация о куках</name>
     </setting>
     <setting var="cookies_text" control_type="text">
@@ -3309,7 +3311,7 @@
       <name locale="ru_RU">Главная страница магазина</name>
     </setting>
     <setting var="left_shop_blocks" control_type="text">
-      <value>categories,bestsellers,brands,photos,tags,news,banner_2,help,viewed</value>
+      <value><![CDATA[categories,bestsellers,brands,photos,tags,news,banner_2,help,viewed]]></value>
       <name locale="ru_RU">Какие блоки выводить</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить. Очистите поле, что бы не выводить левый блок</description>
     </setting>
@@ -3318,7 +3320,7 @@
       <name locale="ru_RU">Каталог товаров</name>
     </setting>
     <setting var="left_category_blocks" control_type="text">
-      <value>filters,banner_2</value>
+      <value><![CDATA[filters,banner_2]]></value>
       <name locale="ru_RU">Какие блоки выводить</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить. Очистите поле, что бы не выводить левый блок</description>
     </setting>
@@ -3374,7 +3376,7 @@
       <name locale="ru_RU">Изображения у подкатегорий</name>
     </setting>
     <setting var="left_block_catalog_brands" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Показывать вкладку бренды</name>
     </setting>
     <setting var="left_block_catalog_brands_photos" control_type="text">
@@ -3383,11 +3385,11 @@
       <description locale="ru_RU">если стоит плагин бренды про или бренды с изображениями, то удалите id фотогалереи и будут выводится из плагинов&lt;br/&gt;&lt;a href="http://steemy.ru/img-ss/insale/1.png" target="_blank"&gt;Как узнать ID из приложения фото&lt;/a&gt;</description>
     </setting>
     <setting var="left_block_catalog_brands_links" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Ссылка на бренды</name>
     </setting>
     <setting var="left_block_catalog_brands_title" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Название бренды</name>
     </setting>
     <setting var="left_block_catalog_yet_count" control_type="text">
@@ -3559,20 +3561,20 @@
       </options>
     </setting>
     <setting var="left_help_title" control_type="text">
-      <value>Связаться с нами</value>
+      <value><![CDATA[Связаться с нами]]></value>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="left_help_phone_1" control_type="text">
-      <value>+7 (473) 229 40 48</value>
+      <value><![CDATA[+7 (473) 229 40 48]]></value>
       <name locale="ru_RU">Телефон 1</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
     <setting var="left_help_phone_1_hint" control_type="text">
-      <value>Написать в мессенджеры</value>
+      <value><![CDATA[Написать в мессенджеры]]></value>
       <name locale="ru_RU">Подпись к телефону 1</name>
     </setting>
     <setting var="left_help_phone_2" control_type="text">
-      <value>+8 920 211 40 48</value>
+      <value><![CDATA[+8 920 211 40 48]]></value>
       <name locale="ru_RU">Телефон 2</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -3586,7 +3588,7 @@
       <description locale="ru_RU">настройки блока находятся в - «Шапка сайта» - настройки блоков для секций</description>
     </setting>
     <setting var="left_help_email" control_type="text">
-      <value>2294048@inbox.ru</value>
+      <value><![CDATA[2294048@inbox.ru]]></value>
       <name locale="ru_RU">Электронный адрес</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -3704,12 +3706,12 @@
             </name>
     </setting>
     <setting var="home_blocks" control_type="text">
-      <value>list_1,list_2,list_3,news,reviews,company,category,subscribe,viewed,banner_products,banner_product_1,banner_product_2</value>
+      <value><![CDATA[list_1,list_2,list_3,news,reviews,company,category,subscribe,viewed,banner_products,banner_product_1,banner_product_2]]></value>
       <name locale="ru_RU">Какие блоки выводить</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
     <setting var="home_blocks_mobile" control_type="text">
-      <value>slider,promo,category_promo,list_3,brands,news,reviews,company,banner_products,subscribe,viewed</value>
+      <value><![CDATA[slider,promo,category_promo,list_3,brands,news,reviews,company,banner_products,subscribe,viewed]]></value>
       <name locale="ru_RU">Какие блоки выводить на мобильном</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
@@ -4070,7 +4072,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_category_promo_ids" control_type="text">
-      <value>43,31,49,48,52</value>
+      <value><![CDATA[43,31,49,48,52]]></value>
       <name locale="ru_RU">Id`s категорий</name>
       <description locale="ru_RU">
                 перечислите через запятую id категорий которые выводить
@@ -4112,7 +4114,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_category_ids" control_type="text">
-      <value>43,31,49,48,52</value>
+      <value><![CDATA[43,31,49,48,52]]></value>
       <name locale="ru_RU">Id`s категорий</name>
       <description locale="ru_RU">
                 перечислите через запятую id категорий которые выводить
@@ -4433,11 +4435,11 @@
       <name locale="ru_RU">Ссылка</name>
     </setting>
     <setting var="home_promo_title_1" control_type="text">
-      <value>Индивидуальный подход</value>
+      <value><![CDATA[Индивидуальный подход]]></value>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_promo_text_1" control_type="text">
-      <value>Изготавливаем на заказ. Выезжаем на замер, консультируем по тканям. Подбираем наилучший для Вас вариант.</value>
+      <value><![CDATA[Изготавливаем на заказ. Выезжаем на замер, консультируем по тканям. Подбираем наилучший для Вас вариант.]]></value>
       <name locale="ru_RU">Описание</name>
     </setting>
     <setting var="divider_home_top_promo_2" control_type="group_divider">
@@ -4463,7 +4465,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_promo_text_2" control_type="text">
-      <value>В черте города действует бесплатная доставка. Географию уточняйте у менеджера.</value>
+      <value><![CDATA[В черте города действует бесплатная доставка. Географию уточняйте у менеджера.]]></value>
       <name locale="ru_RU">Описание</name>
     </setting>
     <setting var="divider_home_top_promo_3" control_type="group_divider">
@@ -4489,7 +4491,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_promo_text_3" control_type="text">
-      <value>Замена бракованного товара. Гарантия на механизмы всех видов вертикальных жалюзи и рулонных штор — 2 года. На механизмы остальных видов конструкций — 1 год.</value>
+      <value><![CDATA[Замена бракованного товара. Гарантия на механизмы всех видов вертикальных жалюзи и рулонных штор — 2 года. На механизмы остальных видов конструкций — 1 год.]]></value>
       <name locale="ru_RU">Описание</name>
     </setting>
     <setting var="divider_home_top_promo_4" control_type="group_divider">
@@ -4511,11 +4513,11 @@
       <name locale="ru_RU">Ссылка</name>
     </setting>
     <setting var="home_promo_title_4" control_type="text">
-      <value>Оплата заказа</value>
+      <value><![CDATA[Оплата заказа]]></value>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_promo_text_4" control_type="text">
-      <value>Работаем с физическими и юридическими лицами. Разные формы оплаты. Подробнее по телефону.</value>
+      <value><![CDATA[Работаем с физическими и юридическими лицами. Разные формы оплаты. Подробнее по телефону.]]></value>
       <name locale="ru_RU">Описание</name>
     </setting>
     <setting var="divider_home_slider" control_type="group_divider">
@@ -4565,11 +4567,11 @@
       <name locale="ru_RU">Рандомно</name>
     </setting>
     <setting var="home_product_day_title" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_product_day_timer" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Таймер отсчета</name>
       <description locale="ru_RU">пропишите дату до которой будет работать вывод таймера. Важно - таймер указывайте в таком формате &lt;b&gt;YYYY-MM-DD h:m:s&lt;/b&gt;, год-месяц-день час:минуты:секунды</description>
     </setting>
@@ -4589,7 +4591,7 @@
       <name locale="ru_RU">Баннер справа - 1</name>
     </setting>
     <setting var="home_slide_banner_1" control_type="image">
-      <value/>
+      <value></value>
       <filename>img/slide-promo-1.*</filename>
       <name locale="ru_RU">Изображение</name>
     </setting>
@@ -4606,7 +4608,7 @@
       <name locale="ru_RU">Баннер справа - 2</name>
     </setting>
     <setting var="home_slide_banner_2" control_type="image">
-      <value/>
+      <value></value>
       <filename>img/slide-promo-2.*</filename>
       <name locale="ru_RU">Изображение</name>
     </setting>
@@ -4653,23 +4655,23 @@
       <name locale="ru_RU">Цвет текста</name>
     </setting>
     <setting var="home_slide_header_1" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Текст на заголовком</name>
     </setting>
     <setting var="home_slide_title_1" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Основной заголовок</name>
     </setting>
     <setting var="home_slide_text_1" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Текст</name>
     </setting>
     <setting var="home_slide_price_1" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Цена от</name>
     </setting>
     <setting var="home_slide_timer_1" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Таймер отсчета</name>
       <description locale="ru_RU">пропишите дату до которой будет работать вывод таймера. Важно - таймер указывайте в таком формате &lt;b&gt;YYYY-MM-DD h:m:s&lt;/b&gt;, год-месяц-день час:минуты:секунды</description>
     </setting>
@@ -4716,19 +4718,19 @@
       <name locale="ru_RU">Цвет текста</name>
     </setting>
     <setting var="home_slide_header_2" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Текст над заголовком</name>
     </setting>
     <setting var="home_slide_title_2" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Основной заголовок</name>
     </setting>
     <setting var="home_slide_text_2" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Текст</name>
     </setting>
     <setting var="home_slide_price_2" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Цена от</name>
     </setting>
     <setting var="home_slide_timer_2" control_type="text">
@@ -4779,19 +4781,19 @@
       <name locale="ru_RU">Цвет текста</name>
     </setting>
     <setting var="home_slide_header_3" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Текст над заголовком</name>
     </setting>
     <setting var="home_slide_title_3" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Основной заголовок</name>
     </setting>
     <setting var="home_slide_text_3" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Текст</name>
     </setting>
     <setting var="home_slide_price_3" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Цена от</name>
     </setting>
     <setting var="home_slide_timer_3" control_type="text">
@@ -5274,19 +5276,19 @@
       <name locale="ru_RU">Цвет текста</name>
     </setting>
     <setting var="home_banner_text_1_header" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Текст перед заголовком</name>
     </setting>
     <setting var="home_banner_text_1_title" control_type="text">
-      <value>Скидка на онлайн заказ</value>
+      <value><![CDATA[Скидка на онлайн заказ]]></value>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_banner_text_1_text" control_type="text">
-      <value>До конца марта при заказе изделий с сайта действует скидка 5%</value>
+      <value><![CDATA[До конца марта при заказе изделий с сайта действует скидка 5%]]></value>
       <name locale="ru_RU">Текст</name>
     </setting>
     <setting var="home_banner_text_1_timer" control_type="text">
-      <value>2021-3-31 23:59:00</value>
+      <value><![CDATA[2021-3-31 23:59:00]]></value>
       <name locale="ru_RU">Таймер отсчета</name>
       <description locale="ru_RU">пропишите дату до которой будет работать вывод таймера. Важно - таймер указывайте в таком формате &lt;b&gt;YYYY-MM-DD h:m:s&lt;/b&gt;, год-месяц-день час:минуты:секунды</description>
     </setting>
@@ -5351,7 +5353,7 @@
       <name locale="ru_RU">Изображение</name>
     </setting>
     <setting var="home_banner_img_text_title_1" control_type="text">
-      <value>Смартфоны будущего: какие они? d</value>
+      <value><![CDATA[Смартфоны будущего: какие они? d]]></value>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_banner_img_text_text_1" control_type="text">
@@ -5522,7 +5524,7 @@
       </options>
     </setting>
     <setting var="category_des_yet" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Скрывать подробнее</name>
     </setting>
     <setting var="category_des_not" control_type="checkbox">
@@ -5559,7 +5561,7 @@
       <name locale="ru_RU">Индикатор товаров</name>
     </setting>
     <setting var="category_sub_slider_mobile" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Прокрутка на мобильном</name>
     </setting>
     <setting var="category_sub_yet" control_type="checkbox">
@@ -5579,7 +5581,7 @@
       <name locale="ru_RU">Показывать заголовок</name>
     </setting>
     <setting var="filters_title_text" control_type="text">
-      <value>Фильтр</value>
+      <value><![CDATA[Фильтр]]></value>
       <name locale="ru_RU">Название заголовока</name>
     </setting>
     <setting var="filters_view" control_type="checkbox">
@@ -5596,11 +5598,11 @@
       <name locale="ru_RU">Открытых вкладок</name>
     </setting>
     <setting var="filters_drop" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Горизонтальный фильтр</name>
     </setting>
     <setting var="filters_drop_fix" control_type="checkbox">
-      <value/>
+      <value></value>
       <name locale="ru_RU">Фиксированный фильтр</name>
     </setting>
     <setting var="filters_result" control_type="checkbox">
@@ -5794,7 +5796,7 @@
       <name locale="ru_RU">На мобильном</name>
     </setting>
     <setting var="category_product_features_code" control_type="text">
-      <value/>
+      <value><![CDATA[tsvet,ukhod,svetopropuskanie,tsvet_furnitury]]></value>
       <name locale="ru_RU">Code</name>
       <description locale="ru_RU">
                 укажите коды через запятую, максимально выводятся только 4 характеристики. Если не указать, то будут выводится по порядку как в настройках.&lt;br/&gt;
@@ -5859,7 +5861,7 @@
       <name locale="ru_RU">Кнопка при наведении</name>
     </setting>
     <setting var="category_product_cart_text" control_type="text">
-      <value>Купить</value>
+      <value><![CDATA[Купить]]></value>
       <name locale="ru_RU">Текст кнопки</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -6116,7 +6118,7 @@
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
     <setting var="product_order_phone" control_type="text">
-      <value>+0 (000) 000-00-00</value>
+      <value><![CDATA[+7 473 229 40 48]]></value>
       <name locale="ru_RU">Заказ по телефону</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -6129,7 +6131,7 @@
       <name locale="ru_RU">Текст бонусных баллов</name>
     </setting>
     <setting var="product_block_info" control_type="text">
-      <value/>
+      <value><![CDATA[<b>Цена указана за минимальный размер, после оформления заказа будет  уточнена у менеджера.</b>]]></value>
       <name locale="ru_RU">Блок информации</name>
       <description locale="ru_RU">произвольный блок информации. Smarty разрешен</description>
     </setting>
@@ -6146,7 +6148,7 @@
       <name locale="ru_RU">Сколько характеристик</name>
     </setting>
     <setting var="product_features_code" control_type="text">
-      <value/>
+      <value><![CDATA[tsvet,ukhod,svetopropuskanie,tsvet_furnitury]]></value>
       <name locale="ru_RU">Сode характеристик</name>
       <description locale="ru_RU">
                 укажите коды характеристик для вывода через запятую &lt;br/&gt;
@@ -6203,7 +6205,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="product_table_info_1_block" control_type="text">
-      <value>1</value>
+      <value><![CDATA[1]]></value>
       <name locale="ru_RU">Id блока</name>
     </setting>
     <setting var="product_table_info_1_feature" control_type="text">
@@ -6235,7 +6237,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="product_table_info_2_block" control_type="text">
-      <value>2</value>
+      <value><![CDATA[2]]></value>
       <name locale="ru_RU">Id блока</name>
     </setting>
     <setting var="product_table_info_2_feature" control_type="text">
@@ -6307,12 +6309,12 @@
       <name locale="ru_RU">Баннер после основного контента</name>
     </setting>
     <setting var="product_banner" control_type="image">
-      <value/>
+      <value></value>
       <filename>img/product-banner.*</filename>
       <name locale="ru_RU">Изображение</name>
     </setting>
     <setting var="product_banner_link" control_type="text">
-      <value/>
+      <value><![CDATA[]]></value>
       <name locale="ru_RU">Ссылка на банере</name>
     </setting>
     <setting var="divider_product_tabs" control_type="group_divider">
@@ -6701,11 +6703,11 @@
       <name locale="ru_RU">Ссылка</name>
     </setting>
     <setting var="product_promo_title_1" control_type="text">
-      <value>Индивидуальный подход</value>
+      <value><![CDATA[Индивидуальный подход]]></value>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="product_promo_text_1" control_type="text">
-      <value>Изготавливаем на заказ. Выезжаем на замер, консультируем по тканям. Подбираем наилучший для Вас вариант.</value>
+      <value><![CDATA[Изготавливаем на заказ. Выезжаем на замер, консультируем по тканям. Подбираем наилучший для Вас вариант.]]></value>
       <name locale="ru_RU">Описание</name>
     </setting>
     <setting var="divider_home_promo_2" control_type="group_divider">
@@ -6726,7 +6728,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="product_promo_text_2" control_type="text">
-      <value>В черте города действует бесплатная доставка. Географию уточняйте у менеджера.</value>
+      <value><![CDATA[В черте города действует бесплатная доставка. Географию уточняйте у менеджера.]]></value>
       <name locale="ru_RU">Описание</name>
     </setting>
     <setting var="divider_home_promo_3" control_type="group_divider">
@@ -6747,7 +6749,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="product_promo_text_3" control_type="text">
-      <value>Замена бракованного товара. Гарантия на механизмы всех видов вертикальных жалюзи и рулонных штор — 2 года. На механизмы остальных видов конструкций — 1 год.</value>
+      <value><![CDATA[Замена бракованного товара. Гарантия на механизмы всех видов вертикальных жалюзи и рулонных штор — 2 года. На механизмы остальных видов конструкций — 1 год.]]></value>
       <name locale="ru_RU">Описание</name>
     </setting>
     <setting var="divider_home_promo_4" control_type="group_divider">
@@ -6764,11 +6766,11 @@
       <name locale="ru_RU">Ссылка</name>
     </setting>
     <setting var="product_promo_title_4" control_type="text">
-      <value>Оплата заказа</value>
+      <value><![CDATA[Оплата заказа]]></value>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="product_promo_text_4" control_type="text">
-      <value>Работаем с физическими и юридическими лицами. Разные формы оплаты. Подробнее по телефону.</value>
+      <value><![CDATA[Работаем с физическими и юридическими лицами. Разные формы оплаты. Подробнее по телефону.]]></value>
       <name locale="ru_RU">Описание</name>
     </setting>
     <setting var="divider_cart_checkout" control_type="group_divider">
@@ -6798,10 +6800,10 @@
       <name locale="ru_RU">Текст заказа</name>
     </setting>
     <setting var="checkout_success_contact" control_type="text">
-      <value><![CDATA[Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.<br />
-                Контакты для связи с нами:<br />
-                E-mail: <a href="mailto:order@insale.ru">order@insale.ru</a><br />
-                Телефон: <a href="tel:89991234567">8(999) 123-45-67</a>]]></value>
+      <value>Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.&lt;br /&gt;
+                Контакты для связи с нами:&lt;br /&gt;
+                E-mail: &lt;a href="mailto:order@insale.ru"&gt;order@insale.ru&lt;/a&gt;&lt;br /&gt;
+                Телефон: &lt;a href="tel:89991234567"&gt;8(999) 123-45-67&lt;/a&gt;</value>
       <name locale="ru_RU">Текст контакты</name>
     </setting>
     <setting var="divider_blog" control_type="group_divider">

@@ -3,7 +3,7 @@
 {if !empty($filters)}
 <div class="in-blocks__item-s{if $ts.filters_drop_fix} d-filter-fix{if $ts.header_fix} d-filter-fix_h{/if}{/if}">
     <div class="d-filter filters">
-        {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+        {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
             <div class="block-info-name">{$name}</div>
             <div class="e-panel-edit" data-group-edit="divider_left_block_filters">
                 <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Настройки фильтра">

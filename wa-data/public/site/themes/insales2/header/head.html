@@ -1,0 +1,14 @@
+{strip}
+
+{$wa->css()}
+{$wa->js()}
+
+{include file="`$themeActive`/head.html" inline}
+{$wa->head()}
+
+{* DELETE FRONT SETTNIGS*}
+{if !$ts.frontend_settings}
+    <style>.e-panel-edit { display:none; }</style>
+{/if}
+
+{/strip}

@@ -1,0 +1,123 @@
+{strip}
+
+{if !empty($mobile)}
+    {$ts.header_icon = 'img/settings/header_icon-12.png'}
+{/if}
+
+{if !empty($section) && $section == 'fix'}
+    {$ts.header_icon = $ts.header_fix_icon}
+{/if}
+
+{if !empty($footer)}
+    {$ts.header_icon = 'img/settings/header_icon-9.png'}
+    {$ts.header_icon_fav = $footerFav}
+    {$ts.header_icon_com = $footerCom}
+    {$ts.header_icon_eye = $footerEye}
+{/if}
+
+{$icon = [
+    'img/settings/header_icon-1.png'  =>
+        ['class' => 'c-hicon', 'name' => 'c-hicon__name', 'icon' => 'icon18', 'count' => 'c-hicon__count'],
+    'img/settings/header_icon-2.png'  =>
+        ['class' => 'c-hicon c-hicon_small', 'name' => 'c-hicon__name', 'icon' => 'icon14', 'count' => 'c-hicon__count'],
+    'img/settings/header_icon-3.png'  =>
+        ['class' => 'c-hicon c-hicon_center', 'name' => 'c-hicon__name', 'icon' => 'icon18', 'count' => 'c-hicon__count'],
+    'img/settings/header_icon-4.png'  =>
+        ['class' => 'c-hicon c-hicon_center c-hicon_small', 'name' => 'c-hicon__name', 'icon' => 'icon14', 'count' => 'c-hicon__count'],
+    'img/settings/header_icon-5.png'  =>
+        ['class' => 'c-hicon c-hicon_rad', 'name' => 'c-hicon__name', 'icon' => 'icon18', 'count' => 'c-hicon__count'],
+    'img/settings/header_icon-6.png'  =>
+        ['class' => 'c-hicon c-hicon_rad c-hicon_small', 'name' => 'c-hicon__name', 'icon' => 'icon14', 'count' => 'c-hicon__count'],
+    'img/settings/header_icon-7.png'  =>
+        ['class' => 'c-hicon c-hicon_rad c-hicon_center', 'name' => 'c-hicon__name', 'icon' => 'icon18', 'count' => 'c-hicon__count'],
+    'img/settings/header_icon-8.png'  =>
+        ['class' => 'c-hicon c-hicon_rad c-hicon_center c-hicon_small', 'name' => 'c-hicon__name', 'icon' => 'icon14', 'count' => 'c-hicon__count'],
+    'img/settings/header_icon-9.png'  =>
+        ['class' => 's-hicon', 'name' => 's-hicon__name', 'icon' => 'icon16', 'count' => 's-hicon__count'],
+    'img/settings/header_icon-10.png'  =>
+        ['class' => 'hicon', 'name' => 'hicon__name', 'icon' => 'icon18', 'count' => 'hicon__count'],
+    'img/settings/header_icon-11.png'  =>
+        ['class' => 's-hicon', 'name' => 'c-hicon__name', 'icon' => 'icon18', 'count' => 's-hicon__count'],
+    'img/settings/header_icon-12.png'  =>
+        ['class' => 'hicon', 'name' => 'c-hicon__name', 'icon' => 'icon18', 'count' => 'hicon__count']
+]}
+
+{if !empty($mobile)}
+    {$iconClass = $icon[$ts.header_icon].icon}
+
+{else}
+    {if $ts.header_icon_size == 'no'}
+        {$iconClass = $icon[$ts.header_icon].icon}
+    {else}
+        {$iconClass = "icon`$ts.header_icon_size`"}
+    {/if}
+{/if}
+
+{if $ts.header_icon_fav}
+    {$favoritePr = waRequest::cookie("shop_favorite", '', waRequest::TYPE_STRING)}
+    <div class="{$icon[$ts.header_icon].class}">
+        <a class="favorits" href="{$wa->getUrl('shop/frontend/search')}?view=favorite" rel="nofollow">
+
+            {if $ts.header_icon_fav_svg}
+                <img class="{$iconClass}" src="{$ts.header_icon_fav_svg}?v{$wa_theme_version}" alt="i-favorits">
+            {else}
+                <svg class="{$iconClass} i-favorits">
+                    <use xlink:href="#i-favorits"></use>
+                </svg>
+            {/if}
+
+            <span class="{$icon[$ts.header_icon].name}">
+                [`Favorite`]
+            </span>
+            <span class="favorits__count {$icon[$ts.header_icon].count} hcount{if $favoritePr} hcount_active{/if}">
+                {if $favoritePr}{count(explode(',', $favoritePr))}{else}0{/if}
+            </span>
+        </a>
+    </div>
+{/if}
+
+{if $ts.header_icon_com}
+    {$comparePr = waRequest::cookie('shop_compare', '', waRequest::TYPE_STRING)}
+    <div class="{$icon[$ts.header_icon].class}">
+        <a class="compare" href="{if $comparePr}{$wa->getUrl('shop/frontend/compare/', ['id' => $comparePr])}{else}{$wa->getUrl('shop/frontend/compare')}{/if}" rel="nofollow">
+            {if $ts.header_icon_com_svg}
+                <img class="{$iconClass}" src="{$ts.header_icon_com_svg}?v{$wa_theme_version}" alt="i-compare">
+            {else}
+                <svg class="{$iconClass} i-compare">
+                    <use xlink:href="#i-compare"></use>
+                </svg>
+            {/if}
+
+            <span class="{$icon[$ts.header_icon].name}">
+                [`Compare`]
+            </span>
+            <span class="compare__count {$icon[$ts.header_icon].count} hcount{if $comparePr} hcount_active{/if}">
+                {if $comparePr}{count(explode(',', $comparePr))}{else}0{/if}
+            </span>
+        </a>
+    </div>
+{/if}
+
+{if $ts.header_icon_eye}
+    {$viewed = waRequest::cookie("viewed", '', waRequest::TYPE_STRING)}
+    <div class="{$icon[$ts.header_icon].class}">
+        <a href="{$wa->getUrl('shop/frontend/search')}?view=viewed" rel="nofollow">
+            {if $ts.header_icon_last_svg}
+                <img class="{$iconClass}" src="{$ts.header_icon_last_svg}?v{$wa_theme_version}" alt="i-eye">
+            {else}
+                <svg class="{$iconClass} i-eye">
+                    <use xlink:href="#i-eye"></use>
+                </svg>
+            {/if}
+
+            <span class="{$icon[$ts.header_icon].name}">
+                [`Viewed`]
+            </span>
+            <span class="{$icon[$ts.header_icon].count} hcount{if $viewed} hcount_active{/if}">
+                {if $viewed}{count(explode(',', $viewed))}{else}0{/if}
+            </span>
+        </a>
+    </div>
+{/if}
+
+{/strip}

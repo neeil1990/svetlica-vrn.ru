@@ -14,14 +14,32 @@
 
 {else}
 
-    {* IMAGES SLIDER TOP*}
+    {* MOBILE CATEGORYES *}
+    {if waRequest::isMobile(false) && $ts.home_blocks_mobile_category}
+        {$categFull = $wa->shop->categories(0, 5, false, true)}
+        {$categoryIDS = explode(',', $ts.home_blocks_mobile_category)}
+        <div class="wrap">
+            <div class="h-categ-mobile">
+                <div class="h-categ-mobile__wrap">
+                    {foreach $categoryIDS as $id}
+                        {if !empty($categFull[$id])}
+                            {$c = $categFull[$id]}
+                            <a href="{$c.url}" class="h-categ-mobile__item">{$c.name}</a>
+                        {/if}
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    {/if}
+
+    {* IMAGES SLIDER TOP *}
     {if $ts.home_slider_top && !waRequest::isMobile(false)}
         <div class="wrap">
             <div class="in-blocks__item">
                 <div class="h-slider_top">
                     {include file="./home/slider.html"}
                 </div>
-                {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                     <div class="block-info-name">slider</div>
                     <div class="e-panel-edit" data-group-edit="divider_home_slider">
                         <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Слайдер (id - slider)">
@@ -39,7 +57,7 @@
             <div class="in-blocks__item in-blocks__item-promo">
                 {include file="./home/promo.html"}
 
-                {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                     <div class="block-info-name">promo</div>
                     <div class="e-panel-edit" data-group-edit="divider_home_promo">
                         <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Промо иконки (id - promo)">
@@ -108,12 +126,10 @@
 
             {if waRequest::isMobile(false)}
                 {$blocks = explode(',', $ts.home_blocks_mobile)}
-            {else}
-                {$blocks = explode(',', $ts.home_blocks)}
             {/if}
 
             {if !empty($blocks)}
-                {if in_array('category_promo', $blocks) || in_array('category', $blocks)}
+                {if (in_array('category_promo', $blocks) || in_array('category', $blocks)) && empty($categFull)}
                     {$categFull = $wa->shop->categories(0, 5, false, true)}
                 {/if}
 
@@ -144,7 +160,7 @@
             {/if}
 
             {* HIDDEN BLOKS FOR EDIT *}
-            {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+            {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                 {foreach $blocksCheck as $name}
                     {if !in_array($name, $blocks)}
                         <div class="in-blocks__item e-panel-edit-block e-panel-edit-block-hidden">

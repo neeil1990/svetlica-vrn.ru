@@ -1,0 +1,51 @@
+{strip}
+
+{if $wa->shop}
+    {$viewed = waRequest::cookie("viewed", '', waRequest::TYPE_STRING)}
+
+    {if !empty($product_view)}
+        {$ts.home_viewed_title = $ts.product_viewed_title}
+        {$ts.home_viewed_col = $ts.product_viewed_col}
+        {$ts.home_viewed_count = $ts.product_viewed_count}
+        {$ts.home_viewed_design = $ts.product_viewed_design}
+    {/if}
+
+    {if !empty($viewed)}
+        {$viewedArray = $wa->shop->products('id/'|cat:$viewed)}
+
+        {if !empty($viewedArray)}
+            {$viewedSort = explode(",", $viewed)}
+            {foreach $viewedSort as $id}
+                {if !empty($viewedArray[$id]) && (empty($product.id) || $product.id != $id)}
+                    {$viewedList[$id] = $viewedArray[$id]}
+                {/if}
+                {if $id@iteration == $ts.home_viewed_count}
+                    {break}
+                {/if}
+            {/foreach}
+        {/if}
+
+        {if !empty($viewedList)}
+            {if $ts.home_viewed_title}
+                <div class="in-blocks__title">
+                    <div class="in-blocks__title-name{if !empty($product_view)}_s{/if}">
+                        {$ts.home_viewed_title}
+                    </div>
+                    <div class="in-blocks__title-link"></div>
+                </div>
+            {/if}
+
+            {if $ts.home_viewed_design == 'short'}
+                <div class="products products_low products_slider products_col-{$ts.home_viewed_col} owl-carousel owl-theme-nav">
+                    {include file="../list-thumbs-short.html" products=$viewedList inline}
+                </div>
+            {else}
+                <div class="products products_slider products_col-{$ts.home_viewed_col} owl-carousel owl-theme-nav owl-loaded owl-drag">
+                    {include file="../list-thumbs.html" products=$viewedList}
+                </div>
+            {/if}
+        {/if}
+    {/if}
+{/if}
+
+{/strip}

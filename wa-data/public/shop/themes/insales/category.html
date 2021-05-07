@@ -6,18 +6,15 @@
 
     <div class="wrap">
 
-        {* SLIDER *}
-        {include file="./home/slider.html"}
-
         {$name = $category.params.h1|default:$category.name}
         {if $ts.category_title_v=='top'}
             {* BREADCRUMBS *}
-            {include file="`$wa_parent_theme_path`/breadcrumbs.html" inline}
+            {include file="`$wa_parent_theme_path`/breadcrumbs.html" action='category'}
 
             {* TITLE *}
             <h1>{$name}</h1>
             <div class="in-blocks__title">
-                {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                     <div class="block-info-name">{$name}</div>
                     <div class="e-panel-edit" data-group-edit="divider_category_title_v">
                         <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Заголовок и банер">
@@ -41,6 +38,20 @@
             {/if}
         {/if}
 
+        {* BANNER PARAMS CATEGORY*}
+        {if !empty($category.params.banner_top)}
+            <div class="in-blocks__item-s">
+                <div class="promo-img">
+                    <div class="promo-img__item">
+                        {if !empty($category.params.banner_top_link)}
+                            <a href="{$category.params.banner_top_link}"></a>
+                        {/if}
+                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$category.params.banner_top}" alt="{$category.name}">
+                    </div>
+                </div>
+            </div>
+        {/if}
+
         {* DESCRIPTION *}
         {if $ts.category_des=='top'}
             {include file="./category/description.html" small=1}
@@ -60,12 +71,12 @@
         <div class="in-right{if $ts.category_right_blocks} in-right_center{/if}">
             {if $ts.category_title_v=='right'}
                 {* BREADCRUMBS *}
-                {include file="`$wa_parent_theme_path`/breadcrumbs.html" inline}
+                {include file="`$wa_parent_theme_path`/breadcrumbs.html" action='category'}
 
                 {* TITLE *}
                 <h1>{$name}</h1>
                 <div class="in-blocks__title">
-                    {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                    {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                         <div class="block-info-name">{$name}</div>
                         <div class="e-panel-edit" data-group-edit="divider_category_title_v">
                             <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Заголовок и банер">
@@ -94,27 +105,6 @@
                 {include file="./category/filters.dropdown.html"}
             {/if}
 
-            {* BANNER PARAMS CATEGORY*}
-            {if !empty($category.params.banner_top)}
-                <div class="in-blocks__item-s">
-                    <div class="promo-img">
-                        <div class="promo-img__item">
-                            {if !empty($category.params.banner_top_link)}
-                                <a href="{$category.params.banner_top_link}"></a>
-                            {/if}
-                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$category.params.banner_top}" alt="{$category.name}">
-                        </div>
-                    </div>
-                </div>
-            {/if}
-
-            {* TAGS-LIST *}
-            {if isset($category.params.meta) && $category.params.meta}
-                <div class="in-blocks__item-s">
-                    {include file='./tags.html'}
-                </div>
-            {/if}
-
             {* PRODUCT-LIST *}
             <div class="in-blocks__item-s c-products">
 
@@ -125,7 +115,7 @@
                 {include file="./category/sorting.html" sorting=!empty($category.params.enable_sorting)}
 
                 <div class="in-blocks__item-s c-products__dop">
-                    {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+                    {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                         <div class="block-info-name">{$name}</div>
                         <div class="e-panel-edit" data-group-edit="divider_category_product">
                             <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Карточка товара">
@@ -159,9 +149,7 @@
                         {if $cookieSwitch == 'list' || $cookieSwitch == 'mini'}
                             {include file="./list-thumbs-`$cookieSwitch`.html"}
                         {else}
-                            <div class="products products_col-{$ts.category_product_columns}">
-                                {include file="./list-thumbs.html"}
-                            </div>
+                            {include file="./list-thumbs.html" columns=$ts.category_product_columns}
                         {/if}
 
                         {if isset($pages_count) && $pages_count > 1}

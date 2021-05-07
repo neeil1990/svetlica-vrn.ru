@@ -1,7 +1,7 @@
 {strip}
 
 <div class="in-blocks__item">
-    {if $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+    {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
         <div class="e-panel-edit" data-group-edit="divider_product_tabs">
             <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Табы информации">
                 <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>

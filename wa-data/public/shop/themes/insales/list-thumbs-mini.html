@@ -27,11 +27,6 @@
 
             {$badgeHtml = $wa->shop->badgeHtml($p.badge)}
 
-            {if ($p.features.svetopropuskanie && array_key_exists('491', $p.features.svetopropuskanie))}
-                {include file="./product/badge.html" inline assign="custom_badge"}
-                {$badgeHtml = $badgeHtml|cat:$custom_badge}
-            {/if}
-
             {$img = $wa->shop->productImgUrl($p, 200)}
             {$imgDefault = "`$wa_parent_theme_url``$ts.product_default|default:'img/dummy200.png'`"}
 
@@ -72,11 +67,6 @@
                     <div class="m-products__info-block">
                         <div class="m-products__info-name">
                             <a href="{$p.frontend_url}" itemprop="name">{$p.name}</a>
-                            {if $p.summary && $ts.category_product_summary}
-                                <meta itemprop="description" content="{$p.summary|escape}">
-                            {else}
-                                <meta itemprop="description" content="{$p.name|escape}">
-                            {/if}
                         </div>
 
                         <div class="m-products__info-fl">
@@ -140,7 +130,7 @@
                     <div class="m-products__info-price">
                         {if $ts.category_product_range && $p.frontend_min_price > 0 && $p.frontend_min_price != $p.frontend_max_price}
                             <div class="m-products__info-price-range">
-                                {shopCustom::p()} {shop_currency_html($p.frontend_min_price)} {$p.features.units}
+                                {shop_currency_html($p.frontend_min_price)} ... {shop_currency_html($p.frontend_max_price)}
                             </div>
                         {else}
                             {if $p.compare_price > 0}
@@ -154,15 +144,14 @@
                                 {$available = false}
                             {else}
                                 <div class="m-products__info-price-new">
-                                    {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
+                                    {shop_currency_html($p.price)}
                                 </div>
                             {/if}
                         {/if}
                     </div>
 
                     {if $ts.category_product_button_cart}
-                        <form class="m-products__info-addcart purchase addtocart" action="{$wa->getUrl('/frontendCart/add')}" method="post"
-                            {if $p.sku_count > 1} data-get="true"{/if} data-app-url="{$wa_app_url}" data-url="{$p.frontend_url}">
+                        <form class="m-products__info-addcart purchase addtocart" action="{$wa->getUrl('shop/frontendCart/add')}" method="post" {if $p.sku_count > 1} data-get="true"{/if} data-app-url="{$wa->getUrl('shop/frontend')}" data-url="{$p.frontend_url}">
 
                             <div class="m-products__info-count">
                                 <div class="counter counter_low">
@@ -206,9 +195,13 @@
                     {/if}
                 </div>
 
+                {if !empty($p.features.brand)}
+                    <meta itemprop="brand" content="{$p.features.brand}">
+                {/if}
+
+                <meta itemprop="description" content="{$p.summary|default:$p.name|escape}">
                 <meta itemprop="url" content="{$p.frontend_url}">
                 <meta itemprop="image" content="{$img|default:$imgDefault}">
-                <meta itemprop="brand" content="">
                 <meta itemprop="review" content="">
                 <meta itemprop="sku" content="">
 

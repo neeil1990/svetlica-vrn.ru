@@ -81,16 +81,12 @@
                     </div>
 
                     <div class="h-products__right h-products__right-{$ts.home_list_1_count}">
-                        <div class="products h-products_col-{$ts.home_list_1_count} owl-carousel owl-theme-nav products_slider">
-                            {include file="list-thumbs.html" products=$lists}
-                        </div>
+                        {include file="list-thumbs.html" products=$lists columns=$ts.home_list_1_count slider_view=1 slider_home=1}
                     </div>
                 </div>
             {else}
-                <div class="products products_col-{$ts.home_list_1_count}
-                        {if $ts.home_list_1_design == 'slider'} owl-carousel owl-theme-nav products_slider{/if}">
-
-                    {if $ts.home_list_1_img}
+                {if $ts.home_list_1_img}
+                    <div class="products products_col-{$ts.home_list_1_count}">
                         <div class="products__item h-products__promo{if $ts.home_list_1_fit} h-products__promo-fit{/if}">
                             {if $ts.home_list_1_img_link}
                             <a href="{$ts.home_list_1_img_link}"></a>
@@ -98,10 +94,12 @@
 
                             <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$wa_parent_theme_url}{$ts.home_list_1_img}?v{$wa_theme_version}" alt="{$ts.home_list_1_title}" />
                         </div>
-                    {/if}
+                {/if}
 
-                    {include file="list-thumbs.html" products=$lists}
-                </div>
+                    {include file="list-thumbs.html" products=$lists columns=$ts.home_list_1_count slider_view=$ts.home_list_1_design == 'slider' home_img=$ts.home_list_1_img}
+                {if $ts.home_list_1_img}
+                    </div>
+                {/if}
             {/if}
 
             {if $ts.home_list_1_bg}

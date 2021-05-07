@@ -36,6 +36,9 @@
 </style>
 
 <div class="wrap">
+    {* BREADCRUMBS *}
+    {include file="`$wa_parent_theme_path`/breadcrumbs.html" action='cart'}
+
     <div class="s-cart-page">
 
     {if !$cart.count}
@@ -106,7 +109,7 @@
                                         </svg>
                                     </div>
                                     <div class="counter__count">
-                                        <input type="{if waRequest::isMobile(false)}number{else}text{/if}" name="quantity[{$item.id}]" value="{$item.quantity}">
+                                        <input class="qty" type="{if waRequest::isMobile(false)}number{else}text{/if}" name="quantity[{$item.id}]" value="{$item.quantity}">
                                     </div>
                                     <div class="counter__plus">
                                         <svg class="icon10 i-plus ">
@@ -233,9 +236,7 @@
                 <div class="in-blocks__title-link"></div>
             </div>
 
-            <div class="products products_col-5 products_slider owl-carousel owl-theme-nav">
-                {include file="list-thumbs.html" products=$related}
-            </div>
+            {include file="list-thumbs.html" products=$related columns=5 slider_view=1}
         </div>
     {/if}
 </div>

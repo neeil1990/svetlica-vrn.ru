@@ -154,20 +154,18 @@
                 </div>
             </div>
         {/if}
-        
+
         <div class="product__item">
-            <div style="font-size: 1.875rem;font-weight: 700;float: left;">{shopCustom::p(true)}&nbsp;</div>
-            <div style="float: left;" class="price product__price" data-price="{shop_currency($product.price, null, null, 0)}"
+            <div class="price product__price" data-price="{shop_currency($product.price, null, null, 0)}"
                 {if $ts.product_zero_text} data-zero-text="{$ts.product_zero_text}"{/if}>
                 {if $ts.product_zero_text && $product.price == 0}
                     <div class="products__zero-text">
                         {$ts.product_zero_text}
                     </div>
                 {else}
-                     {shop_currency_html($product.price)}
+                    {shop_currency_html($product.price)}
                 {/if}
             </div>
-            <div style="font-size: 1.875rem;font-weight: 700;">&nbsp;{$product.features.units}</div>
 
             <div class="product__price-old" data-price="{shop_currency($product.compare_price, null, null, 0)}"
                 {if !($product.compare_price > 0)} style="display:none;"{/if}>
@@ -175,18 +173,26 @@
                     {shop_currency_html($product.compare_price)}
                 </div>
 
-                {if $product.compare_price>0}
-                    {$disPercent = round(($product.compare_price-$product.price)*100/$product.compare_price,2)}
-                {/if}
+                {if $ts.product_discount}
+                    {$disPercent = 0}
+                    {if $product.compare_price>0}
+                        {$disPercent = ($product.compare_price-$product.price)*100/$product.compare_price}
+                        {if $ts.category_product_discount_round == 'down'}
+                            {$disPercent = floor($disPercent)}
+                        {else}
+                            {$disPercent = $disPercent|ceil}
+                        {/if}
+                    {/if}
 
-                <div class="product__price-dis stock-label">
-                    <div class="stock-label__percent product__price-dis-percent">
-                        {if !empty($disPercent)}{$disPercent}%{/if}
+                    <div class="product__price-dis stock-label"{if $disPercent < $ts.category_product_discount_min} style="display:none;"{/if}>
+                        <div class="stock-label__percent product__price-dis-percent">
+                            {if !empty($disPercent)}{$disPercent}%{/if}
+                        </div>
+                        <div class="stock-label__price product__price-dis-number">
+                            {if $product.compare_price>0}-{shop_currency_html($product.compare_price - $product.price)}{/if}
+                        </div>
                     </div>
-                    <div class="stock-label__price product__price-dis-number">
-                        {if $product.compare_price>0}-{shop_currency_html($product.compare_price - $product.price)}{/if}
-                    </div>
-                </div>
+                {/if}
             </div>
         </div>
 
@@ -248,23 +254,6 @@
                 {/foreach}
             {else}
                 {* FLAT SKU LIST selling mode *}
-                <p class="product__item-title">Ширина:</p>
-                <p>
-                    <input type="text" class="" name="wa_width" placeholder="302 мм" style="width:100%" required>
-                </p>
-
-                <p class="product__item-title">Высота:</p>
-                <p>
-                    <input type="text" class="" name="wa_height" placeholder="500 мм" style="width:100%" required>
-                </p>
-
-                {if $product.category_id == "52"}
-                <p class="product__item-title">Глубина:</p>
-                <p>
-                    <input type="text" class="" name="wa_deep" placeholder="200 мм" style="width:100%" required>
-                </p>
-                {/if}
-
                 {$product_available = false}
                 {if count($product.skus) > 1}
                     <ul class="skus">
@@ -444,7 +433,9 @@
             if (typeof Product === "function") {
                 new Product('#cart-form', {
                     modal_add: {$ts.modal_add|default:0},
-                    currency: {json_encode($currency_info)}
+                    currency: {json_encode($currency_info)},
+                    discount_round: "{$ts.category_product_discount_round|default:'down'}",
+                    discount_min: {$ts.category_product_discount_min|default:1}
                     {if count($product.skus) > 1 or $product.sku_type}
                         ,services: {json_encode($sku_services)}
                     {/if}

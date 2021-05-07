@@ -499,10 +499,20 @@ Product.prototype.updatePrice = function (price, compare_price) {
     if(compare_price) {
         this.add2cart.find(".compare-at-price").html(this.currencyFormat(compare_price));
 
-        var disPrecent = (Math.round((compare_price - price)*100/compare_price * 100))/100;
-        this.add2cart.find(".product__price-dis-percent").html(disPrecent+'%');
-        this.add2cart.find(".product__price-dis-number").html('-'+this.currencyFormat((compare_price-price)));
-        this.add2cart.find(".product__price-dis").show();
+        var disPrecent = (compare_price - price)*100/compare_price;
+        if(this.discount_round == 'down') {
+            disPrecent = Math.floor(disPrecent);
+        } else {
+            disPrecent = Math.ceil(disPrecent);
+        }
+
+        if(disPrecent >= this.discount_min) {
+            this.add2cart.find(".product__price-dis-percent").html(disPrecent + '%');
+            this.add2cart.find(".product__price-dis-number").html('-' + this.currencyFormat((compare_price - price)));
+            this.add2cart.find(".product__price-dis").show();
+        } else {
+            this.add2cart.find(".product__price-dis").hide();
+        }
     }
 
     if(this.add2cart.find(".product__price").data('zero-text') && price == 0) {

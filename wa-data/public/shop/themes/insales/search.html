@@ -49,9 +49,7 @@
             {/if}
         {/foreach}
 
-        <div class="products products_col-{$ts.category_product_columns}">
-            {include file="./list-thumbs.html" favorit=1}
-        </div>
+        {include file="./list-thumbs.html" favorit=1 columns=$ts.category_product_columns}
     {/if}
 
 {elseif $wa->get('view') == 'viewed'}
@@ -76,9 +74,7 @@
             {/if}
         {/foreach}
 
-        <div class="products products_col-{$ts.category_product_columns}">
-            {include file="./list-thumbs.html" products=$products}
-        </div>
+        {include file="./list-thumbs.html" products=$products columns=$ts.category_product_columns}
     {/if}
 
 {else}
@@ -124,9 +120,7 @@
                 {if $cookieSwitch == 'list' || $cookieSwitch == 'mini'}
                     {include file="./list-thumbs-`$cookieSwitch`.html"}
                 {else}
-                    <div class="products products_col-{$ts.category_product_columns}">
-                        {include file="./list-thumbs.html"}
-                    </div>
+                    {include file="./list-thumbs.html" columns=$ts.category_product_columns}
                 {/if}
 
                 {if isset($pages_count) && $pages_count > 1}

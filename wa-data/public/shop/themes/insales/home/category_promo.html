@@ -1,11 +1,10 @@
 {strip}
 
 {if !empty($categFull) && $ts.home_category_promo_ids}
-
     {$categIds = []}
     {$ids = explode(',', $ts.home_category_promo_ids)}
     {$colors = explode(',', $ts.home_category_promo_colors)}
-    
+
     {foreach $ids as $id}
         {if !empty($categFull[$id])}
             {$categIds[$id] = $categFull[$id]}
@@ -27,8 +26,6 @@
                 {* ПОЧЕМУ НЕ @FIRST?, ТК ВДРУГ НЕ ПРАВИЛЬНЫЙ ID И ТОГДА СЛОМАЕТ ВЕРСТКУ*}
                 {$i = 1}
                 {foreach $categIds as $id=>$c}
-                    {$imgDefault = "`$wa_parent_theme_url``$ts.category_default_img|default:'img/dummy200.png'`"}
-
                     {$img = ''}
                     {if class_exists('shopCategoryImagesPlugin')}
                         {$img = shopCategoryImagesPlugin::getCategoryImageUrl($c.id)}
@@ -49,27 +46,27 @@
                         <div class="bg-categ__list{if $i == 4} bg-categ__list_row{/if}">
                     {/if}
 
-                        <div class="bg-categ__row in-effect-glare" style="background-color:{$colors[$i-1]|default:'#DFF2FF'};background-image:url({$img|default:$imgDefault})">
-                            <div class="bg-categ__title">
-                                <a href="{$c.url}">{$c.name}</a>
-                            </div>
-
-                            {$childs = $wa->shop->categories($c.id, 1)}
-
-                            {if !empty($childs)}
-                                <div class="bg-categ__items{if $i == 1} bg-categ__items_col{/if}">
-                                    {foreach $childs as $c1}
-                                        <div class="bg-categ__item">
-                                            <a href="{$c1.url}">{$c1.name}</a>
-                                        </div>
-
-                                        {if ($i == 1 && $c1@iteration == 10) || ($i > 1 && $c1@iteration == 5)}
-                                            {break}
-                                        {/if}
-                                    {/foreach}
-                                </div>
-                            {/if}
+                    <div class="bg-categ__row in-effect-glare" style="background-color:{$colors[$i-1]|default:'#DFF2FF'};{if ((waRequest::isMobile(false) && $ts.home_category_promo_bg_mobile) || !waRequest::isMobile(false)) && $img}background-image:url({$img}){/if}">
+                        <div class="bg-categ__title">
+                            <a href="{$c.url}">{$c.name}</a>
                         </div>
+
+                        {$childs = $wa->shop->categories($c.id, 1)}
+
+                        {if !empty($childs)}
+                            <div class="bg-categ__items{if $i == 1} bg-categ__items_col{/if}">
+                                {foreach $childs as $c1}
+                                    <div class="bg-categ__item">
+                                        <a href="{$c1.url}">{$c1.name}</a>
+                                    </div>
+
+                                    {if ($i == 1 && $c1@iteration == 10) || ($i > 1 && $c1@iteration == 5)}
+                                        {break}
+                                    {/if}
+                                {/foreach}
+                            </div>
+                        {/if}
+                    </div>
 
                     {if $i == 1 || $i == 3 || $i > 4}
                         </div>
@@ -83,6 +80,5 @@
         </div>
     {/if}
 {/if}
-
 
 {/strip}
