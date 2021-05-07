@@ -1,0 +1,39 @@
+<p class="product__item-title">Ширина:</p>
+<p>
+    <input type="text" class="" name="order_prop[Ширина]" placeholder="302 мм" style="width:100%" required>
+</p>
+
+<p class="product__item-title">Высота:</p>
+<p>
+    <input type="text" class="" name="order_prop[Высота]" placeholder="500 мм" style="width:100%" required>
+</p>
+
+{if $product.category_id == "52"}
+<p class="product__item-title">Глубина:</p>
+<p>
+    <input type="text" class="" name="order_prop[Глубина]" placeholder="200 мм" style="width:100%" required>
+</p>
+
+<p class="product__item-title">Тип профиля:</p>
+<p>
+    <select name="order_prop[Тип_профиля]" style="width:100%">
+        <option value="Радиусный">Радиусный</option>
+        <option value="Фигурный">Фигурный</option>
+    </select>
+</p>
+
+<p class="product__item-title">Цвет экрана:</p>
+<p>
+    <select name="order_prop[Цвет_экрана]" style="width:100%">
+        <option value="Белый">Белый</option>
+        <option value="Бук">Бук</option>
+        <option value="Венге">Венге</option>
+        <option value="Вишня">Вишня</option>
+        <option value="Дуб">Дуб</option>
+        <option value="Клен">Клен</option>
+        <option value="Орех">Орех</option>
+        <option value="Седой дуб">Седой дуб</option>
+        <option value="Сонома">Сонома</option>
+    </select>
+</p>
+{/if}
