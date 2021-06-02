@@ -199,8 +199,8 @@
       <name locale="ru_RU">Общие настройки</name>
     </setting>
     <setting var="micro_address" control_type="text">
-      <value>г.Воронеж, ул. Новосибирская, д13
-г.Воронеж, ул. Дружинников, д13</value>
+      <value><![CDATA[г.Воронеж, ул. Новосибирская, д13
+г.Воронеж, ул. Дружинников, д13]]></value>
       <name locale="ru_RU">Адрес компании для микроразметки</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -2931,9 +2931,9 @@
             </description>
     </setting>
     <setting var="footer_copmany_text" control_type="text">
-      <value>Производственная фирма и интернет-магазин для  штор и жалюзи. Большой ассортимент, отличное качество.
-&lt;br&gt;&lt;br&gt;
-Вся информация на сайте представлена для ознакомления и не является публичной офертой.</value>
+      <value><![CDATA[Производственная фирма и интернет-магазин для  штор и жалюзи. Большой ассортимент, отличное качество.
+<br><br>
+Вся информация на сайте представлена для ознакомления и не является публичной офертой.]]></value>
       <name locale="ru_RU">Текст о компании</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -3111,9 +3111,9 @@
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
     <setting var="footer_contact_address" control_type="text">
-      <value>г. Воронеж Новосибирская 13,
+      <value><![CDATA[г. Воронеж Новосибирская 13,
 г. Воронеж Дружинников 13
-</value>
+]]></value>
       <name locale="ru_RU">Адрес</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -5651,7 +5651,7 @@
       <name locale="ru_RU">Товаров на странице</name>
     </setting>
     <setting var="category_sorting_page_count" control_type="text">
-      <value>12,24,36,48</value>
+      <value>24,48</value>
       <name locale="ru_RU">Количество товаров</name>
       <description locale="ru_RU">укажите через запятую количество товаров которые отображать на странице, необходимо в настройках магазина указать по умолчанию сколько выводить, должно совпадать со значением что бы проставить активный пункт</description>
     </setting>
@@ -6110,8 +6110,7 @@
       <name locale="ru_RU">Показывать теги</name>
     </setting>
     <setting var="product_zero_text" control_type="text">
-      <value>Цена по запросу
-</value>
+      <value>Цена по запросу</value>
       <name locale="ru_RU">Текст при цене 0</name>
     </setting>
     <setting var="product_cart_text" control_type="text">
@@ -6802,10 +6801,10 @@
       <name locale="ru_RU">Текст заказа</name>
     </setting>
     <setting var="checkout_success_contact" control_type="text">
-      <value>Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.&lt;br /&gt;
-                Контакты для связи с нами:&lt;br /&gt;
-                E-mail: &lt;a href="mailto:order@insale.ru"&gt;order@insale.ru&lt;/a&gt;&lt;br /&gt;
-                Телефон: &lt;a href="tel:89991234567"&gt;8(999) 123-45-67&lt;/a&gt;</value>
+      <value><![CDATA[Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.<br />
+                Контакты для связи с нами:<br />
+                E-mail: <a href="mailto:order@insale.ru">order@insale.ru</a><br />
+                Телефон: <a href="tel:89991234567">8(999) 123-45-67</a>]]></value>
       <name locale="ru_RU">Текст контакты</name>
     </setting>
     <setting var="divider_blog" control_type="group_divider">
