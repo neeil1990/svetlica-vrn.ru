@@ -1,0 +1,89 @@
+{strip}
+
+{if !$ts.category_sub_hide && !isset($category.params.sub_hide) && !empty($category.subcategories)}
+    <div class="in-blocks__item-s">
+        {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+            <div class="block-info-name">{$name}</div>
+            <div class="e-panel-edit" data-group-edit="divider_category_sub">
+                <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Подкатегории">
+                    <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+                </div>
+            </div>
+        {/if}
+
+        <div class="h-categ h-categ_c{if !empty($right)}-r{/if}
+            {if waRequest::isMobile(false) && $ts.category_sub_slider_mobile} h-categ_mobile{/if}">
+            <div class="h-categ__wrap">
+                {$i=0}
+                {foreach $category.subcategories as $c}
+                    {if !isset($c.params.hide)}
+                        {$i=$i+1}
+                        <div class="h-categ__item{if (!waRequest::isMobile(false) || (waRequest::isMobile(false) && !$ts.category_sub_slider_mobile)) && $ts.category_sub_yet && $i > $ts.category_sub_yet_count} h-hidden{/if}">
+                            <a class="h-categ__link" href="{$c.url}">
+                                {if $ts.category_sub_img}
+                                    {$imgDefault = "`$wa_parent_theme_url``$ts.category_default_img|default:'img/dummy200.png'`"}
+
+                                    {$img = ''}
+                                    {if class_exists('shopCategoryImagesPlugin')}
+                                        {$img = shopCategoryImagesPlugin::getCategoryImageUrl($c.id)}
+                                    {elseif class_exists('shopCatimgPlugin')}
+                                        {$img = shopCatimgPlugin::getImage($c.id, 'image')}
+                                    {elseif class_exists('shopSkcatimageHelper')}
+                                        {$img = shopSkcatimageHelper::getImages($c.id, 'image')}
+                                    {/if}
+
+                                    {if isset($c.params.img)}
+                                        {$img = $c.params.img}
+                                    {/if}
+
+                                    <span class="h-categ__img">
+                                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img|default:$imgDefault}" alt="{$c.name}">
+                                    </span>
+                                {/if}
+
+                                <span class="h-categ__name">{$c.name}</span>
+
+                                {if $ts.category_sub_count}
+                                    {$countProduct = $wa->shop->productsCount("category/`$c.id`")}
+                                    {if !empty($img)}
+                                        <span class="h-categ__count">{$countProduct}</span>
+                                    {else}
+                                        <span class="h-categ__count-st">
+                                            {$countProduct} {if $countProduct == 0}
+                                                [`products`]
+                                            {elseif $countProduct == 1 }
+                                                [`product`]
+                                            {elseif $countProduct > 1 && $countProduct < 5}
+                                                [`productss`]
+                                            {else}
+                                                [`products`]
+                                            {/if}
+                                        </span>
+                                    {/if}
+                                {/if}
+                            </a>
+                        </div>
+                    {/if}
+                {/foreach}
+            </div>
+            {if (!waRequest::isMobile(false) || (waRequest::isMobile(false) && !$ts.category_sub_slider_mobile)) && $ts.category_sub_yet && $i > $ts.category_sub_yet_count}
+                <div class="h-yet h-yet_center in-blocks__item-s">
+                    <button class="h-yet__show" type="button">
+                        [`Show more`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                    <button class="h-yet__hide" type="button">
+                        [`Hide`]
+                        <svg class="icon10 i-angle-down">
+                            <use xlink:href="#i-angle-down"></use>
+                        </svg>
+                    </button>
+                </div>
+            {/if}
+        </div>
+    </div>
+{/if}
+
+{strip}

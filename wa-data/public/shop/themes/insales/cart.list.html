@@ -1,0 +1,22 @@
+{strip}
+
+{$ts = $theme_settings}
+
+{if $ts.cart_list}
+    {$lists = $wa->shop->productSet($ts.cart_list)}
+
+    {if !empty($lists)}
+        <div class="in-blocks__item">
+            <div class="in-blocks__title">
+                <div class="in-blocks__title-name">
+                    {$ts.home_list_2_title}
+                </div>
+                <div class="in-blocks__title-link"></div>
+            </div>
+
+            {include file="list-thumbs.html" products=$lists columns=5 slider_view=1}
+        </div>
+    {/if}
+{/if}
+
+{/strip}

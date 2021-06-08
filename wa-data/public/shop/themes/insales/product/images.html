@@ -1,0 +1,159 @@
+{strip}
+
+{* IMAGE GALLERY *}
+{$class=''}
+
+{$video = $product->video}
+{if (count($product.images) > 0 && $video) || count($product.images) > 1}
+    {if $ts.product_images == 'slider_left'}
+        {$class=' p-images__wrap_rev'}
+    {elseif $ts.product_images == 'slider_right'}
+        {$class=' p-images__wrap_rev p-images__wrap_rev-2'}
+    {/if}
+{/if}
+
+<div class="p-images{if $ts.product_cart == 2} p-images-2{/if}">
+    {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
+        <div class="e-panel-edit" data-group-edit="divider_product_img">
+            <div class="e-panel-edit__icon e-panel-edit__block" title="Редактировать блок - Изображения">
+                <svg class="icon12 i-edit"><use xlink:href="#i-edit"></use></svg>
+            </div>
+        </div>
+    {/if}
+    <div class="p-images__wrap{$class}">
+        <div class="p-images__right">
+            {$badgeHtml = $wa->shop->badgeHtml($product.badge)}
+            {if !empty($badgeHtml)}
+                <div class="badges">{$badgeHtml}</div>
+            {/if}
+
+            {if (count($product.images) > 0 && $video) || count($product.images) > 1}
+                <div class="p-images__slider owl-carousel owl-theme-nav-2">
+                    {$first = 0}
+                    {if $video && $ts.product_video}
+                        <a href="{$video.url}" class="p-images__slider-item p-images__video" data-fancybox="gallery" data-index="0">
+                            <span class="owl-video" href="{$video.url}"></span>
+                        </a>
+                        {$first = 1}
+                    {/if}
+
+                    {if count($product.images) > 0}
+                        {foreach $product.images as $image}
+                            <a href="{$wa->shop->imgUrl($image, '970')}" class="p-images__slider-item" data-fancybox="gallery" data-index="{$image@iteration-1+$first}" data-image-id="{$image.id}" data-width="{$image.width}" data-height="{$image.height}">
+                                {$imgUrl = $wa->shop->imgUrl($image, '0x460')}
+                                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgUrl}" itemprop="image" alt="{$product.name|escape}">
+                            </a>
+                        {/foreach}
+                    {/if}
+
+                    {if $video && !$ts.product_video}
+                        <a href="{$video.url}" class="p-images__slider-item p-images__video" data-fancybox="gallery" data-index="{$image@iteration+$first}">
+                            <span class="owl-video" href="{$video.url}"></span>
+                        </a>
+                    {/if}
+                </div>
+            {else}
+                {if count($product.images) > 0}
+                    {foreach $product.images as $image}
+                        <a href="{$wa->shop->imgUrl($image, '970')}" class="p-images__slider-item">
+                            {$imgUrl = $wa->shop->imgUrl($image, '0x460')}
+                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgUrl}" data-src="{$imgUrl}" itemprop="image" alt="{$product.name|escape}">
+                        </a>
+                    {/foreach}
+                {else}
+                    {$imgDefault = "`$wa_parent_theme_url``$ts.product_default|default:'img/dummy200.png'`"}
+                    <a class="p-images__slider-item" href="{$imgDefault}">
+                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgDefault}" data-src="{$imgDefault}" itemprop="image" alt="{$product.name|escape}">
+                    </a>
+                {/if}
+            {/if}
+        </div>
+
+        {if ((count($product.images) > 0 && $video) || count($product.images) > 1) && $ts.product_images != 'hide'}
+            <div class="p-images__left">
+                <div class="p-images__dop{if $ts.product_images == 'blocks'} p-images__dop-block{/if}">
+                    {if $ts.product_images != 'blocks'}
+                    <div class="owl-carousel owl-theme-nav-2 p-images__dop-slider{if $ts.product_images != 'slider_bottom'}-2{/if}">
+                    {/if}
+                        {$first = 0}
+                        {if $video && $ts.product_video}
+                            <div class="p-images__dop-link p-images__dop-link_active p-images__dop-video" data-index="0">
+                                <svg class="icon30 i-youtube ">
+                                    <use xlink:href="#i-youtube"></use>
+                                </svg>
+                            </div>
+                            {$first = 1}
+                        {/if}
+
+                        {foreach $product.images as $image}
+                            <div class="p-images__dop-link{if $image@iteration==1 && $first==0} p-images__dop-link_active{/if}" data-image-id="{$image.id}" data-index="{$image@iteration-1+$first}">
+                                {$imgUrl = $wa->shop->imgUrl($image, '0x96')}
+                                <img class="lazy-img p-images__dop-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$imgUrl}" data-src="{$imgUrl}" itemprop="image" alt="{$product.name|escape}">
+                            </div>
+                        {/foreach}
+
+                        {if $video && !$ts.product_video}
+                            <div class="p-images__dop-link p-images__dop-video" data-index="{$image@iteration+$first}">
+                                <svg class="icon30 i-youtube ">
+                                    <use xlink:href="#i-youtube"></use>
+                                </svg>
+                            </div>
+                        {/if}
+                    {if $ts.product_images != 'blocks'}
+                    </div>
+                    {/if}
+                </div>
+            </div>
+        {/if}
+    </div>
+
+    {if $ts.product_brands}
+
+        {$brandName=''}
+        {$brandImg=''}
+        {$brandLink=''}
+
+        {* BRANDS IMAGES AND DESCRIPTION https://www.webasyst.ru/store/plugin/shop/productbrands/ *}
+        {if class_exists('shopProductbrandsPlugin')}
+            {$brand = shopProductbrandsPlugin::productBrand($product.id)}
+            {if $brand}
+                {$brandName=$brand.name}
+                {if $brand.image}
+                    {$brandImg="`$wa_url`wa-data/public/shop/brands/`$brand.id`/`$brand.id``$brand.image`"}
+                {/if}
+                {$brandLink=$brand.url}
+            {/if}
+
+        {* BRANDS PRO https://www.webasyst.ru/store/plugin/shop/brand/ *}
+        {else if class_exists('shopBrandViewHelper')}
+            {$brand = shopBrandViewHelper::getProductBrand($product)}
+            {if $brand}
+                {$brandName=$brand.name}
+                {if $brand.image}
+                    {$brandImg=$brand.image_url}
+                {/if}
+                {$brandLink=$brand.frontend_url}
+            {/if}
+        {/if}
+
+        {if $brandName}
+            <div class="p-images__brand">
+                {if $brandImg}
+                    <div class="p-images__brand-logo">
+                        <a href="{$brandLink}">
+                            <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$brandImg}" alt="{$brandName|escape}">
+                        </a>
+                    </div>
+                {/if}
+                <div class="p-images__brand-name">
+                    <div class="p-images__brand-title">[`Brand`]:</div>
+                    <a href="{$brandLink}" class="p-images__brand-link">
+                        {$brandName}
+                    </a>
+                </div>
+            </div>
+        {/if}
+    {/if}
+</div>
+
+{/strip}

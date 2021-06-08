@@ -1,0 +1,64 @@
+{strip}
+
+{if $ts.home_banner_product_1_id && $ts.home_banner_product_1_bg}
+
+    {$p = $wa->shop->product($ts.home_banner_product_1_id)}
+
+    {if !empty($p.id)}
+        {$img = $wa->shop->productImgUrl($p, 200)}
+        {$imgDefault = "`$wa_parent_theme_url``$ts.product_default|default:'img/dummy200.png'`"}
+
+        <div class="p-promo">
+            <div class="p-promo__wrap" style="background-image:url({$wa_parent_theme_url}{$ts.home_banner_product_1_bg}?v{$wa_theme_version})">
+                <div class="p-promo__content">
+                    <div class="p-promo__content-img">
+                        <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$img|default:$imgDefault}" data-srcset="{$img|default:$imgDefault} 1x, {$img|default:$imgDefault|regex_replace:'/(.*)\.([^.]*)$/':'$1@2x.$2'} 2x" alt="{$p.name|escape}" />
+                    </div>
+
+                    <div class="p-promo__content-info">
+                        <a href="{$wa->shop->productUrl($p)}" class="p-promo__title">{$p.name}</a>
+                        <div class="p-promo__text">{$p.summary}</div>
+
+                        <div class="p-promo__price">
+                            {if $p.compare_price > 0}
+                                <div class="p-promo__price-old">
+                                    <div class="p-promo__price-old-th">
+                                        {shop_currency_html($p.compare_price)}
+                                    </div>
+                                    <div class="stock-label">
+                                        <div class="stock-label__percent">
+                                            {round(($p.compare_price-$p.price)*100/$p.compare_price)}%
+                                        </div>
+                                        <div class="stock-label__price">
+                                            -{shop_currency_html(round($p.compare_price-$p.price))}
+                                        </div>
+                                    </div>
+                                </div>
+                            {/if}
+
+                            <div class="p-promo__price-new">
+                                {shop_currency_html($p.price)}
+                            </div>
+                        </div>
+
+                        <div class="p-promo__cart">
+                            <form class="addtocart" data-app-url="{$wa_app_url}"{if count($p.skus) > 1} data-get="true"{/if} data-url="{$wa->shop->productUrl($p)}" method="post" action="{$wa->getUrl('/frontendCart/add')}">
+                                <button type="submit" class="button" data-id="{$p.id}">[`Buy now`]</button>
+                                <input type="hidden" name="product_id" value="{$p.id}" />
+                                <input type="hidden" name="quantity" value="1" />
+                            </form>
+
+                            <a href="{$wa->shop->productUrl($p)}" class="p-promo__cart-next">
+                                [`more`] <svg class="icon8 i-angle-right">
+                                    <use xlink:href="#i-angle-right"></use>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {/if}
+{/if}
+
+{/strip}

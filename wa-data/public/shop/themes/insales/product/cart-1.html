@@ -1,0 +1,258 @@
+{strip}
+
+<div class="product__content-left">
+    {* SUMMARY *}
+    {if $ts.product_summary && $product.summary}
+        <div class="product__item">
+            <div class="product__summary">
+                {$product.summary}
+            </div>
+        </div>
+    {/if}
+
+    {* RATING *}
+    {if $ts.product_rating}
+        <div class="product__item">
+            <div class="product__rating">
+                <div class="product__rating-star">
+                    {$wa->shop->ratingHtml($product.rating, 20, true)}
+                </div>
+
+                {if !$wa->get('ajax')}
+                    <div class="product__rating-link">
+                        <svg class="icon18 i-reviews">
+                            <use xlink:href="#i-reviews"></use>
+                        </svg>
+                        <div class="product__rating-link-name">
+                            {$reviews_total_count} {if $reviews_total_count == 1 }
+                                [`Review`]
+                            {elseif $reviews_total_count > 1 && $reviews_total_count < 5}
+                                [`Recall`]
+                            {else}
+                                [`Reviewss`]
+                            {/if}
+                        </div>
+                    </div>
+                {/if}
+            </div>
+        </div>
+    {/if}
+
+    {* FEATURES *}
+    {if $ts.product_features && !empty($product.features)}
+        <div class="product__item product__item-mobile">
+
+            {if class_exists('shopSeofilterViewHelper')}
+                {$product.features = shopSeofilterViewHelper::wrapFeatureValues($product.features)}
+            {/if}
+
+            <div class="product__item-title">
+                [`Characteristics`]
+            </div>
+
+            {function name="renderFeaturesCart" _features=[] sku_id='' featuresCode=[]}
+                <div class="product__features{if $sku_id} product__features-{$sku_id}{/if}" style="display:
+                    {if ($sku_id && $sku_id == $product.sku_id) || !$sku_id }block{else}none{/if}">
+                    {$i = 0}
+                    {foreach $_features as $f_code => $f_value}
+                        {if $f_value == NULL}{continue}{/if}
+
+                        {if !empty($sku_features)}
+                            {$_feature = $sku_features[$f_code]}
+                        {else}
+                            {$_feature = $features[$f_code]}
+                        {/if}
+
+                        {if $i > $ts.product_features_count}
+                            {break}
+                        {/if}
+
+                        {if $_feature.type != 'divider' &&
+                            (!$featuresCode || in_array($f_code, $featuresCode))}
+
+                            <div class="product__features-item">
+                                <div class="product__features-name">
+                                    {$_feature.name|escape}:
+                                </div>
+                                <div class="product__features-value">
+                                    {if is_array($f_value)}
+                                        {if $_feature.type == 'color'}
+                                            {foreach $f_value as $k => $v}
+                                                <span>
+                                                    {$colorHex = str_pad(dechex($v.code), 6, '0', $smarty.const.STR_PAD_LEFT)}
+                                                    <i class="icon16 color" style="background-color:#{$colorHex};"></i>
+                                                    <span class="product__features-color-name">{$v.value} </span>
+                                                </span>
+                                            {/foreach}
+                                        {else}
+                                            {implode(', ', $f_value)}
+                                        {/if}
+                                    {else}
+                                        {$f_value}
+                                    {/if}
+                                </div>
+                            </div>
+                            {$i = $i + 1}
+                        {/if}
+                    {/foreach}
+
+                    {if count($_features) > $ts.product_features_count}
+                        <div class="product__features-all">
+                            [`See all`] <svg class="icon8 i-angle-right">
+                                <use xlink:href="#i-angle-right"></use>
+                            </svg>
+                        </div>
+                    {/if}
+                </div>
+            {/function}
+
+            {$featuresCode = []}
+            {if $ts.product_features_code}
+                {$featuresCode = explode(',',$ts.product_features_code)}
+            {/if}
+
+            {if !empty($product.params.features_code)}
+                {$featuresCode = $product.params.features_code}
+            {/if}
+
+            {if $ts.product_sku_features}
+                {foreach $product.skus as $_sku}
+                    {if !empty($_sku.features)}
+                        {renderFeaturesCart _features=$_sku.features sku_id=$_sku.id featuresCode=$featuresCode}
+                    {/if}
+                {/foreach}
+            {else}
+                {renderFeaturesCart _features=$product.features featuresCode=$featuresCode}
+            {/if}
+        </div>
+    {/if}
+
+    {if !$wa->get('ajax')}
+        {* CATEGORIES *}
+        {if $ts.product_category}
+            <div class="product__item product__item-mobile">
+                <div class="product__item-title">
+                    [`Categories`]
+                </div>
+                <div class="product__category">
+                    {foreach $product.categories as $c}
+                        {if $c.status}
+                            {if $c@iteration > 1}, {/if}
+                            <a class="product__category-item" href="{$wa->getUrl('/frontend/category', ['category_url' => $c.full_url])}">
+                                {$c.name}
+                            </a>
+                        {/if}
+                    {/foreach}
+                </div>
+
+            </div>
+        {/if}
+
+        {* TAGS *}
+        {if $product.tags && $ts.product_tags}
+            <div class="product__item product__item-mobile">
+                <div class="product__item-title">
+                    [`Tags`]
+                </div>
+                <div class="l-tags">
+                    <div class="l-tags__items">
+                        {foreach $product.tags as $t}
+                            <a class="l-tags__item" href="{$wa->getUrl('/frontend/tag', ['tag' => urlencode($t)])}">{$t}</a>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+        {/if}
+
+        {* PLUGINS *}
+        {* @event frontend_product.%plugin_id%.block *}
+        {foreach $frontend_product as $_}
+            <div class="product__plugins">
+                {$_.block}
+            </div>
+        {/foreach}
+    {/if}
+</div>
+
+<div class="product__content-right">
+    {* CART FORMS *}
+    {include file="./cart.form.html"}
+
+    {* FAVORITES AND COMPARE *}
+    {if $ts.product_fav || $ts.product_com}
+        <div class="product__item">
+            <div class="product__fav-com">
+                {if $ts.product_fav}
+                    {$favoritePr = waRequest::cookie("shop_favorite", '', waRequest::TYPE_STRING)}
+                    {assign var=favoritePrsplit value=","|explode:$favoritePr}
+                    <div data-product-id="{$product.id}" class="product__fav-com-item p-favorit
+                        {if in_array($product.id, $favoritePrsplit)} p-favorit_active{/if}">
+                        {if $ts.header_icon_fav_svg}
+                            <img class="icon16" src="{$wa_theme_url}{$ts.header_icon_fav_svg}?v{$wa_theme_version}" alt="i-favorits">
+                        {else}
+                            <svg class="icon16 i-favorits"><use xlink:href="#i-favorits"></use></svg>
+                        {/if}
+                        [`Favorite`]
+                    </div>
+                {/if}
+
+                {if $ts.product_com}
+                    <div data-product-id="{$product.id}" class="product__fav-com-item p-compare
+                        {if $wa->shop->inComparison($product.id)} p-compare_active{/if}">
+                        {if $ts.header_icon_com_svg}
+                            <img class="icon16" src="{$wa_theme_url}{$ts.header_icon_com_svg}?v{$wa_theme_version}" alt="i-compare">
+                        {else}
+                            <svg class="icon16 i-compare"><use xlink:href="#i-compare"></use></svg>
+                        {/if}
+                        [`Compare`]
+                    </div>
+                {/if}
+            </div>
+        </div>
+    {/if}
+
+    {* CONTACT PHONE ORDER *}
+    {if $ts.product_order_phone}
+        <div class="product__item">
+            <div class="product__contact">
+                <svg class="icon16 i-phone">
+                    <use xlink:href="#i-phone"></use>
+                </svg>
+                [`Order by phone`]:
+                <a href="tel:{eval var=$ts.product_order_phone}">
+                    <strong>{eval var=$ts.product_order_phone}</strong>
+                </a>
+            </div>
+        </div>
+    {/if}
+
+    {* INFO BLOCK *}
+    {if $ts.product_block_info}
+        <div class="product__item page">
+            {eval var=$ts.product_block_info}
+        </div>
+    {/if}
+
+    {if $ts.product_share && waRequest::isMobile(false)}
+        <div class="in-blocks__item-s">
+            <script src="https://yastatic.net/share2/share.js"></script>
+            <div class="ya-share2" data-services="{$ts.product_share}"></div>
+        </div>
+    {/if}
+
+    {if !$wa->get('ajax')}
+        {* PLUGINS *}
+        {if !empty($frontend_product)}
+            {* @event frontend_product.%plugin_id%.block_aux *}
+            <div class="s-product-aux">
+                {foreach $frontend_product as $_}
+                    <div class="product__plugins">
+                        {$_.block_aux}
+                    </div>
+                {/foreach}
+            </div>
+        {/if}
+    {/if}
+</div>
+
+{/strip}

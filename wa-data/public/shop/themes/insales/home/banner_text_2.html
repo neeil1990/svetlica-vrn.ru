@@ -1,0 +1,33 @@
+{strip}
+
+{if $ts.home_banner_text_2_bg}
+    <div class="f-promo">
+        <div class="f-promo__wrap">
+            <div class="f-promo__img">
+                <img class="lazy-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-src="{$wa_parent_theme_url}{$ts.home_banner_text_2_bg}?v{$wa_theme_version}" alt="{$ts.home_banner_text_2_title}">
+            </div>
+
+            <div class="f-promo__content">
+                <div class="f-promo__title">
+                    {$ts.home_banner_text_2_title}
+                </div>
+
+                <div class="f-promo__text">
+                    {$ts.home_banner_text_2_text}
+                </div>
+
+                {if $ts.home_banner_text_2_link}
+                    <div class="f-promo__next">
+                        <a href="{$ts.home_banner_text_2_link}">
+                            {$ts.home_banner_text_2_link_title} <svg class="icon8 i-angle-right">
+                                <use xlink:href="#i-angle-right"></use>
+                            </svg>
+                        </a>
+                    </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+{/if}
+
+{/strip}

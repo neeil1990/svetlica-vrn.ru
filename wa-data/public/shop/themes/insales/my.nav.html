@@ -1,0 +1,27 @@
+{strip}
+
+{$sel = ''}
+{if !empty($my_nav_selected)}
+    {$sel = $my_nav_selected}
+{/if}
+
+<a href="?logout">[`Log out`]</a>
+
+<a href="{$wa->getUrl('shop/frontend/myProfile')}"{if $sel == 'profile'} class="my-nav__active"{/if}>[s`My profile`]</a>
+
+<a href="{$wa->getUrl('shop/frontend/myOrders')}"{if $sel == 'orders'} class="my-nav__active"{/if}>[`My orders`]</a>
+
+{if shopAffiliate::isEnabled()}
+    <a href="{$wa->getUrl('shop/frontend/myAffiliate')}"{if $sel == 'affiliate'} class="my-nav__active"{/if}>[`Affiliate program`]</a>
+{/if}
+
+{if !empty($frontend_my_nav)}
+    {* @event frontend_my_nav.%plugin_id% *}
+    {foreach $frontend_my_nav as $_plugin => $_}
+        {$_}
+    {/foreach}
+{/if}
+
+{$wa->globals('isMyAccount', true)}
+
+{/strip}

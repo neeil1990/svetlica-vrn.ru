@@ -1,0 +1,162 @@
+{strip}
+
+<div class="in-blocks__item">
+    {if $product.features && $ts.product_show_features}
+        {if class_exists('shopSeofilterViewHelper')}
+            {$product.features = shopSeofilterViewHelper::wrapFeatureValues($product.features)}
+        {/if}
+        <div class="in-blocks__item" id="features">
+            <div class="in-blocks__title">
+                <div class="in-blocks__title-name">[`Features`]</div>
+                <div class="in-blocks__title-link"></div>
+            </div>
+
+            {function name="renderFeatures" _features=[] sku_id=''}
+                <table class="features{if $sku_id} features-{$sku_id}{/if}" style="display:
+                    {if ($sku_id && $sku_id == $product.sku_id) || !$sku_id }table{else}none{/if}">
+                    {foreach $_features as $_feature_id => $_feature_value}
+                        {$_true_params = ["weight", "brand", "model", "width", "height", "depth", "color", "manufacturer"]}
+                        {$_is_good_param = ($_feature_id|in_array:$_true_params)}
+                        {$_itemprop = ""}
+                        {if $_is_good_param}{$_itemprop = $_feature_id}{/if}
+                        {if !empty($sku_features)}
+                            {$_feature = $sku_features[$_feature_id]}
+                        {else}
+                            {$_feature = $features[$_feature_id]}
+                        {/if}
+
+                        {if $_feature && $_feature.type == 'divider'}
+                            <tr class="divider">
+                                <td colspan="2">
+                                    <div class="features__name">
+                                        <span>{$_feature.name|escape}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        {elseif $_feature}
+                            <tr>
+                                <td>
+                                    <div class="features__name">
+                                        <span>{$_feature.name|escape}</span>
+                                    </div>
+                                </td>
+                                <td{if $_itemprop} itemprop="{$_itemprop|escape}"{/if}>
+                                    {if is_array($_feature_value)}
+                                        {implode(', ', $_feature_value)}
+                                    {else}
+                                        {$_feature_value}
+                                    {/if}
+                                </td>
+                            </tr>
+                        {/if}
+                    {/foreach}
+                </table>
+            {/function}
+
+            {if $ts.product_sku_features}
+                {foreach $product.skus as $_sku}
+                    {if !empty($_sku.features)}
+                        {renderFeatures _features=$_sku.features sku_id=$_sku.id}
+                    {/if}
+                {/foreach}
+            {else}
+                {renderFeatures _features=$product.features}
+            {/if}
+        </div>
+    {/if}
+
+    {if $product.description && $ts.product_show_description}
+        <div class="in-blocks__item" id="description">
+            <div class="in-blocks__title">
+                <div class="in-blocks__title-name">[`Description`]</div>
+                <div class="in-blocks__title-link"></div>
+            </div>
+
+            <div class="page">
+                <div class="desc{if $ts.product_description_yet} desc_max{/if}" itemprop="description">
+                    {$product.description}
+                </div>
+
+                {if $ts.product_description_yet}
+                    <div class="h-yet">
+                        <button class="h-yet__show">
+                            [`more`] <svg class="icon10 i-angle-down"><use xlink:href="#i-angle-down"></use></svg>
+                        </button>
+                        <button class="h-yet__hide">
+                            [`hide`] <svg class="icon10 i-angle-down"><use xlink:href="#i-angle-down"></use></svg>
+                        </button>
+                    </div>
+                {/if}
+            </div>
+        </div>
+    {/if}
+
+
+    {if $ts.product_show_reviews}
+        <div class="in-blocks__item" id="reviews">
+            <div class="in-blocks__title">
+                <div class="in-blocks__title-name">{sprintf('[`%s reviews`]', $product.name)}</div>
+                <div class="in-blocks__title-link"></div>
+            </div>
+
+            <div class="review-loading"><br />
+                <img src="{$wa_active_theme_url}img/loading16.gif" alt="Loading...">
+            </div>
+
+            <div class="review-block"></div>
+            <script>
+                $.ajax({
+                    url: "{$wa->shop->productUrl($product)}reviews/",
+                    success: function(response) {
+                        $(".review-loading").remove();
+                        $('.review-block').append($(response).find('.reviews__left').html());
+                        window.stylerRadioChecbox();
+                    }});
+            </script>
+        </div>
+    {/if}
+
+    {if !empty($product.pages)}
+        {foreach $product.pages as $page}
+            <div class="in-blocks__item" id="page-{$page.id}">
+                <div class="in-blocks__title">
+                    <div class="in-blocks__title-name">{$page.name}</div>
+                    <div class="in-blocks__title-link"></div>
+                </div>
+                <div class="page">
+                    {$page.content}
+                </div>
+            </div>
+        {/foreach}
+    {/if}
+
+    {if $ts.product_block_1_title && $ts.product_block_1_id}
+        <div class="in-blocks__item" id="block-1">
+            <div class="in-blocks__title">
+                <div class="in-blocks__title-name">{$ts.product_block_1_title}</div>
+                <div class="in-blocks__title-link"></div>
+            </div>
+            <div class="page">
+                {$wa->block($ts.product_block_1_id)}
+            </div>
+        </div>
+    {/if}
+
+    {if $ts.product_block_2_title && $ts.product_block_2_id}
+        <div class="in-blocks__item" id="block-2">
+            <div class="in-blocks__title">
+                <div class="in-blocks__title-name">{$ts.product_block_2_title}</div>
+                <div class="in-blocks__title-link"></div>
+            </div>
+            <div class="page">
+                {$wa->block($ts.product_block_2_id)}
+            </div>
+        </div>
+    {/if}
+
+    {if $wa->user()->isAdmin($wa->app())}
+        <div class="block-info-name">tabs-no</div>
+    {/if}
+</div>
+
+{/strip}

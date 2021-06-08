@@ -1,0 +1,225 @@
+{strip}
+
+{$ts = $theme_settings}
+
+<div class="wrap">
+    {* BREADCRUMBS *}
+    {include file="`$wa_parent_theme_path`/breadcrumbs.html" action='compare'}
+
+    {if empty($products)}
+        <h1>[`Compare products`]</h1>
+
+        <div class="in-empty-wrapper">
+            <p class="in-empty-wrapper__title">[`Comparison list is empty`]</p>
+            <p class="in-empty-wrapper__text">{sprintf('[`To add products to comparison, go to the <a href="%s">main page</a>`]',{$wa_app_url})}</p>
+        </div>
+
+        {$wa->title('[`Compare`]')}
+    {/if}
+</div>
+
+{if count($products)}
+    {$product_names = ''}
+    <div class="st-compare">
+        <div class="st-compare__fix-wrap">
+            <div class="st-compare__fix">
+                <div class="wrap">
+                    <h1>[`Compare products`]</h1>
+
+                    <div class="st-compare__features">
+                        <div class="st-compare__f-name">
+                            <div class="st-compare__f-select">
+                                <label class="st-compare__f-radio st-compare__f-radio_active st-compare__f-select-all">
+                                    <input type="radio" name="st-compare__f" checked="checked"> [`All`]
+                                </label>
+                            </div>
+
+                            <div class="st-compare__f-select">
+                                <label class="st-compare__f-radio st-compare__f-select-diff">
+                                    <input type="radio" name="st-compare__f"> [`Different`]
+                                </label>
+                            </div>
+
+                            <div class="st-compare__f-clear">
+                                <div class="st-compare__f-clear-icon">
+                                    <svg class="icon8 i-remove">
+                                        <use xlink:href="#i-remove"></use>
+                                    </svg>
+                                </div>
+                                <div class="st-compare__f-clear-text">
+                                    [`Clear`]
+                                </div>
+                            </div>
+                        </div>
+                        <div class="st-compare__f-vals">
+                            <div class="products st-compare__f-sl-pr owl-carousel owl-theme-nav">
+                                {foreach $products as $p}
+                                    <div class="products__item">
+                                        <a href="{$p.delete_url}" class="st-compare__f-remove" data-product-id="{$p.id}">
+                                            <svg class="icon8 i-remove ">
+                                                <use xlink:href="#i-remove"></use>
+                                            </svg>
+                                        </a>
+
+                                        {$img = $wa->shop->productImgUrl($p, 240)}
+                                        {$imgDefault = "`$wa_parent_theme_url``$ts.product_default|default:'img/dummy200.png'`"}
+
+                                        <a href="{$wa->getUrl('/frontend/product/', ['product_url' => $p.url])}">
+                                            <span class="products__item-tile">
+                                                <span class="products__item-img">
+                                                    <span class="products__img products__img_active">
+                                                        <img src="{$img|default:$imgDefault}" alt="{$p.name|escape}" itemprop="image">
+                                                    </span>
+                                                </span>
+
+                                                <span class="products__item-info">
+                                                    <span class="products__item-info-name">{$p.name}</span>
+                                                </span>
+
+                                                {if $ts.category_product_rating}
+                                                    {$product = $wa->shop->product($p.id)}
+                                                    <span class="products__item-info-rating">
+                                                        <span class="products__rating">
+                                                            {$icon = 16}
+                                                            {if waRequest::isMobile(false)}
+                                                                {$icon = 10}
+                                                            {/if}
+                                                            {$wa->shop->ratingHtml($p.rating, $icon, true)}
+                                                        </span>
+                                                        <span class="products__rating-count">
+                                                            <svg class="icon16 i-reviews">
+                                                                <use xlink:href="#i-reviews"></use>
+                                                            </svg> {$product.rating_count}
+                                                        </span>
+                                                    </span>
+                                                {/if}
+                                            </span>
+                                        </a>
+                                    </div>
+
+                                    {$product_names = $product_names|cat:($p.name)}
+                                    {if !$smarty.foreach.product_names.last}{$product_names = $product_names|cat:', '}{/if}
+                                {/foreach}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrap">
+            <div class="st-compare__content">
+                <div class="st-compare__features">
+                    <div class="st-compare__f-name">
+                        <div class="st-compare__f-item st-compare__ind-0">
+                            [`Price`]
+                        </div>
+
+                        {$i=1}
+                        {foreach $features as $f_id=>$f}
+                            {if $f.type != 'divider'}
+                                <div class="st-compare__f-item st-compare__ind-{$i}{if $f.same} st-compare__f-item_same{/if}">
+                                    {$f.name}
+                                </div>
+                                {$i=$i+1}
+                            {/if}
+                        {/foreach}
+                    </div>
+                    <div class="st-compare__f-vals">
+                        <div class="st-compare__f-sl owl-carousel owl-theme-nav">
+                            {foreach $products as $p}
+                                <div class="st-compare__f-col">
+                                    <div class="st-compare__f-item st-compare__ind-0">
+                                        <div class="st-compare__f-val">
+                                            <b>{shop_currency_html($p.price)}</b>
+                                        </div>
+                                    </div>
+
+                                    {$i=1}
+                                    {foreach $features as $f_id=>$f}
+                                        {if $f.type != 'divider'}
+                                            <div class="st-compare__f-item st-compare__ind-{$i}{if $f.same} st-compare__f-item_same{/if}">
+                                                <div calss="st-compare__f-val">
+                                                    {if isset($p.features[$f_id])}
+                                                        {if is_array($p.features[$f_id])}
+                                                            {implode('<br> ', $p.features[$f_id])}
+                                                        {else}
+                                                            {$p.features[$f_id]}
+                                                        {/if}
+                                                    {else}
+                                                        &mdash;
+                                                    {/if}
+                                                </div>
+                                            </div>
+                                            {$i=$i+1}
+                                        {/if}
+                                    {/foreach}
+                                </div>
+                            {/foreach}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {$wa->title( sprintf('[`Compare %s`]', $product_names) )}
+{/if}
+
+
+{literal}
+<script>
+    (function($) {
+        const comapreSame = $('.st-compare__f-item_same');
+        const activeClass = 'st-compare__f-radio_active';
+
+        $('.st-compare__f-select-all').on('change', function() {
+            showSomeFields($(this), true);
+        });
+
+        $('.st-compare__f-select-diff').on('change', function() {
+            showSomeFields($(this), false);
+        });
+
+        function showSomeFields(rad, show) {
+            if(show) {
+                comapreSame.show();
+                $('.st-compare__f-item_same-sep').remove();
+            } else {
+                comapreSame.hide();
+                comapreSame.before('<div class="st-compare__f-item_same-sep"></div>');
+            }
+            $('.st-compare__f-radio').removeClass(activeClass);
+            rad.addClass(activeClass);
+        }
+
+
+        $('.st-compare__f-clear').on("click", function () {
+            $.cookie('shop_compare', null, {path: '/'});
+            location.href = location.href.replace(/compare\/.*/, 'compare/');
+        });
+
+        $('.st-compare__f-remove').on("click", function () {
+            var compare = $.cookie('shop_compare');
+            if (compare) {
+                compare = compare.split(',');
+            } else {
+                compare = [];
+            }
+
+            var i = $.inArray($(this).data("product-id") + "", compare);
+            if (i != -1) {
+                compare.splice(i, 1)
+            }
+
+            if (compare.length) {
+                $.cookie('shop_compare', compare.join(','), { expires: 30, path: '/'});
+            } else {
+                $.cookie('shop_compare', null, { expires: 30, path: '/'});
+            }
+        });
+    })(jQuery);
+</script>
+{/literal}
+
+{/strip}
