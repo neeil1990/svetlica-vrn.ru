@@ -33,6 +33,9 @@ img {
   border: 0;
   outline: none;
 }
+.ym-advanced-informer{
+  display: none;
+}
 .lazy-img {
   opacity: 0;
   transition: opacity 0.3s ease-out;
@@ -3293,7 +3296,7 @@ input.search__input {
 /*&:first-child .h-menu__sub-link
 				border-top-left-radius 6px
 				border-top-right-radius 6px
-			
+
 			&:last-child .h-menu__sub-link
 				border-bottom-left-radius 6px
 				border-bottom-right-radius 6px*/
