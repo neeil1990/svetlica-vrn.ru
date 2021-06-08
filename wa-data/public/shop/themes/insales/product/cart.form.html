@@ -156,7 +156,8 @@
         {/if}
 
         <div class="product__item">
-            <div class="price product__price" data-price="{shop_currency($product.price, null, null, 0)}"
+            <div style="font-size: 1.875rem;font-weight: 700;float: left;">{shopCustom::p(true)}&nbsp;</div>
+            <div style="float: left;" class="price product__price" data-price="{shop_currency($product.price, null, null, 0)}"
                 {if $ts.product_zero_text} data-zero-text="{$ts.product_zero_text}"{/if}>
                 {if $ts.product_zero_text && $product.price == 0}
                     <div class="products__zero-text">
@@ -166,6 +167,7 @@
                     {shop_currency_html($product.price)}
                 {/if}
             </div>
+            <div style="font-size: 1.875rem;font-weight: 700;">&nbsp;{$product.features.units}</div>
 
             <div class="product__price-old" data-price="{shop_currency($product.compare_price, null, null, 0)}"
                 {if !($product.compare_price > 0)} style="display:none;"{/if}>
@@ -254,6 +256,11 @@
                 {/foreach}
             {else}
                 {* FLAT SKU LIST selling mode *}
+
+                {if class_exists('shopOrderpropertiesPlugin')}
+                    {shopOrderpropertiesPlugin::getOrderProperties($product)}
+                {/if}
+
                 {$product_available = false}
                 {if count($product.skus) > 1}
                     <ul class="skus">

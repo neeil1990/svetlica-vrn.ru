@@ -240,7 +240,7 @@
                         <div class="s-products__price">
                             {if $ts.category_product_range && $p.frontend_min_price > 0 && $p.frontend_min_price != $p.frontend_max_price}
                                 <span class="s-products__price-range">
-                                    {shop_currency_html($p.frontend_min_price)} ... {shop_currency_html($p.frontend_max_price)}
+                                    {shopCustom::p()} {shop_currency_html($p.frontend_min_price)} {$p.features.units}
                                 </span>
                             {else}
                                 {if $ts.product_zero_text && $p.price==0}
@@ -250,7 +250,7 @@
                                     {$available = false}
                                 {else}
                                     <div class="s-products__price-new">
-                                        {shop_currency_html($p.price)}
+                                        {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
                                     </div>
                                 {/if}
 
