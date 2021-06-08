@@ -141,7 +141,7 @@
     <file path="header.html"/>
     <file path="home.html"/>
     <file path="list-thumbs.html" custom="0" modified="1">
-      <description locale="ru_RU"></description>
+      <description locale="ru_RU"/>
     </file>
     <file path="list-thumbs-list.html"/>
     <file path="list-thumbs-mini.html"/>
