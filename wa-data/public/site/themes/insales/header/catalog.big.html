@@ -29,7 +29,7 @@
 
                             <span class="c-menu__item-bl">
                                 <span class="c-menu__item-name">
-                                    {$c.name}
+                                     {$c.name}
                                 </span>
                                 {label cat=$c}
                             </span>
@@ -67,7 +67,11 @@
 
                                 <span class="c-menu__item-bl">
                                     <span class="c-menu__item-name">
-                                        {$c.name}
+                                        {if shopNamesPlugin::name($c.id)}
+                                            {shopNamesPlugin::name($c.id)}
+                                        {else}
+                                            {$c.name}
+                                        {/if}
                                     </span>
                                     {label cat=$c}
                                 </span>
