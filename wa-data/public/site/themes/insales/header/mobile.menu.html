@@ -96,7 +96,11 @@
                             {/if}
 
                             <span class="m-menu__name">
-                                {$m.name}
+                                {if shopNamesPlugin::name($m.id)}
+                                    {shopNamesPlugin::name($m.id)}
+                                {else}
+                                    {$m.name}
+                                {/if}
                             </span>
 
                             {if empty($pages)}
