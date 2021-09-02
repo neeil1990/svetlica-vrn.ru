@@ -110,16 +110,10 @@
 
                 {* FILTERS RESULT *}
                 {include file="./category/filters.result.html"}
-                
-                {if isset($category.params.meta) && $category.params.meta}
-			      {include file='./tags.html' inline}
-	            {/if}
 
                 {* FILTERS SORTING *}
                 {include file="./category/sorting.html" sorting=!empty($category.params.enable_sorting)}
-<div class="btn_to_work_wrap">
-    <a href="#btn_to_work" class="btn_to_work">Посмотреть примеры наших работ</a>
-</div>
+
                 <div class="in-blocks__item-s c-products__dop">
                     {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                         <div class="block-info-name">{$name}</div>
@@ -233,18 +227,10 @@
 
     {* DESCRIPTION *}
     {if $ts.category_des=='bottom'}
-    
-    <div id="btn_to_work"></div>
         <div class="in-blocks__item wrap">
-            
             {include file="./category/description.html"}
         </div>
     {/if}
-
-
-{if $wa->isMobile()}
-    {include file="`$wa_parent_theme_path`/left/tagbuttons.html"}
-{/if}
 
     {* BANNER PARAMS CATEGORY BOTTOM*}
     {if !empty($category.params.banner_bottom)}

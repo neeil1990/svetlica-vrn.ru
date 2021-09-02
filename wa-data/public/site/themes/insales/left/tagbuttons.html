@@ -1,0 +1,28 @@
+<style>
+.tag_menu {
+    margin:auto;
+	max-width:300px
+}
+.tag_menu div.tag_menu-item {
+    border: 1px solid #0060bf;
+    margin-top: 10px;
+    padding: 7px 15px;
+    position: relative;
+}
+.tag_menu div.tag_menu-item a {
+  text-decoration:none
+}
+ </style> 
+  
+  <div class="tag_menu">
+
+        {foreach shopCustom::array_filter($category.params, 'left_tag') as $tag}
+        {if $tag}
+        {$tag = explode("@", $tag)}
+        <div class="tag_menu-item"><a href="{$tag[1]}">{$tag[0]}</a></div>
+        {/if}
+        {/foreach}
+
+    </div>
+	
+	

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="insales" app="site" vendor="989788" author="steemy.ru" version="2.2.0" edition="15">
+<theme id="insales" app="site" vendor="989788" author="steemy.ru" version="2.2.0" edition="14">
   <name locale="en_US">Insale for Site</name>
   <name locale="ru_RU">Insale для Site</name>
   <description locale="en_US">Responsive Theme «InSale»</description>
@@ -15,9 +15,7 @@
     <file path="css/insale.css" custom="0" modified="1">
       <description locale="ru_RU"/>
     </file>
-    <file path="css/insale.min.css" custom="0" modified="1">
-      <description locale="ru_RU"/>
-    </file>
+    <file path="css/insale.min.css"/>
     <file path="css/user.css" custom="0" modified="1">
       <description locale="ru_RU"/>
     </file>
@@ -59,9 +57,7 @@
     <file path="left/categories.html"/>
     <file path="left/filters.html"/>
     <file path="left/help.html"/>
-    <file path="left/left.html" custom="0" modified="1">
-      <description locale="ru_RU"/>
-    </file>
+    <file path="left/left.html"/>
     <file path="left/news.html"/>
     <file path="left/photos.html"/>
     <file path="left/search.html"/>
@@ -82,7 +78,7 @@
     <file path="head.html"/>
     <file path="header.html"/>
     <file path="index.html" custom="0" modified="1">
-      <description locale="ru_RU"></description>
+      <description locale="ru_RU"/>
     </file>
     <file path="panel.edit.html"/>
     <file path="login.html"/>
@@ -604,7 +600,7 @@
       <name locale="ru_RU">«Шапка сайта» - середина</name>
     </setting>
     <setting var="header_midd_blocks" control_type="text">
-      <value>logo,search,icon,cart</value>
+      <value>logo,catalog,search,icon,cart</value>
       <name locale="ru_RU">Какие блоки выводить&lt;/div&gt;&lt;div class="hp-midd"&gt;</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
@@ -3007,7 +3003,7 @@
       <name locale="ru_RU">Alphabank</name>
     </setting>
     <setting var="footer_copy_text" control_type="text">
-      <value>&lt;a href="https://prime-ltd.su/?from=site.ru"&gt; &lt;img src="http://prime-ltd.su/logo/white.svg"; title="Продвижение сайтов" alt="Продвижение сайтов" style="width: 175px;"&gt;  &lt;/a&gt;</value>
+      <value/>
       <name locale="ru_RU">Копирайт разработчика</name>
     </setting>
     <setting var="footer_copy" control_type="checkbox">
@@ -3721,7 +3717,7 @@
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
     <setting var="home_blocks_mobile" control_type="text">
-      <value>slider,promo,category,list_3,brands,news,reviews,company,banner_products,subscribe,viewed</value>
+      <value>slider,promo,category_promo,list_3,brands,news,reviews,company,banner_products,subscribe,viewed</value>
       <name locale="ru_RU">Какие блоки выводить на мобильном</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
@@ -4188,11 +4184,11 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_brands_count" control_type="text">
-      <value>0</value>
+      <value>8</value>
       <name locale="ru_RU">Количество вывода</name>
     </setting>
     <setting var="home_brands_link" control_type="text">
-      <value/>
+      <value>/</value>
       <name locale="ru_RU">Ссылка - смотреть все</name>
     </setting>
     <setting var="home_brands_link_title" control_type="text">

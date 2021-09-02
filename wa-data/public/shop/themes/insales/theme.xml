@@ -124,7 +124,9 @@
     <file path="cart.add.html"/>
     <file path="cart.html"/>
     <file path="cart.list.html"/>
-    <file path="category.html"/>
+    <file path="category.html" custom="0" modified="1">
+      <description locale="ru_RU"></description>
+    </file>
     <file path="checkout.auth.html"/>
     <file path="checkout.confirmation.html"/>
     <file path="checkout.contactinfo.html"/>
@@ -137,7 +139,9 @@
     <file path="compare.html"/>
     <file path="error.html"/>
     <file path="footer.html"/>
-    <file path="head.html"/>
+    <file path="head.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
     <file path="header.html"/>
     <file path="home.html"/>
     <file path="list-thumbs.html" custom="0" modified="1">

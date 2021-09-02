@@ -9021,7 +9021,6 @@ input.search__input {
     margin-top: 40px;
     text-align: center;
     width: calc(33.33% - 30px);
-    margin: 0 auto;
 }
 .p-our-work__title {
     font-size: 22px;
@@ -9055,7 +9054,6 @@ input.search__input {
         margin-left: 20px;
         margin-top: 30px;
         width: calc(50% - 20px);
-        margin: 0 auto;
     }
 }
 @media screen and (max-width: 480px) {

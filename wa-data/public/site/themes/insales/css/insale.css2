@@ -16444,7 +16444,3 @@ ul.my-nav a {
 .h-hidden-show .h-hidden {
   display: inline-block;
 }
-.btn_to_work{
-  color: #fff;
-  text-align: center;
-}

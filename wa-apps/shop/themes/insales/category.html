@@ -113,7 +113,9 @@
 
                 {* FILTERS SORTING *}
                 {include file="./category/sorting.html" sorting=!empty($category.params.enable_sorting)}
-
+<div style="display: none;" class="btn_to_work_wrap 4434">
+    <a href="#" class="btn_to_work">Посмотреть примеры наших работ</a>
+</div>
                 <div class="in-blocks__item-s c-products__dop">
                     {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
                         <div class="block-info-name">{$name}</div>
@@ -228,6 +230,7 @@
     {* DESCRIPTION *}
     {if $ts.category_des=='bottom'}
         <div class="in-blocks__item wrap">
+            <div style="display: none;">122</div>
             {include file="./category/description.html"}
         </div>
     {/if}

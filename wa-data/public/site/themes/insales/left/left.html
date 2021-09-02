@@ -94,6 +94,8 @@
                     {/if}
                 {/if}
             {/foreach}
+            
+            {include file="../left/tagbuttons.html" }
 
             {* HIDDEN BLOKS FOR EDIT *}
             {if $ts.frontend_settings && $wa->user()->isAdmin($wa->app()) && !waRequest::isMobile(false)}
