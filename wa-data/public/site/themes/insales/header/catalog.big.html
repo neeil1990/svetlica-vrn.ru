@@ -160,7 +160,13 @@
                         {if !isset($c.params.hide)}
                             <div class="c-menu__items{if $c@first} c-menu__items_active{/if} c-menu__items-{$c.id}">
                                 <div class="c-menu__items-title">
-                                    <div class="c-menu__items-title-name">{$c.name}</div>
+                                    <div class="c-menu__items-title-name">
+                                        {if shopNamesPlugin::name($c.id)}
+                                            {shopNamesPlugin::name($c.id)}
+                                        {else}
+                                            {$c.name}
+                                        {/if}
+                                    </div>
                                     {label cat=$c}
                                 </div>
 
@@ -176,7 +182,11 @@
                                                 <a href="{$c1.url}" class="h-menu__img-link{if $c1.id == $sel} h-menu__link_active{/if}">
                                                     {call menu_icon c=$c1 class_name="h-menu__img-icon" type="image"}
                                                     <span class="h-menu__img-name h-menu__name">
-                                                        {$c1.name}
+                                                        {if shopNamesPlugin::name($c1.id)}
+                                                            {shopNamesPlugin::name($c1.id)}
+                                                        {else}
+                                                            {$c1.name}
+                                                        {/if}
                                                     </span>
                                                     {label cat=$c1}
                                                 </a>
