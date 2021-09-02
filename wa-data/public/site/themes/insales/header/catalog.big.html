@@ -159,6 +159,9 @@
                     {foreach $categ as $c}
                         {if !isset($c.params.hide)}
                             <div class="c-menu__items{if $c@first} c-menu__items_active{/if} c-menu__items-{$c.id}">
+
+                                <!-- hidden title category menu -->
+                                {if false}
                                 <div class="c-menu__items-title">
                                     <div class="c-menu__items-title-name">
                                         {if shopNamesPlugin::name($c.id)}
@@ -169,6 +172,7 @@
                                     </div>
                                     {label cat=$c}
                                 </div>
+                                {/if}
 
                                 {if isset($c.params.menu_banner)}
                                     <div class="c-menu__items-content">
