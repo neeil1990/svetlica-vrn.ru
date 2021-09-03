@@ -1,0 +1,22 @@
+<div class="block">
+    <table class="zebra">
+        <tr>
+            <th>[`ID`]</th>
+            <th>[`Images`]</th>
+            <th>[`Title`]</th>
+            <th>[`Description`]</th>
+            <th>[`Link`]</th>
+            <th>[`Delete`]</th>
+        </tr>
+        {foreach from=$advantages item=advantage}
+            <tr>
+                <td class="bold">{$advantage.id}</td>
+                <td><img src="{$advantage.img}" alt="{$advantage.title}" width="60" height="60"></td>
+                <td><a href="?module=post&action=edit&id={$advantage.id}">{$advantage.title}</a></td>
+                <td>{$advantage.description}</td>
+                <td>{$advantage.link}</td>
+                <td><a href="#" class="delete-advantage" data-id="{$advantage.id}"><i class="icon16 delete"></i></a></td>
+            </tr>
+        {/foreach}
+    </table>
+</div>

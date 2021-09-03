@@ -1,0 +1,56 @@
+<form action="?module=post&action={$action}" method="post" enctype="multipart/form-data">
+    {$wa->csrf()}
+    {if $advantage.id}
+        <input type="hidden" name="id" value="{$advantage.id}">
+    {/if}
+    <div class="block fields form">
+        <div class="field-group">
+            <div class="field">
+                <div class="name">[`Link`]</div>
+                <div class="value">
+                    <input type="text" name="link" class="bold" value="{$advantage.link}" />
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">[`Title`]</div>
+                <div class="value">
+                    <input type="text" name="title" class="bold" value="{$advantage.title}" />
+                </div>
+            </div>
+            <div class="field">
+                <div class="name">[`Description`]</div>
+                <div class="value">
+                    <textarea class="bold" name="description">{$advantage.description}</textarea>
+                </div>
+            </div>
+        </div>
+
+        {if $advantage.img}
+        <div class="field-group">
+            <div class="field">
+                <div class="value">
+                    <img src="{$advantage.img}" alt="{$advantage.title}" width="100" height="100">
+                </div>
+            </div>
+        </div>
+        {/if}
+
+        <div class="field-group">
+            <div class="field">
+                <div class="name">[`Images`]</div>
+                <div class="value">
+                    <input type="file" name="img" accept=".jpg, .jpeg, .png"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <div class="field">
+                <div class="value">
+                    <input type="submit" class="button green" value="[`Save`]" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>

@@ -110,7 +110,7 @@
 
                 {* FILTERS RESULT *}
                 {include file="./category/filters.result.html"}
-                
+
                 {if isset($category.params.meta) && $category.params.meta}
 			      {include file='./tags.html' inline}
 	            {/if}
@@ -204,6 +204,9 @@
                 </div>
             </div>
 
+            {* Advantages app *}
+            {$wa->advantages->show($category)}
+
             {* DESCRIPTION *}
             {if $ts.category_des=='right_bottom'}
                 {include file="./category/description.html"}
@@ -233,10 +236,10 @@
 
     {* DESCRIPTION *}
     {if $ts.category_des=='bottom'}
-    
+
     <div id="btn_to_work"></div>
         <div class="in-blocks__item wrap">
-            
+
             {include file="./category/description.html"}
         </div>
     {/if}

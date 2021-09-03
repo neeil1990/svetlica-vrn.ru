@@ -1,0 +1,18 @@
+<div class="in-blocks__item in-blocks__item-promo">
+    <div class="promo promo_bor">
+        <div class="promo__wrap">
+            {foreach from=$advantages item=advantage}
+            <a class="promo__item" href="{$advantage.link}">
+                <span class="promo__icon">
+                    <img class="lazy-img lazy-img-active" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                         data-src="{$advantage.img}" alt="{$advantage.title}">
+                </span>
+                <span class="promo__info">
+                    <span class="promo__title">{$advantage.title}</span>
+                    <span class="promo__text">{$advantage.description}</span>
+                </span>
+            </a>
+            {/foreach}
+        </div>
+    </div>
+</div>
