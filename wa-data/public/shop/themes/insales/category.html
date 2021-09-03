@@ -204,9 +204,6 @@
                 </div>
             </div>
 
-            {* Advantages app *}
-            {$wa->advantages->show($category)}
-
             {* DESCRIPTION *}
             {if $ts.category_des=='right_bottom'}
                 {include file="./category/description.html"}
@@ -233,6 +230,9 @@
             </div>
         {/if}
     </div>
+
+    {* Advantages app *}
+    {$wa->advantages->show($category)}
 
     {* DESCRIPTION *}
     {if $ts.category_des=='bottom'}
