@@ -26,5 +26,6 @@ class advantagesPostEditAction extends waViewAction
 
         $this->view->assign('action', $this->action);
         $this->setLayout(new advantagesDefaultLayout());
+		
     }
 }
