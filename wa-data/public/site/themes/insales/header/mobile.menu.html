@@ -123,9 +123,7 @@
                                         <use xlink:href="#i-angle-left"></use>
                                     </svg>
                                 </div>
-                                <div class="m-menu-links__title">
-                                    {$m.name}
-                                </div>
+                                <div class="m-menu-links__title" data-text="{$m.name}"></div>
                                 <div class="m-menu-links__close">
                                     <svg class="icon12 i-remove">
                                         <use xlink:href="#i-remove"></use>
@@ -134,13 +132,6 @@
                             </div>
 
                             <ul class="m-menu__ul-1">
-                                {if empty($pages)}
-                                    <li class="m-menu__li-1">
-                                        <a href="{$m.url}" class="m-menu__a-1">
-                                            <strong>[`All`] {$m.name|lower}</strong>
-                                        </a>
-                                    </li>
-                                {/if}
                                 {menu_mobile_step menu=$m.childs}
                             </ul>
                         </div>
@@ -176,9 +167,7 @@
                         <use xlink:href="#i-angle-left"></use>
                     </svg>
                 </div>
-                <div class="m-menu-links__title">
-                    {$ts.header_mobile_catalog_title}
-                </div>
+                <div class="m-menu-links__title" data-text="{$ts.header_mobile_catalog_title}"></div>
                 <div class="m-menu-links__close">
                     <svg class="icon12 i-remove">
                         <use xlink:href="#i-remove"></use>
