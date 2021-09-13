@@ -82,7 +82,7 @@
     <file path="head.html"/>
     <file path="header.html"/>
     <file path="index.html" custom="0" modified="1">
-      <description locale="ru_RU"></description>
+      <description locale="ru_RU"/>
     </file>
     <file path="panel.edit.html"/>
     <file path="login.html"/>
@@ -3330,7 +3330,7 @@
       <name locale="ru_RU">Каталог товаров</name>
     </setting>
     <setting var="left_category_blocks" control_type="text">
-      <value>filters,banner_2</value>
+      <value>subcategories</value>
       <name locale="ru_RU">Какие блоки выводить</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить. Очистите поле, что бы не выводить левый блок</description>
     </setting>
@@ -3716,7 +3716,7 @@
             </name>
     </setting>
     <setting var="home_blocks" control_type="text">
-      <value>list_1,list_2,list_3,news,reviews,company,category,subscribe,viewed,banner_products,banner_product_1,banner_product_2</value>
+      <value><![CDATA[list_1,list_2,list_3,news,reviews,company,category,subscribe,viewed,banner_products,banner_product_1,banner_product_2,category_promo]]></value>
       <name locale="ru_RU">Какие блоки выводить</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
