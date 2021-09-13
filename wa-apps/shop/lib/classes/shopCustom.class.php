@@ -23,4 +23,54 @@ class shopCustom
         return ($data) ?: false;
     }
 
+
+    public static function getListProducts($ids, $title = '', $template){
+
+        $ids = json_decode($ids, true);
+
+        if(!$ids)
+            return false;
+
+        if(empty($template))
+            $template = "list-thumbs";
+
+        $arKeys = array_keys($ids);
+        $collection = new shopProductsCollection($arKeys);
+        $products = $collection->getProducts("*,image_crop_small");
+
+        uksort($products, function ($leftItem, $rightItem) use ($arKeys){
+
+            $order = array_flip($arKeys);
+
+            $leftPos = $order[$leftItem];
+            $rightPos = $order[$rightItem];
+
+            return $leftPos >= $rightPos;
+        });
+
+        foreach ($ids as $key => $val){
+
+            if(isset($products[$key])){
+
+                if($val[0])
+                    $products[$key]['name'] = $val[0];
+
+                if($val[1])
+                    $products[$key]['summary'] = $val[1];
+            }
+        }
+
+        //list-thumbs, list-thumbs-list, list-thumbs-mini
+
+        $view = wa()->getView();
+        $view->assign('pages_count', false);
+        $view->assign('products', $products);
+        $html = $view->fetch(wa()->getDataPath('themes', true, 'shop') . '/insales/'. $template .'.html');
+
+        if($title)
+            $html = '<div class="in-blocks__title"><div class="in-blocks__title-name category-name">'. $title .'</div></div>'.$html;
+
+        return $html;
+    }
+
 }

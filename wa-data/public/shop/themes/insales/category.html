@@ -183,6 +183,14 @@
                                 </div>
                             </div>
                         {/if}
+
+                        <!-- products list -->
+                        {foreach shopCustom::array_filter($category.params, 'rec') as $rec}
+                        {if $rec}
+                        {$rec = explode("@", $rec)}
+                            {shopCustom::getListProducts($rec[1], $rec[0], $rec[2])}
+                        {/if}
+                        {/foreach}
                     {else}
                         {if !empty($filters)}
                             <div class="in-empty-wrapper">
