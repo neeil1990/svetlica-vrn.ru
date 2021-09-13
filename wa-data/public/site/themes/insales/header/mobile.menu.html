@@ -69,7 +69,7 @@
 {function menu_mobile_step}
     {if !empty($menu)}
         {foreach $menu as $m}
-            {if !isset($m.hide) && !isset($m.params.hide)}
+            {if !isset($m.hide) && !isset($m.params.hide_mobile)}
                 <li class="m-menu__li-1">
                     <div class="m-menu__info">
                         <a href="{$m.url}" class="m-menu__a-1">
