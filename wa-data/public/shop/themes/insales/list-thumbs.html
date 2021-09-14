@@ -62,6 +62,8 @@
     <div class="products {if !empty($slider_home)}h-{/if}products_col-{$ts.category_product_columns}{if !empty($slider_view)} products_slider owl-carousel owl-theme-nav{/if}">
     {/if}
         {foreach $products as $p}
+            {$p = shopSeoViewHelper::extendProduct($p)}
+
             {$available = $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
             {$textAvailable = $ts.product_stock_ouf|default:"[`Out of stock`]"}
 
@@ -194,7 +196,7 @@
                         {/if}
 
                         <span class="products__item-info-name" itemprop="name">
-                            {$p.name}
+                            {$p.seo_name}
                         </span>
 
                         {if $ts.category_product_summary}

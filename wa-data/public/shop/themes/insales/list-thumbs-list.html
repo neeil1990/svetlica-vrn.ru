@@ -16,6 +16,8 @@
         {/if}
 
         {foreach $products as $p}
+            {$p = shopSeoViewHelper::extendProduct($p)}
+
             {$available = $wa->shop->settings('ignore_stock_count') || $p.count === null || $p.count > 0}
             {$textAvailable = $ts.product_stock_ouf|default:"[`Out of stock`]"}
 
@@ -109,7 +111,7 @@
                 <div class="s-products__right">
                     <div class="s-products__right-l">
                         <div class="s-products__name">
-                            <a href="{$p.frontend_url}" itemprop="name">{$p.name}</a>
+                            <a href="{$p.frontend_url}" itemprop="name">{$p.seo_name}</a>
                             {if $p.video_url && $ts.category_product_video}
                                 <div class="s-products__video">
                                     <svg class="icon20 i-youtube">
