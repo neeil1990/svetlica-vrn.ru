@@ -140,9 +140,7 @@
                             {/if}
 
                             {if $ts.product_zero_text && $p.price==0}
-                                <div class="products__zero-text">
-                                    {$ts.product_zero_text}
-                                </div>
+                                <div class="products__zero-text" data-text="{$ts.product_zero_text}"></div>
                                 {$available = false}
                             {else}
                                 <div class="m-products__info-price-new">

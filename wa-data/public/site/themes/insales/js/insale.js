@@ -1256,6 +1256,11 @@ $(function() {
                         .removeClass('c-products_loading')
                         .html(products.html());
 
+                    $('[data-text]').each(function(i, el){
+                        let content = $(el).data('text');
+                        $(el).addClass('js-text').text(content);
+                    });
+
                     if (!!(history.pushState && history.state !== undefined)) {
                         window.history.pushState({}, '', url);
                     }
