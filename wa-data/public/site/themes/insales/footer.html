@@ -143,7 +143,11 @@
                     {foreach $companyLinks as $l}
                         {if !isset($l.params.hide) && !isset($l.hide)}
                             <div class="f-menu__list">
-                                <a href="{$l.url}">{$l.name|escape}</a>
+                                {if shopNamesPlugin::name($l.id)}
+                                    <a href="{$l.url}">{shopNamesPlugin::name($l.id)}</a>
+                                {else}
+                                    <a href="{$l.url}">{$l.name|escape}</a>
+                                {/if}
                             </div>
                         {/if}
                     {/foreach}
