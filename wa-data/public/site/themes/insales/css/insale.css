@@ -16442,7 +16442,18 @@ ul.my-nav a {
 .h-hidden-show .h-hidden {
   display: inline-block;
 }
+.btn_to_work_wrap{
+  text-align: center;
+  margin-top: 35px;
+}
 .btn_to_work{
   color: #fff;
   text-align: center;
+  text-decoration: none;
+  background: #4e7df1;
+  border-radius: 3px;
+  padding: 10px;
+}
+.btn_to_work:hover{
+  color: #fff;
 }
