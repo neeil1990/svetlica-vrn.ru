@@ -14153,8 +14153,6 @@ input.d-filter__inp {
   margin-top: 14px;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: end;
-      align-items: end;
   line-height: 1.6;
 }
 .f-contact__item:first-child {

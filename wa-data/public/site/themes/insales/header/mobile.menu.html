@@ -95,13 +95,17 @@
                                 {/if}
                             {/if}
 
-                            <span class="m-menu__name">
-                                {if shopNamesPlugin::name($m.id)}
-                                    {shopNamesPlugin::name($m.id)}
-                                {else}
-                                    {$m.name}
-                                {/if}
-                            </span>
+                            {if isset($m.params.hide_js)}
+                                <span class="m-menu__name" data-text="{if shopNamesPlugin::name($m.id)}{shopNamesPlugin::name($m.id)}{else}{$m.name}{/if}"></span>
+                            {else}
+                                <span class="m-menu__name">
+                                    {if shopNamesPlugin::name($m.id)}
+                                        {shopNamesPlugin::name($m.id)}
+                                    {else}
+                                        {$m.name}
+                                    {/if}
+                                </span>
+                            {/if}
 
                             {if empty($pages)}
                                 {label cat=$m}

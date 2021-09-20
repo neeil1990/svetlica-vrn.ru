@@ -260,44 +260,6 @@
 
             <div class="footer__item-contact">
                 <div class="f-contact">
-                    {if $ts.footer_contact_phone}
-                        <div class="f-contact__item">
-                            <div class="f-contact__item-icon">
-                                <svg class="icon16 i-phone">
-                                    <use xlink:href="#i-phone"></use>
-                                </svg>
-                            </div>
-                            <div class="f-contact__item-text">
-                                {eval var=$ts.footer_contact_phone}
-                            </div>
-                        </div>
-                    {/if}
-                    {if $ts.footer_contact_address}
-                        <div class="f-contact__item">
-                            <div class="f-contact__item-icon">
-                                <svg class="icon16 i-address">
-                                    <use xlink:href="#i-address"></use>
-                                </svg>
-                            </div>
-                            <div class="f-contact__item-text">
-                                {eval var=$ts.footer_contact_address}
-                            </div>
-                        </div>
-                    {/if}
-                    {if $ts.footer_contact_email}
-                        <div class="f-contact__item">
-                            <div class="f-contact__item-icon">
-                                <svg class="icon16 i-email">
-                                    <use xlink:href="#i-email"></use>
-                                </svg>
-                            </div>
-                            <div class="f-contact__item-text">
-                                <a href="mailto:{eval var=$ts.footer_contact_email}">
-                                    {eval var=$ts.footer_contact_email}
-                                </a>
-                            </div>
-                        </div>
-                    {/if}
                     {if $ts.footer_contact_mode}
                         <div class="f-contact__item">
                             <div class="f-contact__item-icon">

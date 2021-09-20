@@ -136,17 +136,6 @@
                             </div>
                         {/if}
 
-                        {if $ts.category_product_art && !empty($p.skus)}
-                            {foreach $p.skus as $sku}
-                                {if $sku.sku}
-                                    <div class="s-products__code">
-                                        [`Code`]: {$sku.sku|escape}
-                                    </div>
-                                    {break}
-                                {/if}
-                            {/foreach}
-                        {/if}
-
                         {if !empty($p.features.color) && $ts.category_product_features_color}
                             <div class="s-products__color">
                                 {foreach $p.features.color as $v}

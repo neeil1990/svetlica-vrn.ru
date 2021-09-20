@@ -66,13 +66,18 @@
                                                     {if !isset($c1.params.hide) && $c1@iteration <= $ts.header_catalog_yet_count}
                                                         <li class="h-menu__img-li-1">
                                                             <a href="{$c1.url}" class="h-menu__img-link-1{if $c1.id == $sel} h-menu__link_active{/if}">
-                                                                <span class="h-menu__name">
-                                                                    {if shopNamesPlugin::name($c1.id)}
-                                                                        {shopNamesPlugin::name($c1.id)}
-                                                                    {else}
-                                                                        {$c1.name}
-                                                                    {/if}
-                                                                </span>
+
+                                                                {if isset($c1.params.hide_js)}
+                                                                    <span class="h-menu__name" data-text="{if shopNamesPlugin::name($c1.id)}{shopNamesPlugin::name($c1.id)}{else}{$c1.name}{/if}"></span>
+                                                                {else}
+                                                                    <span class="h-menu__name">
+                                                                        {if shopNamesPlugin::name($c1.id)}
+                                                                            {shopNamesPlugin::name($c1.id)}
+                                                                        {else}
+                                                                            {$c1.name}
+                                                                        {/if}
+                                                                    </span>
+                                                                {/if}
 
                                                                 {label cat=$c1}
                                                             </a>

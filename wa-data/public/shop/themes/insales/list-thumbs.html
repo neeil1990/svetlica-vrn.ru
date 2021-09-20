@@ -289,17 +289,6 @@
                             </div>
                         {/if}
 
-                        {if $ts.category_product_art && !empty($p.skus)}
-                            {foreach $p.skus as $sku}
-                                {if $sku.sku}
-                                    <div class="products__code">
-                                        [`Code`]: <span class="products__code-v">{$sku.sku|escape}</span>
-                                    </div>
-                                    {break}
-                                {/if}
-                            {/foreach}
-                        {/if}
-
                         {if $ts.category_product_skus != 'radio'}
                             <div class="products__price">
                                 {if $ts.category_product_range && $p.frontend_min_price > 0 && $p.frontend_min_price != $p.frontend_max_price
