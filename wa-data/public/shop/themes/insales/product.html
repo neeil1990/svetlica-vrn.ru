@@ -7,7 +7,7 @@
     {include file="`$wa_parent_theme_path`/breadcrumbs.html"}
 </div>
 
-<div class="product wrap" itemscope="" itemtype="http://schema.org/Product">
+<div class="product wrap" itemscope="" itemtype="https://schema.org/Product">
 
     {* TITLE *}
     {$name = $product.params.h1|default:$product.name}
@@ -89,7 +89,7 @@
         {/if}
 
         {if count($rates) > 0}
-            <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+            <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
                 <meta itemprop="ratingValue" content="{$product.rating}" />
                 <meta itemprop="bestRating" content="5" />
                 <meta itemprop="worstRating" content="1" />

@@ -243,14 +243,14 @@
 
                 {* list all SKUs for Schema.org markup *}
                 {foreach $product.skus as $sku}
-                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                         {if $sku.name}<meta itemprop="name" content="{$sku.name|escape}">{/if}
                         <meta itemprop="price" content="{$sku.price}">
                         <meta itemprop="priceCurrency" content="{$wa->shop->currency()}">
                         {if (!($sku.count === null) && $sku.count <= 0)}
-                            <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                            <link itemprop="availability" href="https://schema.org/OutOfStock" />
                         {else}
-                            <link itemprop="availability" href="http://schema.org/InStock" />
+                            <link itemprop="availability" href="https://schema.org/InStock" />
                         {/if}
                     </div>
                 {/foreach}
@@ -267,7 +267,7 @@
                         {foreach $product.skus as $sku}
                             {$sku_available =  $product.status && $sku.available && ($wa->shop->settings('ignore_stock_count') || $sku.count === null || $sku.count > 0)}
 
-                            <li class="skus-item" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <li class="skus-item" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                                 <label{if !$sku.available} class="disabled"{/if}>
                                     <input type="radio" name="sku_id" value="{$sku.id}"
                                            {if !$sku_available} data-disabled="1"{/if}
@@ -293,9 +293,9 @@
                                     <meta itemprop="priceCurrency" content="{$wa->shop->currency()}">
 
                                     {if (!($sku.count === null) && $sku.count <= 0)}
-                                        <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                                        <link itemprop="availability" href="https://schema.org/OutOfStock" />
                                     {else}
-                                        <link itemprop="availability" href="http://schema.org/InStock" />
+                                        <link itemprop="availability" href="https://schema.org/InStock" />
                                     {/if}
                                 </label>
                             </li>
@@ -304,17 +304,17 @@
                     </ul>
                 {else}
                     {* in case there is only one SKU, don't display the selector *}
-                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                         {$sku = $product.skus[$product.sku_id]}
                         {if $sku.name}<meta itemprop="name" content="{$sku.name|escape}">{/if}
                         <meta itemprop="price" content="{$sku.price}">
                         <meta itemprop="priceCurrency" content="{$wa->shop->currency()}">
                         {if !$sku.available}
-                            <link itemprop="availability" href="http://schema.org/Discontinued" />
+                            <link itemprop="availability" href="https://schema.org/Discontinued" />
                         {elseif !$wa->shop->settings('ignore_stock_count') && !($sku.count === null || $sku.count > 0)}
-                            <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                            <link itemprop="availability" href="https://schema.org/OutOfStock" />
                         {else}
-                            <link itemprop="availability" href="http://schema.org/InStock" />
+                            <link itemprop="availability" href="https://schema.org/InStock" />
                         {/if}
                         <input name="sku_id" type="hidden" value="{$product.sku_id}">
                         {$product_available = $product.status && $sku.available && ($wa->shop->settings('ignore_stock_count') || $sku.count === null || $sku.count > 0)}

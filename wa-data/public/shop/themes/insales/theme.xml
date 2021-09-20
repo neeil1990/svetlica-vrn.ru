@@ -110,12 +110,18 @@
     <file path="home/subscribe.html"/>
     <file path="home/viewed.html"/>
     <file path="product/bestsellers.html"/>
-    <file path="product/cart.form.html"/>
+    <file path="product/cart.form.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
     <file path="product/cart-1.html"/>
     <file path="product/cart-2.html"/>
     <file path="product/images.html"/>
-    <file path="product/info.popup.html"/>
-    <file path="product/info.tabs.html"/>
+    <file path="product/info.popup.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
+    <file path="product/info.tabs.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
     <file path="product/promo.html"/>
     <file path="product/right.info.html"/>
     <file path="product/tabs.html"/>
@@ -125,7 +131,7 @@
     <file path="cart.html"/>
     <file path="cart.list.html"/>
     <file path="category.html" custom="0" modified="1">
-      <description locale="ru_RU"></description>
+      <description locale="ru_RU"/>
     </file>
     <file path="checkout.auth.html"/>
     <file path="checkout.confirmation.html"/>
@@ -147,9 +153,15 @@
     <file path="list-thumbs.html" custom="0" modified="1">
       <description locale="ru_RU"/>
     </file>
-    <file path="list-thumbs-list.html"/>
-    <file path="list-thumbs-mini.html"/>
-    <file path="list-thumbs-short.html"/>
+    <file path="list-thumbs-list.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
+    <file path="list-thumbs-mini.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
+    <file path="list-thumbs-short.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
     <file path="main.html"/>
     <file path="my.affiliate.html"/>
     <file path="my.nav.html"/>
@@ -157,11 +169,19 @@
     <file path="my.orders.html"/>
     <file path="my.profile.html"/>
     <file path="order.html"/>
-    <file path="page.html"/>
-    <file path="product.html"/>
+    <file path="page.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
+    <file path="product.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
     <file path="product.page.html"/>
-    <file path="reviews.html"/>
-    <file path="reviews.form.html"/>
+    <file path="reviews.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
+    <file path="reviews.form.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
     <file path="search.html"/>
   </files>
 </theme>

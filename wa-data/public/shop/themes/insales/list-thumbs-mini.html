@@ -36,7 +36,7 @@
                 {$product = $wa->shop->product($p.id)}
             {/if}
 
-            <div class="m-products__item" itemscope="" itemtype="http://schema.org/Product">
+            <div class="m-products__item" itemscope="" itemtype="https://schema.org/Product">
                 <div class="m-products__img">
                     <a href="{$p.frontend_url}">
                         <span class="m-products__img-block">
@@ -180,15 +180,15 @@
                                 {eval var=$ts.category_product_cart_text}
                             </button>
 
-                            <span style="display:none;" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                            <span style="display:none;" itemprop="offers" itemscope="" itemtype="https://schema.org/Offer">
                                 <meta itemprop="url" content="{$p.frontend_url}" />
                                 <meta itemprop="priceValidUntil" content="" />
                                 <meta itemprop="price" content="{$p.price}">
                                 <meta itemprop="priceCurrency" content="{$wa->shop->currency()}">
                                 {if $available}
-                                    <link itemprop="availability" href="http://schema.org/InStock">
+                                    <link itemprop="availability" href="https://schema.org/InStock">
                                 {else}
-                                    <link itemprop="availability" href="http://schema.org/OutOfStock" />
+                                    <link itemprop="availability" href="https://schema.org/OutOfStock" />
                                 {/if}
                             </span>
                         </form>
@@ -206,7 +206,7 @@
                 <meta itemprop="sku" content="">
 
                 {if $product.rating_count > 0 && !empty($product)}
-                    <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                    <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
                         <meta itemprop="ratingValue" content="{$product.rating}" />
                         <meta itemprop="bestRating" content="5" />
                         <meta itemprop="worstRating" content="0" />
