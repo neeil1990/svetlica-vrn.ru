@@ -15,6 +15,9 @@
             {/foreach}
         {/if}
 
+        {$incPrice = 0}
+        {$incBuy = 0}
+        {$incStock = 0}
         {foreach $products as $p}
             {$p = shopSeoViewHelper::extendProduct($p)}
 
@@ -221,10 +224,14 @@
                                     {/if}
                                 {/if}
 
+                                {if $incStock >= $category.params.product_per_stock}
+                                <div class="products__available-{$classAvailable}" data-text="{$textAvailable}"></div>
+                                {else}
                                 <div class="products__available-{$classAvailable}">
                                     {if $classAvailable == 'in-stock'}<svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>{/if}
                                     {$textAvailable}
                                 </div>
+                                {/if}
                             </div>
                         {/if}
 
@@ -238,9 +245,13 @@
                                     <div class="products__zero-text" data-text="{$ts.product_zero_text}"></div>
                                     {$available = false}
                                 {else}
-                                    <div class="s-products__price-new">
-                                        {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
-                                    </div>
+                                    {if $incPrice >= $category.params.product_per_price}
+                                        <div class="s-products__price-new" data-text="{shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}"></div>
+                                    {else}
+                                        <div class="s-products__price-new">
+                                            {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
+                                        </div>
+                                    {/if}
                                 {/if}
 
                                 {if $p.compare_price > 0}
@@ -297,12 +308,16 @@
                                     </div>
                                 </div>
 
-                                <button class="s-products__button button button_low" type="submit" {if !$available} disabled{/if}>
+                                {if $incBuy >= $category.params.product_per_buy}
+                                    <button class="s-products__button button button_low" data-text="{eval var=$ts.category_product_cart_text}" type="submit" {if !$available} disabled{/if}></button>
+                                {else}
+                                    <button class="s-products__button button button_low" type="submit" {if !$available} disabled{/if}>
                                     {if array_key_exists($p.id, $itemsCartId) && $itemsCartId[$p.id] == $p.sku_id}
-                                        <svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>
+                                    <svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>
                                     {/if}
                                     {eval var=$ts.category_product_cart_text}
-                                </button>
+                                    </button>
+                                {/if}
                             </form>
 
                             {* PLUGIN - https://www.webasyst.ru/store/plugin/shop/pnotice/ *}
@@ -380,6 +395,9 @@
                     </div>
                 {/if}
             </div>
+        {$incPrice = $incPrice + 1}
+        {$incBuy = $incBuy + 1}
+        {$incStock = $incStock + 1}
         {/foreach}
     </div>
 {/if}

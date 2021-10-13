@@ -13,6 +13,9 @@
 
 
     <div class="m-products">
+        {$incPrice = 0}
+        {$incBuy = 0}
+        {$incStock = 0}
         {foreach $products as $p}
             {$p = shopSeoViewHelper::extendProduct($p)}
 
@@ -121,10 +124,14 @@
                                     {/if}
                                 {/if}
 
-                                <div class="products__available-{$classAvailable}">
-                                    {if $classAvailable == 'in-stock'}<svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>{/if}
-                                    {$textAvailable}
-                                </div>
+                                {if $incStock >= $category.params.product_per_stock}
+                                    <div class="products__available-{$classAvailable}" data-text="{$textAvailable}"></div>
+                                {else}
+                                    <div class="products__available-{$classAvailable}">
+                                        {if $classAvailable == 'in-stock'}<svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>{/if}
+                                        {$textAvailable}
+                                    </div>
+                                {/if}
                             </div>
                         {/if}
                     </div>
@@ -143,9 +150,13 @@
                                 <div class="products__zero-text" data-text="{$ts.product_zero_text}"></div>
                                 {$available = false}
                             {else}
-                                <div class="m-products__info-price-new">
-                                    {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
-                                </div>
+                                {if $incPrice >= $category.params.product_per_price}
+                                    <div class="m-products__info-price-new" data-text="{shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}"></div>
+                                {else}
+                                    <div class="m-products__info-price-new">
+                                        {shopCustom::p()} {shop_currency_html($p.price)} {$p.features.units}
+                                    </div>
+                                {/if}
                             {/if}
                         {/if}
                     </div>
@@ -173,12 +184,16 @@
 
                             <input type="hidden" name="product_id" value="{$p.id}" />
 
-                            <button class="m-products__button button button_low" type="submit" {if !$available} disabled{/if}>
+                            {if $incBuy >= $category.params.product_per_buy}
+                                <button class="m-products__button button button_low" data-text="{eval var=$ts.category_product_cart_text}" type="submit" {if !$available} disabled{/if}></button>
+                            {else}
+                                <button class="m-products__button button button_low" type="submit" {if !$available} disabled{/if}>
                                 {if array_key_exists($p.id, $itemsCartId) && $itemsCartId[$p.id] == $p.sku_id}
-                                    <svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>
+                                <svg class="icon12 i-check"><use xlink:href="#i-check"></use></svg>
                                 {/if}
                                 {eval var=$ts.category_product_cart_text}
-                            </button>
+                                </button>
+                            {/if}
 
                             <span style="display:none;" itemprop="offers" itemscope="" itemtype="https://schema.org/Offer">
                                 <meta itemprop="url" content="{$p.frontend_url}" />
@@ -215,6 +230,9 @@
                     </div>
                 {/if}
             </div>
+            {$incPrice = $incPrice + 1}
+            {$incBuy = $incBuy + 1}
+            {$incStock = $incStock + 1}
         {/foreach}
     </div>
 {/if}
