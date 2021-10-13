@@ -3325,7 +3325,7 @@
       <name locale="ru_RU">Главная страница магазина</name>
     </setting>
     <setting var="left_shop_blocks" control_type="text">
-      <value>categories,bestsellers,brands,photos,tags,news,banner_2,help,viewed</value>
+      <value><![CDATA[bestsellers,brands,photos,tags,news,banner_2,help,categories]]></value>
       <name locale="ru_RU">Какие блоки выводить</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить. Очистите поле, что бы не выводить левый блок</description>
     </setting>
@@ -3720,7 +3720,7 @@
             </name>
     </setting>
     <setting var="home_blocks" control_type="text">
-      <value>list_1,list_2,list_3,news,reviews,company,category,subscribe,viewed,banner_products,banner_product_1,banner_product_2,category_promo</value>
+      <value>list_1,list_2,list_3,news,reviews,company,category,subscribe,banner_products,banner_product_1,banner_product_2</value>
       <name locale="ru_RU">Какие блоки выводить</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
