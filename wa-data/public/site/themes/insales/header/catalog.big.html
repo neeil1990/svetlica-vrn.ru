@@ -193,6 +193,10 @@
                                             <li class="h-menu__img-li">
                                                 <a href="{$c1.url}" class="h-menu__img-link{if $c1.id == $sel} h-menu__link_active{/if}">
                                                     {call menu_icon c=$c1 class_name="h-menu__img-icon" type="image"}
+
+                                                    {if isset($c1.params.hide_js)}
+                                                    <span class="h-menu__img-name h-menu__name" data-text="{if shopNamesPlugin::name($c1.id)}{shopNamesPlugin::name($c1.id)}{else}{$c1.name}{/if}"></span>
+                                                    {else}
                                                     <span class="h-menu__img-name h-menu__name">
                                                         {if shopNamesPlugin::name($c1.id)}
                                                             {shopNamesPlugin::name($c1.id)}
@@ -200,6 +204,7 @@
                                                             {$c1.name}
                                                         {/if}
                                                     </span>
+                                                    {/if}
                                                     {label cat=$c1}
                                                 </a>
 
