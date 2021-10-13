@@ -52,8 +52,12 @@ class shopCustom
 
             if(isset($products[$key])){
 
-                if($val[0])
+                $products[$key]['seo_name'] = $products[$key]['name'];
+
+                if($val[0]){
                     $products[$key]['name'] = $val[0];
+                    $products[$key]['seo_name'] = $val[0];
+                }
 
                 if($val[1])
                     $products[$key]['summary'] = $val[1];
@@ -63,6 +67,7 @@ class shopCustom
         //list-thumbs, list-thumbs-list, list-thumbs-mini
 
         $view = wa()->getView();
+        $view->assign('recommend_product', true);
         $view->assign('pages_count', false);
         $view->assign('products', $products);
         $html = $view->fetch(wa()->getDataPath('themes', true, 'shop') . '/insales/'. $template .'.html');
