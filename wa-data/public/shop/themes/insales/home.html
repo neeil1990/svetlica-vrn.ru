@@ -171,6 +171,14 @@
                 {/foreach}
                 <input type="hidden" name="e-panel-edit-type" value="home">
             {/if}
+
+            {if $wa->block("main_content")}
+            <div class="in-blocks__item">
+                <div class="page">
+                    {$wa->block("main_content")}
+                </div>
+            </div>
+            {/if}
         </div>
     </div>
 
