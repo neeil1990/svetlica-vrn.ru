@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="insales" app="site" vendor="989788" author="steemy.ru" version="2.2.0" edition="15">
+<theme id="insales" app="site" vendor="989788" author="steemy.ru" version="2.2.0" edition="17">
   <name locale="en_US">Insale for Site</name>
   <name locale="ru_RU">Insale для Site</name>
   <description locale="en_US">Responsive Theme «InSale»</description>
@@ -211,8 +211,8 @@
       <name locale="ru_RU">Общие настройки</name>
     </setting>
     <setting var="micro_address" control_type="text">
-      <value><![CDATA[г.Воронеж, ул. Новосибирская, д13
-г.Воронеж, ул. Дружинников, д13]]></value>
+      <value>г.Воронеж, ул. Новосибирская, д13
+г.Воронеж, ул. Дружинников, д13</value>
       <name locale="ru_RU">Адрес компании для микроразметки</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -2943,9 +2943,9 @@
             </description>
     </setting>
     <setting var="footer_copmany_text" control_type="text">
-      <value><![CDATA[Производственная фирма и интернет-магазин для  штор и жалюзи. Большой ассортимент, отличное качество.
-<br><br>
-Вся информация на сайте представлена для ознакомления и не является публичной офертой.]]></value>
+      <value>Производственная фирма и интернет-магазин для  штор и жалюзи. Большой ассортимент, отличное качество.
+&lt;br&gt;&lt;br&gt;
+Вся информация на сайте представлена для ознакомления и не является публичной офертой.</value>
       <name locale="ru_RU">Текст о компании</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -3123,9 +3123,9 @@
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
     <setting var="footer_contact_address" control_type="text">
-      <value><![CDATA[г. Воронеж Новосибирская 13,
+      <value>г. Воронеж Новосибирская 13,
 г. Воронеж Дружинников 13
-]]></value>
+</value>
       <name locale="ru_RU">Адрес</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -3720,7 +3720,7 @@
             </name>
     </setting>
     <setting var="home_blocks" control_type="text">
-      <value>list_1,list_2,list_3,news,reviews,company,category,subscribe,banner_products,banner_product_1,banner_product_2</value>
+      <value><![CDATA[list_1,list_2,list_3,news,reviews,company,category,subscribe,banner_products,banner_product_1,banner_product_2]]></value>
       <name locale="ru_RU">Какие блоки выводить</name>
       <description locale="ru_RU">укажите через запятую без пробела какие блоки выводить</description>
     </setting>
@@ -4453,8 +4453,8 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_promo_text_1" control_type="text">
-      <value><![CDATA[Изготавливаем на заказ. Выезжаем на замер, консультируем по тканям. Подбираем наилучший для Вас вариант.
-]]></value>
+      <value>Изготавливаем на заказ. Выезжаем на замер, консультируем по тканям. Подбираем наилучший для Вас вариант.
+</value>
       <name locale="ru_RU">Описание</name>
     </setting>
     <setting var="divider_home_top_promo_2" control_type="group_divider">
@@ -5363,12 +5363,12 @@
       <name locale="ru_RU">Баннер 1</name>
     </setting>
     <setting var="home_banner_img_text_1" control_type="image">
-      <value>img/banner_img_text-1.png</value>
+      <value>img/banner_img_text-1.jpg?v1634129958</value>
       <filename>img/banner_img_text-1.*</filename>
       <name locale="ru_RU">Изображение</name>
     </setting>
     <setting var="home_banner_img_text_title_1" control_type="text">
-      <value>Смартфоны будущего: какие они? d</value>
+      <value>Смартфоны будущего: какие они?</value>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_banner_img_text_text_1" control_type="text">
@@ -5380,16 +5380,16 @@
       <name locale="ru_RU">Баннер 2</name>
     </setting>
     <setting var="home_banner_img_text_2" control_type="image">
-      <value>img/banner_img_text-2.png</value>
+      <value/>
       <filename>img/banner_img_text-2.*</filename>
       <name locale="ru_RU">Изображение</name>
     </setting>
     <setting var="home_banner_img_text_title_2" control_type="text">
-      <value>Смартфоны будущего: какие они?</value>
+      <value/>
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="home_banner_img_text_text_2" control_type="text">
-      <value>Есть над чем задуматься: акционеры крупнейших компаний призывают нас к новым свершениям, которые, в свою очередь, должны быть разоблачены. Не следует, однако, забывать, что постоянное информационно-пропагандистское обеспечение нашей деятельности создаёт необходимость включения в производственный план целого ряда внеочередных мероприятий с учётом комплекса позиций, занимаемых участниками в отношении поставленных задач.</value>
+      <value/>
       <name locale="ru_RU">Текст</name>
     </setting>
     <setting var="divider_category" control_type="group_divider">
@@ -5492,7 +5492,7 @@
       <description locale="ru_RU">если у категории нет своего изображения, то будет везде выводится дефолтное изображение</description>
     </setting>
     <setting var="category_products_yet" control_type="checkbox">
-      <value></value>
+      <value/>
       <name locale="ru_RU">Кнопка показать еще товары</name>
     </setting>
     <setting var="category_right_blocks" control_type="text">
@@ -6814,10 +6814,10 @@
       <name locale="ru_RU">Текст заказа</name>
     </setting>
     <setting var="checkout_success_contact" control_type="text">
-      <value><![CDATA[Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.<br />
-                Контакты для связи с нами:<br />
-                E-mail: <a href="mailto:order@insale.ru">order@insale.ru</a><br />
-                Телефон: <a href="tel:89991234567">8(999) 123-45-67</a>]]></value>
+      <value>Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.&lt;br /&gt;
+                Контакты для связи с нами:&lt;br /&gt;
+                E-mail: &lt;a href="mailto:order@insale.ru"&gt;order@insale.ru&lt;/a&gt;&lt;br /&gt;
+                Телефон: &lt;a href="tel:89991234567"&gt;8(999) 123-45-67&lt;/a&gt;</value>
       <name locale="ru_RU">Текст контакты</name>
     </setting>
     <setting var="divider_blog" control_type="group_divider">
