@@ -51,7 +51,7 @@
         {/if}
 
         <div class="mcart__total">
-            <div class="mcart__total-text">[`Total`]:</div>
+            <div class="mcart__total-text" data-text="[`Total`]:"></div>
             {$cartTotal = $wa->shop->cart->total()}
             <div class="mcart__total-price cart-price">
                 {if $priceTotal > $cartTotal}

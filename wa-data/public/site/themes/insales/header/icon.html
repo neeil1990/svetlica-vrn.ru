@@ -66,9 +66,7 @@
                 </svg>
             {/if}
 
-            <span class="{$icon[$ts.header_icon].name}">
-                [`Favorite`]
-            </span>
+            <span class="{$icon[$ts.header_icon].name}" data-text="[`Favorite`]"></span>
             <span class="favorits__count {$icon[$ts.header_icon].count} hcount{if $favoritePr} hcount_active{/if}">
                 {if $favoritePr}{count(explode(',', $favoritePr))}{else}0{/if}
             </span>
@@ -88,9 +86,7 @@
                 </svg>
             {/if}
 
-            <span class="{$icon[$ts.header_icon].name}">
-                [`Compare`]
-            </span>
+            <span class="{$icon[$ts.header_icon].name}" data-text="[`Compare`]"></span>
             <span class="compare__count {$icon[$ts.header_icon].count} hcount{if $comparePr} hcount_active{/if}">
                 {if $comparePr}{count(explode(',', $comparePr))}{else}0{/if}
             </span>
@@ -110,9 +106,7 @@
                 </svg>
             {/if}
 
-            <span class="{$icon[$ts.header_icon].name}">
-                [`Viewed`]
-            </span>
+            <span class="{$icon[$ts.header_icon].name}" data-text="[`Viewed`]"></span>
             <span class="{$icon[$ts.header_icon].count} hcount{if $viewed} hcount_active{/if}">
                 {if $viewed}{count(explode(',', $viewed))}{else}0{/if}
             </span>
