@@ -40,9 +40,11 @@
                                     {/if}
                                 {/if}
 
-                                <span class="m-menu__name">
-                                    {$m.name}
-                                </span>
+                                {if isset($m.params.hide_js)}
+                                    <span class="m-menu__name" data-text=" {$m.name}"></span>
+                                {else}
+                                    <span class="m-menu__name"> {$m.name}</span>
+                                {/if}
 
                                 {if empty($pages)}
                                     {label cat=$m}
