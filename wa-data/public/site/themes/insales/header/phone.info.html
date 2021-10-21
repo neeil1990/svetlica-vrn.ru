@@ -16,7 +16,7 @@
                     </a>
                 </div>
                 {if $ts.header_phone_sign_1}
-                    <div class="h-phone__info-hint">{$ts.header_phone_sign_1}</div>
+                    <div class="h-phone__info-hint" data-text="{$ts.header_phone_sign_1}"></div>
                 {/if}
             </div>
         {/if}
@@ -38,7 +38,7 @@
                     </a>
                 </div>
                 {if $ts.header_phone_sign_3}
-                    <div class="h-phone__info-hint">{eval var=$ts.header_phone_sign_3}</div>
+                    <div class="h-phone__info-hint" data-text="{eval var=$ts.header_phone_sign_3}"></div>
                 {/if}
             </div>
         {/if}
@@ -61,7 +61,7 @@
             </a>
         </div>
         {if $ts.header_phone_sign_2}
-            <div class="h-phone__info-hint">{$ts.header_phone_sign_2}</div>
+            <div class="h-phone__info-hint" data-text="{$ts.header_phone_sign_2}"></div>
         {/if}
     {/if}
 

@@ -51,15 +51,7 @@
                 </a>
 
                 {if $ts.header_phone_call_type == 'down' || $ts.header_phone_sign_1}
-                    <div class="h-phone__hint">
-                        {if $ts.header_phone_call_type == 'down'}
-                            <div class="h-phone__call in-callback">
-                                {$ts.header_phone_call}
-                            </div>
-                        {else}
-                            {$ts.header_phone_sign_1}
-                        {/if}
-                    </div>
+                    <div class="h-phone__hint" data-text="{$ts.header_phone_sign_1}"></div>
                 {/if}
             </div>
 
