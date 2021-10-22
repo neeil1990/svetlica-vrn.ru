@@ -149,6 +149,11 @@
         'blocks'
     ]}
 
+    {$current_category = $wa->shop->category($sel)}
+    {if $current_category && isset($current_category.params.hide_menu)}
+        {$hide_menu = $current_category.params.hide_menu}
+    {/if}
+
     <ul class="h-menu h-menu_catalog h-menu_over{if $ts.header_category_space_between} h-menu_catalog-sb{/if}">
         {foreach $categ as $c}
             {if !isset($c.params.hide)}
@@ -158,12 +163,16 @@
 
                     <a href="{$c.url}" class="h-menu__link{if $c.id == $sel || $c.url == "`$sel`"} h-menu__link_active{/if}">
                         {menu_icon c=$c class_name="h-menu__icon" type="icon"}
-                        {if isset($c.params.hide_js)}
+                        {if isset($hide_menu) && $hide_menu}
                             <span class="h-menu__name" data-text="{$c.name}"></span>
                         {else}
-                            <span class="h-menu__name">
-                                {$c.name}
-                            </span>
+                            {if isset($c.params.hide_js)}
+                                <span class="h-menu__name" data-text="{$c.name}"></span>
+                            {else}
+                                <span class="h-menu__name">
+                                    {$c.name}
+                                </span>
+                            {/if}
                         {/if}
                         {label cat=$c}
 
