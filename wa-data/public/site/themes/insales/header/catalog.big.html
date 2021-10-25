@@ -64,18 +64,21 @@
                         <li class="c-menu__item{if $c@first && empty($leftBlock)} c-menu__item_active h-menu__link_active{/if}" data-id="{$c.id}">
                             <a href="{$c.url}" class="c-menu__item-link">
                                 {call menu_icon c=$c class_name="c-menu__item-icon" type="icon"}
-
                                 <span class="c-menu__item-bl">
-                                    {if isset($c.params.hide_js)}
+                                    {if $hide_menu}
                                         <span class="c-menu__item-name" data-text="{if shopNamesPlugin::name($c.id)} {shopNamesPlugin::name($c.id)} {else} {$c.name} {/if}"></span>
                                     {else}
-                                        <span class="c-menu__item-name">
-                                            {if shopNamesPlugin::name($c.id)}
-                                                {shopNamesPlugin::name($c.id)}
-                                            {else}
-                                                {$c.name}
-                                            {/if}
-                                        </span>
+                                        {if isset($c.params.hide_js)}
+                                            <span class="c-menu__item-name" data-text="{if shopNamesPlugin::name($c.id)} {shopNamesPlugin::name($c.id)} {else} {$c.name} {/if}"></span>
+                                        {else}
+                                            <span class="c-menu__item-name">
+                                                {if shopNamesPlugin::name($c.id)}
+                                                    {shopNamesPlugin::name($c.id)}
+                                                {else}
+                                                    {$c.name}
+                                                {/if}
+                                            </span>
+                                        {/if}
                                     {/if}
                                     {label cat=$c}
                                 </span>
@@ -193,17 +196,20 @@
                                             <li class="h-menu__img-li">
                                                 <a href="{$c1.url}" class="h-menu__img-link{if $c1.id == $sel} h-menu__link_active{/if}">
                                                     {call menu_icon c=$c1 class_name="h-menu__img-icon" type="image"}
-
-                                                    {if isset($c1.params.hide_js)}
-                                                    <span class="h-menu__img-name h-menu__name" data-text="{if shopNamesPlugin::name($c1.id)}{shopNamesPlugin::name($c1.id)}{else}{$c1.name}{/if}"></span>
+                                                    {if $hide_menu}
+                                                        <span class="h-menu__img-name h-menu__name" data-text="{if shopNamesPlugin::name($c1.id)}{shopNamesPlugin::name($c1.id)}{else}{$c1.name}{/if}"></span>
                                                     {else}
-                                                    <span class="h-menu__img-name h-menu__name">
-                                                        {if shopNamesPlugin::name($c1.id)}
-                                                            {shopNamesPlugin::name($c1.id)}
+                                                        {if isset($c1.params.hide_js)}
+                                                        <span class="h-menu__img-name h-menu__name" data-text="{if shopNamesPlugin::name($c1.id)}{shopNamesPlugin::name($c1.id)}{else}{$c1.name}{/if}"></span>
                                                         {else}
-                                                            {$c1.name}
+                                                        <span class="h-menu__img-name h-menu__name">
+                                                            {if shopNamesPlugin::name($c1.id)}
+                                                                {shopNamesPlugin::name($c1.id)}
+                                                            {else}
+                                                                {$c1.name}
+                                                            {/if}
+                                                        </span>
                                                         {/if}
-                                                    </span>
                                                     {/if}
                                                     {label cat=$c1}
                                                 </a>
@@ -214,9 +220,11 @@
                                                             {if !isset($c2.params.hide) && $c2@iteration <= $ts.header_catalog_yet_count}
                                                                 <li class="h-menu__img-li-1">
                                                                     <a href="{$c2.url}" class="h-menu__img-link-1{if $c2.id == $sel} h-menu__link_active{/if}">
-                                                                        <span class="h-menu__name">
-                                                                            {$c2.name}
-                                                                        </span>
+                                                                        {if $hide_menu}
+                                                                            <span class="h-menu__name" data-text="{$c2.name}"></span>
+                                                                        {else}
+                                                                            <span class="h-menu__name">{$c2.name}</span>
+                                                                        {/if}
                                                                         {label cat=$c2}
                                                                     </a>
                                                                 </li>
