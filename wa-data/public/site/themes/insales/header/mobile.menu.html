@@ -11,6 +11,12 @@
 {/function}
 
 {function menu_mobile}
+
+    {$current_category = $wa->shop->category($category.id)}
+    {if $current_category && isset($current_category.params.hide_menu)}
+        {$hide_menu = $current_category.params.hide_menu}
+    {/if}
+
     {if !empty($menu)}
         <ul class="m-menu__ul-{$lv}">
             {foreach $menu as $m}
@@ -40,10 +46,14 @@
                                     {/if}
                                 {/if}
 
-                                {if isset($m.params.hide_js)}
+                                {if $hide_menu}
                                     <span class="m-menu__name" data-text=" {$m.name}"></span>
                                 {else}
-                                    <span class="m-menu__name"> {$m.name}</span>
+                                    {if isset($m.params.hide_js)}
+                                        <span class="m-menu__name" data-text=" {$m.name}"></span>
+                                    {else}
+                                        <span class="m-menu__name"> {$m.name}</span>
+                                    {/if}
                                 {/if}
 
                                 {if empty($pages)}
@@ -69,6 +79,12 @@
 {/function}
 
 {function menu_mobile_step}
+
+    {$current_category = $wa->shop->category($category.id)}
+    {if $current_category && isset($current_category.params.hide_menu)}
+        {$hide_menu = $current_category.params.hide_menu}
+    {/if}
+
     {if !empty($menu)}
         {foreach $menu as $m}
             {if !isset($m.hide) && !isset($m.params.hide_mobile)}
@@ -97,16 +113,20 @@
                                 {/if}
                             {/if}
 
-                            {if isset($m.params.hide_js)}
+                            {if $hide_menu}
                                 <span class="m-menu__name" data-text="{if shopNamesPlugin::name($m.id)}{shopNamesPlugin::name($m.id)}{else}{$m.name}{/if}"></span>
                             {else}
-                                <span class="m-menu__name">
+                                {if isset($m.params.hide_js)}
+                                    <span class="m-menu__name" data-text="{if shopNamesPlugin::name($m.id)}{shopNamesPlugin::name($m.id)}{else}{$m.name}{/if}"></span>
+                                {else}
+                                    <span class="m-menu__name">
                                     {if shopNamesPlugin::name($m.id)}
                                         {shopNamesPlugin::name($m.id)}
                                     {else}
                                         {$m.name}
                                     {/if}
                                 </span>
+                                {/if}
                             {/if}
 
                             {if empty($pages)}

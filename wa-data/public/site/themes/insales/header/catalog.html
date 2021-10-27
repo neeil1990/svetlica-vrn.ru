@@ -39,6 +39,11 @@
             {$sel = $product.category_id}
         {/if}
 
+        {$current_category = $wa->shop->category($sel)}
+        {if $current_category && isset($current_category.params.hide_menu)}
+            {$hide_menu = $current_category.params.hide_menu}
+        {/if}
+
         {if $ts.header_catalog_type == 'mega-3'}
 
             <div class="c-menu">
@@ -50,16 +55,20 @@
                                     <li class="h-menu__img-li">
                                         <a href="{$c.url}" class="h-menu__img-link{if $c.id == $sel} h-menu__img-link_active{/if}">
                                             {menu_icon c=$c class_name="h-menu__img-icon" type="image"}
-                                            {if isset($c.params.hide_js)}
-                                            <span class="h-menu__img-name h-menu__name" data-text="{if shopNamesPlugin::name($c.id)}{shopNamesPlugin::name($c.id)}{else}{$c.name}{/if}"></span>
+                                            {if $hide_menu}
+                                                <span class="h-menu__img-name h-menu__name" data-text="{if shopNamesPlugin::name($c.id)}{shopNamesPlugin::name($c.id)}{else}{$c.name}{/if}"></span>
                                             {else}
-                                            <span class="h-menu__img-name h-menu__name">
+                                                {if isset($c.params.hide_js)}
+                                                    <span class="h-menu__img-name h-menu__name" data-text="{if shopNamesPlugin::name($c.id)}{shopNamesPlugin::name($c.id)}{else}{$c.name}{/if}"></span>
+                                                {else}
+                                                    <span class="h-menu__img-name h-menu__name">
                                                 {if shopNamesPlugin::name($c.id)}
                                                     {shopNamesPlugin::name($c.id)}
                                                 {else}
                                                     {$c.name}
                                                 {/if}
-                                            </span>
+                                                    </span>
+                                                {/if}
                                             {/if}
                                             {label cat=$c}
                                         </a>
@@ -71,18 +80,21 @@
                                                         <li class="h-menu__img-li-1">
                                                             <a href="{$c1.url}" class="h-menu__img-link-1{if $c1.id == $sel} h-menu__link_active{/if}">
 
-                                                                {if isset($c1.params.hide_js)}
+                                                                {if $hide_menu}
                                                                     <span class="h-menu__name" data-text="{if shopNamesPlugin::name($c1.id)}{shopNamesPlugin::name($c1.id)}{else}{$c1.name}{/if}"></span>
                                                                 {else}
-                                                                    <span class="h-menu__name">
+                                                                    {if isset($c1.params.hide_js)}
+                                                                        <span class="h-menu__name" data-text="{if shopNamesPlugin::name($c1.id)}{shopNamesPlugin::name($c1.id)}{else}{$c1.name}{/if}"></span>
+                                                                    {else}
+                                                                        <span class="h-menu__name">
                                                                         {if shopNamesPlugin::name($c1.id)}
                                                                             {shopNamesPlugin::name($c1.id)}
                                                                         {else}
                                                                             {$c1.name}
                                                                         {/if}
                                                                     </span>
+                                                                    {/if}
                                                                 {/if}
-
                                                                 {label cat=$c1}
                                                             </a>
                                                         </li>

@@ -15,6 +15,11 @@
     {/if}
 {/if}
 
+{$current_category = $wa->shop->category($category.id)}
+{if $current_category && isset($current_category.params.hide_menu)}
+    {$hide_menu = $current_category.params.hide_menu}
+{/if}
+
 {if $wa->currentUrl() != $wa_app_url}
     <div class="bread">
         <nav class="bread__wrap" itemprop="breadcrumb">
@@ -50,7 +55,11 @@
                                     <div class="bread__sub">
                                         {foreach $subs as $sub}
                                             {if $sub.url != $b.url}
-                                                <a href="{$sub.url}" class="bread__sub-link">{$sub.name}</a>
+                                                {if $hide_menu}
+                                                    <a href="{$sub.url}" class="bread__sub-link" data-text="{$sub.name}"></a>
+                                                {else}
+                                                    <a href="{$sub.url}" class="bread__sub-link">{$sub.name}</a>
+                                                {/if}
                                             {/if}
                                         {/foreach}
                                     </div>
@@ -154,7 +163,11 @@
                         <div class="bread__sub">
                             {foreach $subs as $sub}
                                 {if $sub.name != $nameLast}
-                                    <a href="{$sub.url}" class="bread__sub-link">{$sub.name}</a>
+                                    {if $hide_menu}
+                                        <a href="{$sub.url}" class="bread__sub-link" data-text="{$sub.name}"></a>
+                                    {else}
+                                        <a href="{$sub.url}" class="bread__sub-link">{$sub.name}</a>
+                                    {/if}
                                 {/if}
                             {/foreach}
                         </div>

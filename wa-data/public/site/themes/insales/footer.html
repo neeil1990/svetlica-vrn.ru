@@ -143,19 +143,28 @@
                     {foreach $companyLinks as $l}
                         {if !isset($l.params.hide) && !isset($l.hide)}
                             <div class="f-menu__list">
-                                {if isset($l.params.hide_js)}
+                                {if $wa->globals("hide_menu")}
                                     {if shopNamesPlugin::name($l.id)}
-                                    <a href="{$l.url}" data-text="{shopNamesPlugin::name($l.id)}"></a>
+                                        <a href="{$l.url}" data-text="{shopNamesPlugin::name($l.id)}"></a>
                                     {else}
-                                    <a href="{$l.url}" data-text="{$l.name|escape}"></a>
+                                        <a href="{$l.url}" data-text="{$l.name|escape}"></a>
                                     {/if}
                                 {else}
-                                    {if shopNamesPlugin::name($l.id)}
-                                        <a href="{$l.url}">{shopNamesPlugin::name($l.id)}</a>
+                                    {if isset($l.params.hide_js)}
+                                        {if shopNamesPlugin::name($l.id)}
+                                        <a href="{$l.url}" data-text="{shopNamesPlugin::name($l.id)}"></a>
+                                        {else}
+                                        <a href="{$l.url}" data-text="{$l.name|escape}"></a>
+                                        {/if}
                                     {else}
-                                        <a href="{$l.url}">{$l.name|escape}</a>
+                                        {if shopNamesPlugin::name($l.id)}
+                                            <a href="{$l.url}">{shopNamesPlugin::name($l.id)}</a>
+                                        {else}
+                                            <a href="{$l.url}">{$l.name|escape}</a>
+                                        {/if}
                                     {/if}
                                 {/if}
+
                             </div>
                         {/if}
                     {/foreach}

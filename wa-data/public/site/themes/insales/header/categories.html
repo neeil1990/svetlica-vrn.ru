@@ -152,6 +152,7 @@
     {$current_category = $wa->shop->category($sel)}
     {if $current_category && isset($current_category.params.hide_menu)}
         {$hide_menu = $current_category.params.hide_menu}
+        {$wa->globals("hide_menu", $hide_menu)}
     {/if}
 
     <ul class="h-menu h-menu_catalog h-menu_over{if $ts.header_category_space_between} h-menu_catalog-sb{/if}">
