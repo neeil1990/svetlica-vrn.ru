@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE theme PUBLIC "wa-app-theme" "http://www.webasyst.com/wa-content/xml/wa-app-theme.dtd">
-<theme id="insales" app="site" vendor="989788" author="steemy.ru" version="2.2.0" edition="17">
+<theme id="insales" app="site" vendor="989788" author="steemy.ru" version="2.2.0" edition="25">
   <name locale="en_US">Insale for Site</name>
   <name locale="ru_RU">Insale для Site</name>
   <description locale="en_US">Responsive Theme «InSale»</description>
@@ -74,7 +74,9 @@
     <file path="left/viewed.html"/>
     <file path="left/right.html"/>
     <file path="banner.base.html"/>
-    <file path="breadcrumbs.html"/>
+    <file path="breadcrumbs.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
     <file path="development.html"/>
     <file path="error.html"/>
     <file path="footer.html"/>
@@ -90,7 +92,9 @@
       <description locale="ru_RU"/>
     </file>
     <file path="login.html"/>
-    <file path="main.html"/>
+    <file path="main.html" custom="0" modified="1">
+      <description locale="ru_RU"/>
+    </file>
     <file path="my.nav.html"/>
     <file path="my.profile.html"/>
     <file path="page.html"/>
@@ -2246,7 +2250,7 @@
       <name locale="ru_RU">Заголовок</name>
     </setting>
     <setting var="header_address_text" control_type="text">
-      <value>Воронеж, Новосибирская 13, Дружинников 13</value>
+      <value><![CDATA[Воронеж, Дружинников 13]]></value>
       <name locale="ru_RU">Адрес</name>
       <description locale="ru_RU">Smarty разрешен</description>
     </setting>
@@ -2510,7 +2514,7 @@
       <name locale="ru_RU">Одноклассники</name>
     </setting>
     <setting var="social_in" control_type="text">
-      <value>https://www.instagram.com/svetlicavrn/</value>
+      <value/>
       <name locale="ru_RU">Instagram</name>
     </setting>
     <setting var="social_yo" control_type="text">
@@ -2887,7 +2891,7 @@
       <name locale="ru_RU">Меню страниц</name>
     </setting>
     <setting var="header_mobile_pages_title" control_type="text">
-      <value></value>
+      <value/>
       <name locale="ru_RU">Заголовок меню страниц</name>
     </setting>
     <setting var="header_mobile_menu" control_type="select">
@@ -3011,7 +3015,7 @@
       <name locale="ru_RU">Alphabank</name>
     </setting>
     <setting var="footer_copy_text" control_type="text">
-      <value><![CDATA[<a href="https://prime-ltd.su/?from=site.ru"> <img src="https://prime-ltd.su/logo/white.svg"; title="Продвижение сайтов" alt="Продвижение сайтов" style="width: 175px;">  </a>]]></value>
+      <value>&lt;a href="https://prime-ltd.su/?from=site.ru"&gt; &lt;img src="https://prime-ltd.su/logo/white.svg"; title="Продвижение сайтов" alt="Продвижение сайтов" style="width: 175px;"&gt;  &lt;/a&gt;</value>
       <name locale="ru_RU">Копирайт разработчика</name>
     </setting>
     <setting var="footer_copy" control_type="checkbox">

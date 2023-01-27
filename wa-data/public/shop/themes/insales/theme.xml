@@ -144,7 +144,9 @@
     <file path="checkout.success.html"/>
     <file path="compare.html"/>
     <file path="error.html"/>
-    <file path="footer.html"/>
+    <file path="footer.html" custom="0" modified="1">
+      <description locale="ru_RU"></description>
+    </file>
     <file path="head.html" custom="0" modified="1">
       <description locale="ru_RU"/>
     </file>

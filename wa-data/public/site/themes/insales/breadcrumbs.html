@@ -1,5 +1,29 @@
 {strip}
 
+<noindex>
+<center>
+ <style>
+   .blink {
+    animation: blink 5s infinite;
+   }
+   @keyframes blink {
+    from { opacity: 2; }
+    to { opacity: 0; }
+   }
+  </style>
+
+ <p class="blink"><font color = "#FF0000">
+Уважаемые покупатели!
+<br>
+В связи с постоянным и непредсказуемым изменением курса валют, мы не можем оперативно менять рублевые цены на нашу продукцию. Просьба актуальную стоимость уточнять у менеджера по тел (473)229-40-48, также в мессенджерах по тел. 8920-211-40-48 и по электронной почте 2294048@inbox.ru
+<br>
+Благодарим за понимание.
+</font></p>
+</center>
+</noindex>
+
+
+
 {$ts = $theme_settings}
 
 {if $ts.in_breadcrumbs == 'drop' && !waRequest::isMobile(false)}
